@@ -1,0 +1,80 @@
+[
+  {
+    "size": {
+      "width": 300,
+      "height": 388
+    },
+    "upDownA": {
+      "x": -0.0,
+      "y": -0.0025
+    },
+    "leftRightA": {
+      "x": -0.0,
+      "y": -0.0
+    },
+    "upDownV": {
+      "x": 0.0,
+      "y": -0.02500000000000016
+    },
+    "leftRightV": {
+      "x": 0.0,
+      "y": 0.0
+    },
+    "upDownP": {
+      "x": -169.3499999999883,
+      "y": -141.72499999998925
+    },
+    "leftRightP": {
+      "x": -151.19999999998703,
+      "y": -248.69999999998691
+    },
+    "positionInit": {
+      "x": 418.0,
+      "y": 130.0
+    },
+    "vertices": [
+      {
+        "x": 569.200000000113,
+        "y": 299.3499999999896
+      },
+      {
+        "x": 869.3000000000269,
+        "y": 299.3499999999896
+      },
+      {
+        "x": 869.3000000000269,
+        "y": 688.2749999998774
+      },
+      {
+        "x": 569.200000000113,
+        "y": 688.2749999998774
+      }
+    ],
+    "dimensionInit": {
+      "width": 700,
+      "height": 700
+    },
+    "isResizing": true,
+    "isIsometric": false,
+    "canTopResize": true,
+    "canBottomResize": true,
+    "canRightResize": true,
+    "canLeftResize": true,
+    "isShrinking": false,
+    "position": {
+      "x": 569.1999999999871,
+      "y": 299.3499999999883
+    },
+    "velocity": null,
+    "acceleration": null,
+    "theta": 0.0,
+    "omega": 0.0,
+    "alpha": 0.0,
+    "id": "�\u0003T�O�?F�",
+    "HP": 0.0,
+    "isHovering": false,
+    "isSolid": true,
+    "isMotionless": false,
+    "type": null
+  }
+]

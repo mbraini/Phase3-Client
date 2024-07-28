@@ -1,0 +1,22 @@
+{
+  "time": 72000.0,
+  "hp": 5.0,
+  "wave": 2,
+  "shrinkageVelocity": 0.01,
+  "enemyKilled": 12,
+  "totalBullets": 78,
+  "successfulBullets": 33,
+  "enemyCount": 12,
+  "lastWaveTime": 43200.0,
+  "xpGained": 80,
+  "firstWavePR": 43,
+  "secondWavePR": 57,
+  "thirdWavePR": 0,
+  "forthWavePR": 0,
+  "fifthWavePR": 0,
+  "repeatedCount": 7,
+  "isPause": false,
+  "isOver": false,
+  "isDizzy": false,
+  "isInAnimation": false
+}

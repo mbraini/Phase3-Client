@@ -15,6 +15,7 @@ public class LogInPanel extends PIG{
     private MyText username;
     private MyLabel usernameL;
     private MyButton logIn;
+    private MyButton back;
 
     public LogInPanel() {
         this.setLayout(null);
@@ -24,7 +25,17 @@ public class LogInPanel extends PIG{
 
         initSend();
         initUsername();
+        initBack();
         initALs();
+    }
+
+    private void initBack() {
+        back = new MyButton(
+                new Point(getWidth() / 5 * 2 ,getHeight() / 5 * 4),
+                new Dimension(getWidth() / 5 ,getHeight() / 10),
+                "back",
+                this
+        );
     }
 
     private void initALs() {
@@ -35,6 +46,14 @@ public class LogInPanel extends PIG{
                 if (chosenUsername.isEmpty())
                     return;
                 new ClientLogInRequest(chosenUsername).sendRequest();
+            }
+        });
+
+        back.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                end();
+                MainFrame.onlineChoicePanel.start();
             }
         });
     }
@@ -56,7 +75,7 @@ public class LogInPanel extends PIG{
     private void initSend() {
         logIn = new MyButton(
                 new Point(getWidth() / 5 * 2 ,getHeight() / 5 * 3),
-                new Dimension(getWidth() / 5 ,getHeight() / 5),
+                new Dimension(getWidth() / 5 ,getHeight() / 10),
                 "logIn",
                 this
         );

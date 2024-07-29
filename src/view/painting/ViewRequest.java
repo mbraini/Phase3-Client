@@ -18,7 +18,7 @@ public class ViewRequest {
     private static ArrayList<FrameView> addedFrameViews;
     private static boolean endRequest;
 
-    public static void resetAll() {
+    public synchronized static void resetAll() {
         removeObjectViewReq = new ArrayList<>();
         removeFrameViewReq = new ArrayList<>();
         removeEffectViewReq = new ArrayList<>();
@@ -27,7 +27,7 @@ public class ViewRequest {
         addedFrameViews = new ArrayList<>();
     }
 
-    public static void checkRequests(){
+    public synchronized static void checkRequests(){
         if (endRequest) {
             endRequest = false;
             resetAll();

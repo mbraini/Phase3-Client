@@ -19,13 +19,29 @@ public class BossDeathAnimation extends TimerAnimation {
 
     private Boss boss;
     private Timer timer;
+    private Timer wait;
     private int timePassed;
     private int delay = 60;
 
     public BossDeathAnimation(Boss boss) {
         this.boss = boss;
         ModelRequestController.playSound(SoundPathConstants.winSound);
+        GameState.setIsInAnimation(true);
         setUpTimer();
+        setUpWait();
+    }
+
+    private void setUpWait() {
+        wait = new Timer(2000, new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                killEveryOne();
+                System.out.println("BOSS DIED");
+                new EpsilonGetBigAnimation().StartAnimation();
+                wait.stop();
+            }
+        });
+        wait.setRepeats(false);
     }
 
     private void setUpTimer() {
@@ -33,10 +49,11 @@ public class BossDeathAnimation extends TimerAnimation {
             @Override
             public void actionPerformed(ActionEvent e) {
                 timePassed += delay;
-                if (timePassed / delay >= 98) {
-                    killEveryOne();
-                    new EpsilonGetBigAnimation().StartAnimation();
+                if (timePassed / delay >= 95) {
+                    GameState.setIsInAnimation(false);
+                    wait.start();
                     timer.stop();
+                    return;
                 }
                 boss.getHead().setSize(
                         new Dimension(
@@ -66,15 +83,15 @@ public class BossDeathAnimation extends TimerAnimation {
         });
     }
 
-    private void killEveryOne() {
+    private synchronized void killEveryOne() {
         if (!boss.getRightHand().isDead()) {
             ObjectController.removeObject(boss.getRightHand());
-            ObjectController.removeFrame(boss.getLeftHand().getFrame());
+            ObjectController.removeFrame(boss.getRightHand().getFrame());
             Controller.addXP(100);
         }
         if (!boss.getLeftHand().isDead()) {
             ObjectController.removeObject(boss.getLeftHand());
-            ObjectController.removeFrame(boss.getRightHand().getFrame());
+            ObjectController.removeFrame(boss.getLeftHand().getFrame());
             Controller.addXP(100);
         }
         ObjectController.removeObject(boss.getHead());

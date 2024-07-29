@@ -19,7 +19,7 @@ public class ModelRequests {
     private static ArrayList<FrameModel> addedFrameModel;
     private static boolean endRequest;
 
-    public static void resetAll() {
+    public synchronized static void resetAll() {
         removeObjectModelReq = new ArrayList<>();
         removeFrameModelReq = new ArrayList<>();
         removeEffectModelReq = new ArrayList<>();
@@ -30,7 +30,7 @@ public class ModelRequests {
         addedFrameModel = new ArrayList<>();
     }
 
-    public static void checkRequests(){
+    public synchronized static void checkRequests(){
         if (endRequest) {
             endRequest = false;
             resetAll();
@@ -42,7 +42,7 @@ public class ModelRequests {
         checkAbstractEnemies();
     }
 
-    private static void checkAbstractEnemies() {
+    private synchronized static void checkAbstractEnemies() {
         for (int i = 0 ;i < addedAbstractEnemy.size() ;i++){
             ModelData.addAbstractEnemy(addedAbstractEnemy.get(i));
             addedAbstractEnemy.remove(i);
@@ -55,7 +55,7 @@ public class ModelRequests {
         }
     }
 
-    private static void checkEffects() {
+    private synchronized static void checkEffects() {
         for (int i = 0 ;i < addedEffectModel.size() ;i++){
             ModelData.addEffect(addedEffectModel.get(i));
             addedEffectModel.remove(i);
@@ -68,7 +68,7 @@ public class ModelRequests {
         }
     }
 
-    private static void checkObjects() {
+    private synchronized static void checkObjects() {
         for (int i = 0; i <addedObjectModel.size() ;i++){
             ModelData.addModel(addedObjectModel.get(i));
             addedObjectModel.remove(i);
@@ -81,7 +81,7 @@ public class ModelRequests {
         }
     }
 
-    private static void checkFrames() {
+    private synchronized static void checkFrames() {
         for (int i = 0; i <addedFrameModel.size() ;i++){
             ModelData.addFrame(addedFrameModel.get(i));
             addedFrameModel.remove(i);
@@ -128,7 +128,7 @@ public class ModelRequests {
     }
 
 
-    public static void endRequest() {
+    public synchronized static void endRequest() {
         endRequest = true;
         checkRequests();
     }

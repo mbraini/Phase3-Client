@@ -44,4 +44,8 @@ public class OnlineData {
     public static TCPMessager getTCPMessager() {
         return tcpMessager;
     }
+
+    public static void setTCPMessager(TCPMessager tcpMessager) {
+        OnlineData.tcpMessager = tcpMessager;
+    }
 }

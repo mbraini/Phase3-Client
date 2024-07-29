@@ -66,6 +66,7 @@ public class WaveSpawner {
                 break;
             case 6 :
                 sixthWave();
+                spawner.stop();
                 break;
         }
     }

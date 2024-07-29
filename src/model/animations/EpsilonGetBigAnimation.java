@@ -25,8 +25,11 @@ public class EpsilonGetBigAnimation extends TimerAnimation {
         timer = new Timer(delay, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if (ModelData.getEpsilon().getSize().width >= ModelData.getEpsilonFrame().getSize().width) {
+                if (ModelData.getEpsilon().getSize().width >= ModelData.getEpsilonFrame().getSize().width
+                        || ModelData.getEpsilon().getSize().height >= ModelData.getEpsilonFrame().getSize().height)
+                {
                     Controller.endGame(true);
+                    System.out.println("EPSILON GOT BIG!");
                     ModelRequestController.playSound(SoundPathConstants.endSound);
                     timer.stop();
                 }

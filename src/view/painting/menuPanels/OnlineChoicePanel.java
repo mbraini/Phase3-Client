@@ -1,6 +1,7 @@
 package view.painting.menuPanels;
 
 import constants.SizeConstants;
+import controller.online.OnlineData;
 import view.painting.objectViews.panels.MyButton;
 
 import java.awt.*;
@@ -11,6 +12,7 @@ public class OnlineChoicePanel extends PIG{
 
     private MyButton logIn;
     private MyButton signUp;
+    private MyButton playOffline;
 
     public OnlineChoicePanel(){
         this.setLayout(null);
@@ -19,7 +21,17 @@ public class OnlineChoicePanel extends PIG{
         this.setVisible(false);
 
         initButtons();
+        initOffline();
         initAls();
+    }
+
+    private void initOffline() {
+        playOffline = new MyButton(
+                new Point(getWidth() / 5 * 2 ,getHeight() / 10 * 7),
+                new Dimension(getWidth() / 5 ,getHeight() / 10),
+                "play offline",
+                this
+        );
     }
 
     private void initAls() {
@@ -35,6 +47,14 @@ public class OnlineChoicePanel extends PIG{
             public void actionPerformed(ActionEvent e) {
                 end();
                 MainFrame.signUpPanel.start();
+            }
+        });
+        playOffline.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                OnlineData.setTCPMessager(null);
+                end();
+                MainFrame.menuPanel.start();
             }
         });
     }

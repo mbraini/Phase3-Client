@@ -44,5 +44,8 @@ public class ClientSignUpRequest extends ClientRequest{
         else {
             JOptionPane.showMessageDialog(null ,"you cant sign up with this username");
         }
+
+
+
     }
 }

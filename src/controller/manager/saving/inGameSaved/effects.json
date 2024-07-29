@@ -1,1 +1,124 @@
-[]
+[
+  {
+    "fadeTime": 200.0,
+    "vertices": [
+      {
+        "x": -273.5,
+        "y": 1011.2649730810374
+      },
+      {
+        "x": -323.5,
+        "y": 1097.8675134594812
+      },
+      {
+        "x": -223.5,
+        "y": 1097.8675134594812
+      }
+    ],
+    "damage": 0.0,
+    "damageTime": 0.0,
+    "R": 0,
+    "G": 249,
+    "B": 0,
+    "area": {
+      "n": 8,
+      "x": [
+        -249,
+        -225,
+        -244,
+        -270,
+        -307,
+        -323,
+        -316,
+        -298
+      ],
+      "y": [
+        1065,
+        1020,
+        995,
+        980,
+        984,
+        1018,
+        1048,
+        1073
+      ]
+    },
+    "effectType": "archmireEffect",
+    "position": {
+      "x": -273.5,
+      "y": 1069.0
+    },
+    "velocity": null,
+    "acceleration": null,
+    "theta": 0.0,
+    "omega": 0.0,
+    "alpha": 0.0,
+    "id": ")C��%!\u0001Q\r\u0005",
+    "HP": 0.0,
+    "isHovering": false,
+    "isSolid": false,
+    "isMotionless": false,
+    "type": null
+  },
+  {
+    "fadeTime": 100.0,
+    "vertices": [
+      {
+        "x": -239.5,
+        "y": 994.2649730810374
+      },
+      {
+        "x": -289.5,
+        "y": 1080.8675134594812
+      },
+      {
+        "x": -189.5,
+        "y": 1080.8675134594812
+      }
+    ],
+    "damage": 0.0,
+    "damageTime": 0.0,
+    "R": 0,
+    "G": 255,
+    "B": 0,
+    "area": {
+      "n": 8,
+      "x": [
+        -222,
+        -229,
+        -259,
+        -289,
+        -317,
+        -310,
+        -287,
+        -257
+      ],
+      "y": [
+        1034,
+        984,
+        975,
+        978,
+        1003,
+        1040,
+        1060,
+        1070
+      ]
+    },
+    "effectType": "archmireEffect",
+    "position": {
+      "x": -239.5,
+      "y": 1052.0
+    },
+    "velocity": null,
+    "acceleration": null,
+    "theta": 0.0,
+    "omega": 0.0,
+    "alpha": 0.0,
+    "id": "��U�\u0027�����",
+    "HP": 0.0,
+    "isHovering": false,
+    "isSolid": false,
+    "isMotionless": false,
+    "type": null
+  }
+]

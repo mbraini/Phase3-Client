@@ -5,8 +5,11 @@ import controller.Controller;
 import view.Application;
 import view.online.OnlineData;
 import view.painting.objectViews.panels.MyButton;
+import view.painting.objectViews.panels.MyLabel;
+import view.painting.objectViews.panels.MyText;
 
 
+import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -19,6 +22,8 @@ public class MenuPanel extends PIG {
     private MyButton settings;
     private MyButton tutorial;
     private MyButton skillTree;
+    private MyButton squad;
+    private MyLabel live;
     public MenuPanel(){
         this.setLayout(null);
         this.setBounds(0,0, SizeConstants.GAME_WIDTH, SizeConstants.GAME_HEIGHT);
@@ -29,7 +34,27 @@ public class MenuPanel extends PIG {
         initStart();
         initSkillTree();
         initTutorial();
+        initSquad();
+        initLive();
         initAL();
+    }
+
+    private void initLive() {
+        live = new MyLabel(
+                new Point(getWidth() - 100 ,0),
+                new Dimension(100 ,50),
+                "",
+                this
+        );
+    }
+
+    private void initSquad() {
+        squad = new MyButton(
+                new Point(SizeConstants.GAME_WIDTH / 3 , SizeConstants.GAME_HEIGHT / 13 * 3),
+                new Dimension(SizeConstants.GAME_WIDTH / 3, SizeConstants.GAME_HEIGHT / 11),
+                "squad",
+                this
+        );
     }
 
     private void initAL() {
@@ -85,11 +110,20 @@ public class MenuPanel extends PIG {
                 MainFrame.tutorial.start();
             }
         });
+        squad.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (live.getText().equals("offline")) {
+                    Application.endMainFrame();
+                    OnlineData.initTCPMessager();
+                }
+            }
+        });
     }
 
     private void initExit(){
         exit = new MyButton(
-                new Point(SizeConstants.GAME_WIDTH / 3 , SizeConstants.GAME_HEIGHT / 11 * 9),
+                new Point(SizeConstants.GAME_WIDTH / 3 , SizeConstants.GAME_HEIGHT / 13 * 11),
                 new Dimension(SizeConstants.GAME_WIDTH / 3, SizeConstants.GAME_HEIGHT / 11),
                 "exit",
                 this
@@ -98,7 +132,7 @@ public class MenuPanel extends PIG {
 
     private void initStart(){
         start = new MyButton(
-                new Point(SizeConstants.GAME_WIDTH / 3 , SizeConstants.GAME_HEIGHT / 11),
+                new Point(SizeConstants.GAME_WIDTH / 3 , SizeConstants.GAME_HEIGHT / 13),
                 new Dimension(SizeConstants.GAME_WIDTH / 3, SizeConstants.GAME_HEIGHT / 11),
                 "start",
                 this
@@ -107,7 +141,7 @@ public class MenuPanel extends PIG {
 
     private void initSettings(){
         settings = new MyButton(
-                new Point(SizeConstants.GAME_WIDTH / 3 , SizeConstants.GAME_HEIGHT / 11 * 3),
+                new Point(SizeConstants.GAME_WIDTH / 3 , SizeConstants.GAME_HEIGHT / 13 * 9),
                 new Dimension(SizeConstants.GAME_WIDTH / 3, SizeConstants.GAME_HEIGHT / 11),
                 "settings",
                 this
@@ -116,7 +150,7 @@ public class MenuPanel extends PIG {
 
     private void initTutorial(){
         tutorial = new MyButton(
-                new Point(SizeConstants.GAME_WIDTH / 3 , SizeConstants.GAME_HEIGHT / 11 * 7),
+                new Point(SizeConstants.GAME_WIDTH / 3 , SizeConstants.GAME_HEIGHT / 13 * 7),
                 new Dimension(SizeConstants.GAME_WIDTH / 3, SizeConstants.GAME_HEIGHT / 11),
                 "tutorial",
                 this
@@ -125,7 +159,7 @@ public class MenuPanel extends PIG {
 
     private void initSkillTree(){
         skillTree = new MyButton(
-                new Point(SizeConstants.GAME_WIDTH / 3 , SizeConstants.GAME_HEIGHT / 11 * 5),
+                new Point(SizeConstants.GAME_WIDTH / 3 , SizeConstants.GAME_HEIGHT / 13 * 5),
                 new Dimension(SizeConstants.GAME_WIDTH / 3, SizeConstants.GAME_HEIGHT / 11),
                 "skillTree",
                 this
@@ -135,6 +169,14 @@ public class MenuPanel extends PIG {
     @Override
     public void start() {
         this.setVisible(true);
+        if (OnlineData.getTCPMessager() == null) {
+            squad.setForeground(Color.RED);
+            live.setText("offline");
+        }
+        else {
+            squad.setForeground(Color.CYAN);
+            live.setText("live");
+        }
     }
 
     @Override

@@ -3,6 +3,7 @@ package view.painting.menuPanels;
 import constants.SizeConstants;
 import view.online.OnlineData;
 import view.online.tcp.ClientRequestType;
+import view.online.tcp.ClientSignUpRequest;
 import view.painting.objectViews.panels.MyButton;
 import view.painting.objectViews.panels.MyLabel;
 import view.painting.objectViews.panels.MyText;
@@ -33,11 +34,9 @@ public class SignUpPanel extends PIG{
             @Override
             public void actionPerformed(ActionEvent e) {
                 String chosenUsername = username.getText();
-                String ip = OnlineData.getTCPMessager().getSocket().getInetAddress().getHostAddress();
-                System.out.println(ip);
-                OnlineData.getTCPMessager().sendMessage(ClientRequestType.signUp);
-                OnlineData.getTCPMessager().sendMessage(chosenUsername);
-                OnlineData.getTCPMessager().sendMessage(ip);
+                if (chosenUsername.isEmpty())
+                    return;
+                new ClientSignUpRequest(chosenUsername).sendRequest();
             }
         });
     }

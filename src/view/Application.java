@@ -115,6 +115,7 @@ public class Application implements Runnable{
 
     public static void startMainFrame(){
         mainFrame = new MainFrame();
+        MainFrame.menuPanel.start();
     }
 
 

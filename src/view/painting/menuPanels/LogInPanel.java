@@ -33,12 +33,7 @@ public class LogInPanel extends PIG{
         logIn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                String chosenUsername = username.getText();
-                String ip = OnlineData.getTCPMessager().getSocket().getLocalAddress().getHostAddress().trim();
-                System.out.println(ip);
-                OnlineData.getTCPMessager().sendMessage(ClientRequestType.logIn);
-                OnlineData.getTCPMessager().sendMessage(chosenUsername);
-                OnlineData.getTCPMessager().sendMessage(ip);
+
             }
         });
     }

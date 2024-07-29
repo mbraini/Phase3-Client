@@ -1,13 +1,11 @@
 package view.painting.menuPanels;
 
 import constants.SizeConstants;
-import view.online.OnlineData;
-import view.online.tcp.ClientRequestType;
+import controller.online.tcp.ClientLogInRequest;
 import view.painting.objectViews.panels.MyButton;
 import view.painting.objectViews.panels.MyLabel;
 import view.painting.objectViews.panels.MyText;
 
-import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -33,7 +31,10 @@ public class LogInPanel extends PIG{
         logIn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-
+                String chosenUsername = username.getText();
+                if (chosenUsername.isEmpty())
+                    return;
+                new ClientLogInRequest(chosenUsername).sendRequest();
             }
         });
     }

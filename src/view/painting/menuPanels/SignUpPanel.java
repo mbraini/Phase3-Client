@@ -1,9 +1,7 @@
 package view.painting.menuPanels;
 
 import constants.SizeConstants;
-import view.online.OnlineData;
-import view.online.tcp.ClientRequestType;
-import view.online.tcp.ClientSignUpRequest;
+import controller.online.tcp.ClientSignUpRequest;
 import view.painting.objectViews.panels.MyButton;
 import view.painting.objectViews.panels.MyLabel;
 import view.painting.objectViews.panels.MyText;

@@ -1,4 +1,4 @@
-package view.online.tcp;
+package controller.online.tcp;
 
 public enum ClientRequestType {
 

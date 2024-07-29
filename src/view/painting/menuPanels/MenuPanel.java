@@ -3,13 +3,11 @@ package view.painting.menuPanels;
 import constants.SizeConstants;
 import controller.Controller;
 import view.Application;
-import view.online.OnlineData;
+import controller.online.OnlineData;
 import view.painting.objectViews.panels.MyButton;
 import view.painting.objectViews.panels.MyLabel;
-import view.painting.objectViews.panels.MyText;
 
 
-import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;

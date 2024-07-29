@@ -1,11 +1,12 @@
-package view.online.tcp;
+package controller.online.tcp;
 
 import com.google.gson.Gson;
-import view.Application;
-import view.online.OnlineData;
+import controller.online.OnlineData;
 import view.painting.menuPanels.MainFrame;
 
 import javax.swing.*;
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 
 public class ClientSignUpRequest extends ClientRequest{
 
@@ -27,10 +28,13 @@ public class ClientSignUpRequest extends ClientRequest{
 
         OnlineData.getTCPMessager().sendMessage(type);
         OnlineData.getTCPMessager().sendMessage(username);
-        System.out.println(OnlineData.getTCPMessager().getSocket().getInetAddress().getHostAddress().trim());
-        OnlineData.getTCPMessager().sendMessage(
-                OnlineData.getTCPMessager().getSocket().getInetAddress().getHostAddress().trim()
-        );
+        try {
+            OnlineData.getTCPMessager().sendMessage(
+                    InetAddress.getLocalHost().getHostAddress().trim()
+            );
+        } catch (UnknownHostException e) {
+            throw new RuntimeException(e);
+        }
         String recponce = OnlineData.getTCPMessager().readMessage();
         ServerMessageType serverRecponce = gson.fromJson(recponce , ServerMessageType.class);
         if (serverRecponce.equals(ServerMessageType.done)) {

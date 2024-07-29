@@ -116,6 +116,8 @@ public class SettingsPanel extends PIG {
         sensitivitySlider.setMinorTickSpacing(1);
         sensitivitySlider.setPaintTrack(true);
         sensitivitySlider.setMajorTickSpacing(1);
+        sensitivitySlider.setOpaque(false);
+        sensitivitySlider.setForeground(Color.CYAN);
         sensitivitySlider.setPaintLabels(true);
         sensitivitySlider.setFont(new Font("MV Boli" ,Font.PLAIN ,15));
         sensitivitySlider.setValue(Configs.SENSITIVITY);
@@ -131,6 +133,8 @@ public class SettingsPanel extends PIG {
         soundSlider.setPaintTrack(true);
         soundSlider.setMajorTickSpacing(1);
         soundSlider.setPaintLabels(true);
+        soundSlider.setOpaque(false);
+        soundSlider.setForeground(Color.CYAN);
         soundSlider.setFont(new Font("MV Boli" ,Font.PLAIN ,15));
         soundSlider.setValue(Configs.ViewConfigs.SOUND);
         this.add(soundSlider);

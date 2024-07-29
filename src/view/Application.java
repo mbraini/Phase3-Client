@@ -1,13 +1,11 @@
 package view;
 
-import constants.ControllerConstants;
 import constants.ImageConstants;
 import constants.SoundPathConstants;
 import controller.Controller;
-import view.online.OnlineData;
+import controller.online.OnlineData;
 import view.painting.soundEffects.Sound;
 import view.painting.menuPanels.MainFrame;
-import view.online.tcp.TCPClient;
 
 import javax.imageio.ImageIO;
 import javax.sound.sampled.LineUnavailableException;

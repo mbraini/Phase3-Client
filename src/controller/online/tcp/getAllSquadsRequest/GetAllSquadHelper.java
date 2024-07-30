@@ -3,7 +3,7 @@ package controller.online.tcp.getAllSquadsRequest;
 public class GetAllSquadHelper {
 
     private String name;
-    private String memberCount;
+    private int memberCount;
 
     public String getName() {
         return name;
@@ -13,11 +13,11 @@ public class GetAllSquadHelper {
         this.name = name;
     }
 
-    public String getMemberCount() {
+    public int getMemberCount() {
         return memberCount;
     }
 
-    public void setMemberCount(String memberCount) {
+    public void setMemberCount(int memberCount) {
         this.memberCount = memberCount;
     }
 }

@@ -5,7 +5,7 @@ import java.awt.*;
 
 public class MyLabel extends JLabel {
 
-    public MyLabel(Point position ,Dimension size ,String text ,JPanel panel) {
+    public MyLabel(Point position ,Dimension size ,String text ,Container container) {
         super();
         setBounds(
                 position.x,
@@ -20,7 +20,7 @@ public class MyLabel extends JLabel {
         setBorder(BorderFactory.createLineBorder(Color.CYAN,2));
         setHorizontalAlignment(JLabel.CENTER);
         setVerticalAlignment(JLabel.CENTER);
-        panel.add(this);
+        container.add(this);
     }
 
 }

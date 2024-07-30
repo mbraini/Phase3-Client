@@ -5,12 +5,17 @@ import constants.SizeConstants;
 import controller.configs.Configs;
 import controller.online.tcp.getAllSquadsRequest.ClientGetAllSquadsRequest;
 import controller.online.tcp.getAllSquadsRequest.GetAllSquadHelper;
+import view.painting.menuPanels.MainFrame;
 import view.painting.menuPanels.PIG;
+import view.painting.objectViews.panels.JScrollerLabel;
 import view.painting.objectViews.panels.MyButton;
 import view.painting.objectViews.panels.MyLabel;
+import view.painting.objectViews.panels.MyPanel;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
 public class NoSquadPanel extends PIG {
@@ -31,6 +36,17 @@ public class NoSquadPanel extends PIG {
         initJoinRequest();
         initCreateNewSquad();
         initJScrollPane();
+        initAL();
+    }
+
+    private void initAL() {
+        createNewSquad.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                end();
+                MainFrame.createNewSquadPanel.start();
+            }
+        });
     }
 
     private void initCreateNewSquad() {
@@ -55,35 +71,34 @@ public class NoSquadPanel extends PIG {
         youHaveNoSquad = new MyLabel(
                 new Point(getWidth() / 4 ,getHeight() / 15),
                 new Dimension(getWidth() / 2 ,getHeight() / 15),
-                "you don't have any squad right now!",
+                "you don't have a squad right now!",
                 this
         );
     }
 
     private void initJScrollPane() {
         container = new JPanel();
+        container.setLayout(null);
         container.setBounds(
                 getWidth() / 5 * 3 ,
                 getHeight() / 5 * 3,
                 0,
                 0
         );
-        container.setLayout(new GridLayout(1 ,4 ,10 ,50));
-        container.setOpaque(false);
-        container.setBackground(Color.RED);
+//        container.setLayout(new GridLayout(5 ,2 ,10 ,50));
+        container.setBackground(Color.BLACK);
         jScrollPane = new JScrollPane(
                 container,
                 JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED ,
                 JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED
         );
+        jScrollPane.setOpaque(false);
         jScrollPane.setBounds(
                 getWidth() / 5 ,
                 getHeight() / 15 * 3 ,
                 getWidth() / 5 * 3 ,
                 getHeight() / 5 * 3
         );
-        jScrollPane.setBackground(Color.BLACK);
-        jScrollPane.setOpaque(false);
         jScrollPane.createVerticalScrollBar();
         jScrollPane.createHorizontalScrollBar();
         jScrollPane.getVerticalScrollBar().setOpaque(false);
@@ -112,19 +127,46 @@ public class NoSquadPanel extends PIG {
     }
 
     public void updateSquads(ArrayList<GetAllSquadHelper> squads) {
+        container.removeAll();
+        GridLayout gridLayout = new GridLayout(squads.size() + 1 ,1 ,2 ,2);
+        setMainPanel();
+        container.setLayout(gridLayout);
         for (GetAllSquadHelper squad : squads) {
-            new MyLabel(
+            MyPanel myPanel = new MyPanel(
                     new Point(),
                     new Dimension(),
-                    squad.getName(),
                     container
             );
-            new MyLabel(
-                    new Point(),
-                    new Dimension(),
-                    squad.getMemberCount(),
-                    container
+            myPanel.setLayout(new GridLayout(1 ,2 ,2 ,2));
+            new JScrollerLabel(
+                    squad.getName(),
+                    Color.PINK,
+                    myPanel
+            );
+            new JScrollerLabel(
+                    squad.getMemberCount() + "",
+                    Color.GREEN,
+                    myPanel
             );
         }
+    }
+
+    private void setMainPanel() {
+        MyPanel myPanel = new MyPanel(
+                new Point(),
+                new Dimension(),
+                container
+        );
+        myPanel.setLayout(new GridLayout(1 ,2 ,2 ,2));
+        new JScrollerLabel(
+                "squad's name ",
+                Color.WHITE,
+                myPanel
+        );
+        new JScrollerLabel(
+                "squad's member count ",
+                Color.WHITE,
+                myPanel
+        );
     }
 }

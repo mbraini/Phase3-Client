@@ -48,7 +48,7 @@ public class ViewRequestController {
         SkillTreeAbilityRequests.abilityRequest(type);
     }
 
-    public static void updateView(){
+    public synchronized static void updateView(){
         ArrayList<ObjectView> objectViews;
         ArrayList<FrameView> frameViews;
         ArrayList<ObjectModel> objectModels;

@@ -2,6 +2,11 @@ package view.painting.menuPanels;
 
 
 import constants.SizeConstants;
+import view.painting.menuPanels.onlinePanels.LogInPanel;
+import view.painting.menuPanels.onlinePanels.OnlineChoicePanel;
+import view.painting.menuPanels.onlinePanels.SignUpPanel;
+import view.painting.menuPanels.onlinePanels.squad.HasSquadPanel;
+import view.painting.menuPanels.onlinePanels.squad.NoSquadPanel;
 
 import javax.swing.*;
 
@@ -14,6 +19,8 @@ public class MainFrame extends JFrame {
     public static OnlineChoicePanel onlineChoicePanel;
     public static LogInPanel logInPanel;
     public static SignUpPanel signUpPanel;
+    public static HasSquadPanel hasSquadPanel;
+    public static NoSquadPanel noSquadPanel;
     public MainFrame(){
         this.setLayout(null);
         this.setResizable(false);
@@ -36,6 +43,8 @@ public class MainFrame extends JFrame {
         onlineChoicePanel = new OnlineChoicePanel();
         signUpPanel = new SignUpPanel();
         logInPanel = new LogInPanel();
+        hasSquadPanel = new HasSquadPanel();
+        noSquadPanel = new NoSquadPanel();
 
         mainPanel.add(menuPanel);
         mainPanel.add(settingsPanel);
@@ -44,5 +53,7 @@ public class MainFrame extends JFrame {
         mainPanel.add(onlineChoicePanel);
         mainPanel.add(signUpPanel);
         mainPanel.add(logInPanel);
+        mainPanel.add(hasSquadPanel);
+        mainPanel.add(noSquadPanel);
     }
 }

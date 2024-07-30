@@ -4,6 +4,8 @@ public enum ServerMessageType {
 
     done,
     connectionCheck,
-    error
+    error,
+    yes,
+    no
 
 }

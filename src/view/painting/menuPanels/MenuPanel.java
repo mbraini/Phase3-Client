@@ -2,6 +2,7 @@ package view.painting.menuPanels;
 
 import constants.SizeConstants;
 import controller.Controller;
+import controller.online.tcp.HasSquadRequest;
 import view.Application;
 import controller.online.OnlineData;
 import view.painting.objectViews.panels.MyButton;
@@ -114,6 +115,9 @@ public class MenuPanel extends PIG {
                 if (live.getText().equals("offline")) {
                     Application.endMainFrame();
                     OnlineData.initTCPMessager();
+                }
+                else {
+                    new HasSquadRequest().sendRequest();
                 }
             }
         });

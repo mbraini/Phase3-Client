@@ -1,14 +1,16 @@
-package view.painting.menuPanels;
+package view.painting.menuPanels.onlinePanels;
 
 import constants.SizeConstants;
 import controller.online.OnlineData;
+import view.painting.menuPanels.MainFrame;
+import view.painting.menuPanels.PIG;
 import view.painting.objectViews.panels.MyButton;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class OnlineChoicePanel extends PIG{
+public class OnlineChoicePanel extends PIG {
 
     private MyButton logIn;
     private MyButton signUp;

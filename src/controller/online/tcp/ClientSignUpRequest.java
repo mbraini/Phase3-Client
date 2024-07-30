@@ -1,6 +1,8 @@
 package controller.online.tcp;
 
 import com.google.gson.Gson;
+import controller.configs.Configs;
+import controller.configs.helper.SkillTreeJsonHelper;
 import controller.online.OnlineData;
 import view.painting.menuPanels.MainFrame;
 
@@ -38,14 +40,29 @@ public class ClientSignUpRequest extends ClientRequest{
         String recponce = OnlineData.getTCPMessager().readMessage();
         ServerMessageType serverRecponce = gson.fromJson(recponce , ServerMessageType.class);
         if (serverRecponce.equals(ServerMessageType.done)) {
+            update();
             MainFrame.signUpPanel.end();
             MainFrame.menuPanel.start();
         }
         else {
             JOptionPane.showMessageDialog(null ,"you cant sign up with this username");
         }
+    }
 
+    private void update() {
+        OnlineData.getTCPMessager().sendMessage(Configs.GameConfigs.XP);
+        SkillTreeJsonHelper helper = new SkillTreeJsonHelper();
+        helper.ares = Configs.SkillTreeConfigs.aresBought;
+        helper.astrape = Configs.SkillTreeConfigs.astrapeBought;
+        helper.cerberus = Configs.SkillTreeConfigs.cerberusBought;
+        helper.melampus = Configs.SkillTreeConfigs.melampusBought;
+        helper.chiron = Configs.SkillTreeConfigs.chironBought;
+        helper.athena = Configs.SkillTreeConfigs.athenaBought;
+        helper.proteus = Configs.SkillTreeConfigs.proteusBought;
+        helper.empusa = Configs.SkillTreeConfigs.empusaBought;
+        helper.dolus = Configs.SkillTreeConfigs.dolusBought;
+        helper.aceso = Configs.SkillTreeConfigs.acesoBought;
 
-
+        OnlineData.getTCPMessager().sendMessage(gson.toJson(helper));
     }
 }

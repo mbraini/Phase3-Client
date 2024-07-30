@@ -1,7 +1,9 @@
-package view.painting.menuPanels;
+package view.painting.menuPanels.onlinePanels;
 
 import constants.SizeConstants;
 import controller.online.tcp.ClientLogInRequest;
+import view.painting.menuPanels.MainFrame;
+import view.painting.menuPanels.PIG;
 import view.painting.objectViews.panels.MyButton;
 import view.painting.objectViews.panels.MyLabel;
 import view.painting.objectViews.panels.MyText;
@@ -10,7 +12,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class LogInPanel extends PIG{
+public class LogInPanel extends PIG {
 
     private MyText username;
     private MyLabel usernameL;

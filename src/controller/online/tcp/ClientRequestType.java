@@ -4,6 +4,7 @@ public enum ClientRequestType {
 
     signUp,
     logIn,
+    getAllSquads,
     hasSquad
 
 }

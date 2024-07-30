@@ -18,11 +18,11 @@ public class HasSquadPanel extends PIG {
 
     @Override
     public void start() {
-
+        setVisible(true);
     }
 
     @Override
     public void end() {
-
+        setVisible(false);
     }
 }

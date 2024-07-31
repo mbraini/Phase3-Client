@@ -1,8 +1,7 @@
 package view.painting.menuPanels.onlinePanels.squad;
 
 import constants.SizeConstants;
-import controller.online.tcp.ClientCreateSquadRequest;
-import controller.online.tcp.ClientLogInRequest;
+import controller.online.tcp.requests.createSquad.ClientCreateSquadRequest;
 import view.painting.menuPanels.MainFrame;
 import view.painting.menuPanels.PIG;
 import view.painting.objectViews.panels.MyButton;

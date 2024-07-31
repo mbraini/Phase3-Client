@@ -2,7 +2,7 @@ package view.painting.menuPanels;
 
 import constants.SizeConstants;
 import controller.Controller;
-import controller.online.tcp.HasSquadRequest;
+import controller.online.tcp.requests.hasSquad.ClientHasSquadRequest;
 import view.Application;
 import controller.online.OnlineData;
 import view.painting.objectViews.panels.MyButton;
@@ -117,7 +117,7 @@ public class MenuPanel extends PIG {
                     OnlineData.initTCPMessager();
                 }
                 else {
-                    new HasSquadRequest().sendRequest();
+                    new ClientHasSquadRequest().sendRequest();
                 }
             }
         });

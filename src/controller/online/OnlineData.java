@@ -1,6 +1,7 @@
 package controller.online;
 
 import constants.ControllerConstants;
+import controller.online.tcp.TCPThread;
 import utils.TCPMessager;
 import view.Application;
 import view.painting.menuPanels.MainFrame;
@@ -12,6 +13,7 @@ import java.net.Socket;
 public class OnlineData {
 
     public static TCPMessager tcpMessager;
+    public static TCPThread tcpThread;
 
     public static void initTCPMessager() {
         try {
@@ -47,5 +49,13 @@ public class OnlineData {
 
     public static void setTCPMessager(TCPMessager tcpMessager) {
         OnlineData.tcpMessager = tcpMessager;
+    }
+
+    public static TCPThread getTcpThread() {
+        return tcpThread;
+    }
+
+    public static void setTcpThread(TCPThread tcpThread) {
+        OnlineData.tcpThread = tcpThread;
     }
 }

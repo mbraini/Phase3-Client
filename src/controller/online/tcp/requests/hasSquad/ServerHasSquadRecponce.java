@@ -1,15 +1,16 @@
-package controller.online.tcp;
+package controller.online.tcp.requests.hasSquad;
 
 import com.google.gson.Gson;
 import controller.online.OnlineData;
+import controller.online.tcp.ServerRecponce;
+import controller.online.tcp.ServerRecponceType;
 import view.painting.menuPanels.MainFrame;
 
-public class HasSquadRequest extends ClientRequest{
+public class ServerHasSquadRecponce extends ServerRecponce {
 
     private Gson gson;
 
-    public HasSquadRequest() {
-        type = ClientRequestType.hasSquad;
+    public ServerHasSquadRecponce() {
         initGson();
     }
 
@@ -18,11 +19,10 @@ public class HasSquadRequest extends ClientRequest{
     }
 
     @Override
-    public void sendRequest() {
-        OnlineData.getTCPMessager().sendMessage(type);
+    public void receiveRecponce() {
         String answer = OnlineData.getTCPMessager().readMessage();
-        ServerMessageType recponce = gson.fromJson(answer , ServerMessageType.class);
-        if (recponce.equals(ServerMessageType.yes)) {
+        ServerRecponceType recponce = gson.fromJson(answer , ServerRecponceType.class);
+        if (recponce.equals(ServerRecponceType.yes)) {
             MainFrame.menuPanel.end();
             MainFrame.hasSquadPanel.start();
         }

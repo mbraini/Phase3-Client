@@ -1,24 +1,29 @@
-package controller.online.tcp;
+package controller.online.tcp.requests.logIn;
 
 import com.google.gson.Gson;
 import controller.configs.Configs;
 import controller.configs.helper.SkillTreeJsonHelper;
 import controller.online.OnlineData;
+import controller.online.tcp.ClientRequest;
+import controller.online.tcp.ClientRequestType;
+import controller.online.tcp.ServerRecponceType;
 import view.painting.menuPanels.MainFrame;
 
 import javax.swing.*;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 
-public class ClientSignUpRequest extends ClientRequest{
+public class ClientLogInRequest extends ClientRequest {
 
-    private String username;
+    protected String username;
     private Gson gson;
 
-    public ClientSignUpRequest(String username) {
+    public ClientLogInRequest(String username) {
+
         this.username = username;
-        type = ClientRequestType.signUp;
+        type = ClientRequestType.logIn;
         initGson();
+
     }
 
     private void initGson() {
@@ -37,16 +42,7 @@ public class ClientSignUpRequest extends ClientRequest{
         } catch (UnknownHostException e) {
             throw new RuntimeException(e);
         }
-        String recponce = OnlineData.getTCPMessager().readMessage();
-        ServerMessageType serverRecponce = gson.fromJson(recponce , ServerMessageType.class);
-        if (serverRecponce.equals(ServerMessageType.done)) {
-            update();
-            MainFrame.signUpPanel.end();
-            MainFrame.menuPanel.start();
-        }
-        else {
-            JOptionPane.showMessageDialog(null ,"you cant sign up with this username");
-        }
+        new ServerLogInRecponce().receiveRecponce();
     }
 
     private void update() {

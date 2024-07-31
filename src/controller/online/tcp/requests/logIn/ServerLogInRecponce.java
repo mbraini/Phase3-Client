@@ -1,26 +1,22 @@
-package controller.online.tcp;
+package controller.online.tcp.requests.logIn;
 
 import com.google.gson.Gson;
 import controller.configs.Configs;
 import controller.configs.helper.SkillTreeJsonHelper;
 import controller.online.OnlineData;
+import controller.online.tcp.ServerRecponce;
+import controller.online.tcp.ServerRecponceType;
+import controller.online.tcp.TCPThread;
 import view.painting.menuPanels.MainFrame;
 
 import javax.swing.*;
-import java.net.InetAddress;
-import java.net.UnknownHostException;
 
-public class ClientLogInRequest extends ClientRequest{
+public class ServerLogInRecponce extends ServerRecponce {
 
-    protected String username;
     private Gson gson;
 
-    public ClientLogInRequest(String username) {
-
-        this.username = username;
-        type = ClientRequestType.logIn;
+    public ServerLogInRecponce() {
         initGson();
-
     }
 
     private void initGson() {
@@ -28,28 +24,19 @@ public class ClientLogInRequest extends ClientRequest{
     }
 
     @Override
-    public void sendRequest() {
-
-        OnlineData.getTCPMessager().sendMessage(type);
-        OnlineData.getTCPMessager().sendMessage(username);
-        try {
-            OnlineData.getTCPMessager().sendMessage(
-                    InetAddress.getLocalHost().getHostAddress().trim()
-            );
-        } catch (UnknownHostException e) {
-            throw new RuntimeException(e);
-        }
+    public void receiveRecponce() {
         String recponce = OnlineData.getTCPMessager().readMessage();
-        ServerMessageType serverRecponce = gson.fromJson(recponce , ServerMessageType.class);
-        if (serverRecponce.equals(ServerMessageType.done)) {
+        ServerRecponceType serverRecponce = gson.fromJson(recponce , ServerRecponceType.class);
+        if (serverRecponce.equals(ServerRecponceType.done)) {
             update();
+            OnlineData.setTcpThread(new TCPThread());
+            OnlineData.getTcpThread().start();
             MainFrame.logInPanel.end();
             MainFrame.menuPanel.start();
         }
         else {
             JOptionPane.showMessageDialog(null ,"you cant log in with this username");
         }
-
     }
 
     private void update() {
@@ -68,4 +55,6 @@ public class ClientLogInRequest extends ClientRequest{
 
         OnlineData.getTCPMessager().sendMessage(gson.toJson(helper));
     }
+
+
 }

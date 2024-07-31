@@ -3,8 +3,9 @@ package view.painting.menuPanels.onlinePanels.squad;
 import constants.CostConstants;
 import constants.SizeConstants;
 import controller.configs.Configs;
-import controller.online.tcp.getAllSquadsRequest.ClientGetAllSquadsRequest;
-import controller.online.tcp.getAllSquadsRequest.GetAllSquadHelper;
+import controller.online.tcp.requests.joinSquad.ClientJoinSquadRequest;
+import controller.online.tcp.requests.getAllSquadsRequest.ClientGetAllSquadsRequest;
+import controller.online.tcp.requests.getAllSquadsRequest.GetAllSquadHelper;
 import view.painting.menuPanels.MainFrame;
 import view.painting.menuPanels.PIG;
 import view.painting.objectViews.panels.JScrollerLabel;
@@ -16,7 +17,10 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class NoSquadPanel extends PIG {
 
@@ -25,6 +29,8 @@ public class NoSquadPanel extends PIG {
     private MyButton createNewSquad;
     private JScrollPane jScrollPane;
     private JPanel container;
+    private HashMap<JPanel ,String> map;
+    private JPanel lastClicked;
 
     public NoSquadPanel() {
         this.setLayout(null);
@@ -36,7 +42,12 @@ public class NoSquadPanel extends PIG {
         initJoinRequest();
         initCreateNewSquad();
         initJScrollPane();
+        initMap();
         initAL();
+    }
+
+    private void initMap() {
+        map = new HashMap<>();
     }
 
     private void initAL() {
@@ -47,6 +58,15 @@ public class NoSquadPanel extends PIG {
                 MainFrame.createNewSquadPanel.start();
             }
         });
+
+        joinRequest.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                System.out.println("JOINING!");
+                new ClientJoinSquadRequest(map.get(lastClicked)).sendRequest();
+            }
+        });
+
     }
 
     private void initCreateNewSquad() {
@@ -128,16 +148,21 @@ public class NoSquadPanel extends PIG {
 
     public void updateSquads(ArrayList<GetAllSquadHelper> squads) {
         container.removeAll();
+        map = new HashMap<>();
+
         GridLayout gridLayout = new GridLayout(squads.size() + 1 ,1 ,2 ,2);
-        setMainPanel();
         container.setLayout(gridLayout);
+        setMainPanel();
         for (GetAllSquadHelper squad : squads) {
             MyPanel myPanel = new MyPanel(
                     new Point(),
                     new Dimension(),
                     container
             );
+            myPanel.setOpaque(true);
+            myPanel.setBackground(Color.BLACK);
             myPanel.setLayout(new GridLayout(1 ,2 ,2 ,2));
+            map.put(myPanel ,squad.getName());
             new JScrollerLabel(
                     squad.getName(),
                     Color.PINK,
@@ -148,7 +173,20 @@ public class NoSquadPanel extends PIG {
                     Color.GREEN,
                     myPanel
             );
+            myPanel.addMouseListener(new MouseAdapter() {
+                @Override
+                public void mouseClicked(MouseEvent e) {
+                    if (lastClicked != null) {
+                        lastClicked.setBackground(Color.BLACK);
+                    }
+                    myPanel.setBackground(new Color(204, 230, 255));
+                    lastClicked = myPanel;
+                    joinRequest.setEnabled(true);
+                }
+            });
         }
+        revalidate();
+        repaint();
     }
 
     private void setMainPanel() {

@@ -1,4 +1,4 @@
-package controller.online.tcp.getAllSquadsRequest;
+package controller.online.tcp.requests.getAllSquadsRequest;
 
 public class GetAllSquadHelper {
 

@@ -27,6 +27,7 @@ public class NoSquadPanel extends PIG {
     private MyLabel youHaveNoSquad;
     private MyButton joinRequest;
     private MyButton createNewSquad;
+    private MyButton back;
     private JScrollPane jScrollPane;
     private JPanel container;
     private HashMap<JPanel ,String> map;
@@ -39,11 +40,21 @@ public class NoSquadPanel extends PIG {
         this.setVisible(false);
 
         initNoSquad();
+        initBack();
         initJoinRequest();
         initCreateNewSquad();
         initJScrollPane();
         initMap();
         initAL();
+    }
+
+    private void initBack() {
+        back = new MyButton(
+                new Point((getWidth() / 5 * 2) ,getHeight() / 15 * 13),
+                new Dimension(getWidth() / 5 ,getHeight() / 15),
+                "back",
+                this
+        );
     }
 
     private void initMap() {
@@ -67,11 +78,19 @@ public class NoSquadPanel extends PIG {
             }
         });
 
+        back.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                end();
+                MainFrame.menuPanel.start();
+            }
+        });
+
     }
 
     private void initCreateNewSquad() {
         createNewSquad = new MyButton(
-                new Point(getWidth() / 5 * 3 ,getHeight() / 15 * 13),
+                new Point((int) (getWidth() / 5 * (3.5)) ,getHeight() / 15 * 13),
                 new Dimension(getWidth() / 5 ,getHeight() / 15),
                 "create new squad",
                 this
@@ -80,7 +99,7 @@ public class NoSquadPanel extends PIG {
 
     private void initJoinRequest() {
         joinRequest = new MyButton(
-                new Point(getWidth() / 5 ,getHeight() / 15 * 13),
+                new Point((int) (getWidth() / 5 * (0.5)) ,getHeight() / 15 * 13),
                 new Dimension(getWidth() / 5 ,getHeight() / 15),
                 "join request",
                 this

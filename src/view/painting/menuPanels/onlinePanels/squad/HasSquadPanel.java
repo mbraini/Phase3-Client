@@ -3,6 +3,7 @@ package view.painting.menuPanels.onlinePanels.squad;
 import constants.SizeConstants;
 import controller.online.tcp.ClientState;
 import controller.online.tcp.requests.getSquadMembers.GetSquadMembersJsonHelper;
+import controller.online.tcp.requests.leaveSquad.ClientLeaveSquadRequest;
 import view.painting.menuPanels.MainFrame;
 import view.painting.menuPanels.PIG;
 import view.painting.objectViews.panels.JScrollerLabel;
@@ -48,6 +49,19 @@ public class HasSquadPanel extends PIG {
             }
         });
 
+        leaveSquad.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                int answer = JOptionPane.showConfirmDialog(
+                        null ,
+                        "are you sure that you want to leave the squad?",
+                        "",
+                        0
+                );
+                if (answer == 0)
+                    new ClientLeaveSquadRequest().sendRequest();
+            }
+        });
 
     }
 

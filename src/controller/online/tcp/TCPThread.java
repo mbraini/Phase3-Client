@@ -9,6 +9,7 @@ import controller.online.tcp.requests.getAllSquadsRequest.ServerGetAllSquadsRecp
 import controller.online.tcp.requests.getSquadMembers.ServerGetSquadMembersRecponce;
 import controller.online.tcp.requests.hasSquad.ServerHasSquadRecponce;
 import controller.online.tcp.requests.joinSquad.ServerJoinSquadRecponce;
+import controller.online.tcp.requests.leaveSquad.ServerLeaveSquadRecponce;
 
 import javax.swing.*;
 
@@ -47,6 +48,9 @@ public class TCPThread extends Thread {
                         break;
                     case getSquadMembers:
                         new ServerGetSquadMembersRecponce().receiveRecponce();
+                        break;
+                    case leaveSquad:
+                        new ServerLeaveSquadRecponce().receiveRecponce();
                         break;
                     case yes_no_message:
                         new ServerYesNoMessage().showMessage();

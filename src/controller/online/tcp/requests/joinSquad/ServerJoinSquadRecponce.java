@@ -7,11 +7,11 @@ import controller.online.tcp.ServerRecponceType;
 
 import javax.swing.*;
 
-public class ClientJoinSquadRecponce extends ServerRecponce {
+public class ServerJoinSquadRecponce extends ServerRecponce {
 
     private Gson gson;
 
-    public ClientJoinSquadRecponce() {
+    public ServerJoinSquadRecponce() {
         initGson();
     }
 

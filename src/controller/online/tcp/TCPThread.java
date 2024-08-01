@@ -6,9 +6,9 @@ import controller.online.tcp.messages.ServerOKMessage;
 import controller.online.tcp.messages.ServerYesNoMessage;
 import controller.online.tcp.requests.createSquad.ServerCreateSquadRecponce;
 import controller.online.tcp.requests.getAllSquadsRequest.ServerGetAllSquadsRecponce;
+import controller.online.tcp.requests.getSquadMembers.ServerGetSquadMembersRecponce;
 import controller.online.tcp.requests.hasSquad.ServerHasSquadRecponce;
-import controller.online.tcp.requests.joinSquad.ClientJoinSquadRecponce;
-import controller.online.tcp.requests.signUp.ServerSignUpRecponce;
+import controller.online.tcp.requests.joinSquad.ServerJoinSquadRecponce;
 
 import javax.swing.*;
 
@@ -33,7 +33,6 @@ public class TCPThread extends Thread {
                 String json = OnlineData.getTCPMessager().readMessage();
                 ServerMessageType type = gson.fromJson(json ,ServerMessageType.class);
                 switch (type) {
-
                     case hasSquadRecponce :
                         new ServerHasSquadRecponce().receiveRecponce();
                         break;
@@ -44,7 +43,10 @@ public class TCPThread extends Thread {
                         new ServerCreateSquadRecponce().receiveRecponce();
                         break;
                     case joinSquadRecponce:
-                        new ClientJoinSquadRecponce().receiveRecponce();
+                        new ServerJoinSquadRecponce().receiveRecponce();
+                        break;
+                    case getSquadMembers:
+                        new ServerGetSquadMembersRecponce().receiveRecponce();
                         break;
                     case yes_no_message:
                         new ServerYesNoMessage().showMessage();

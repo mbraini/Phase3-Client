@@ -45,10 +45,8 @@ public class ServerYesNoMessage extends ServerMessage{
 
     @Override
     public void showMessage() {
-
         String message = messager.readMessage();
         int choice = JOptionPane.showConfirmDialog(null,message , "" ,0);
-        System.out.println();
         if (choice == 0) {
             messager.sendMessage(ClientMessageRecponceType.yes);
         }

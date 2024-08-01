@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import controller.online.OnlineData;
 import controller.online.tcp.ServerRecponce;
 import controller.online.tcp.ServerRecponceType;
+import controller.online.tcp.requests.getSquadMembers.ClientGetSquadMembersRequest;
 import view.painting.menuPanels.MainFrame;
 
 public class ServerHasSquadRecponce extends ServerRecponce {
@@ -23,6 +24,7 @@ public class ServerHasSquadRecponce extends ServerRecponce {
         String answer = OnlineData.getTCPMessager().readMessage();
         ServerRecponceType recponce = gson.fromJson(answer , ServerRecponceType.class);
         if (recponce.equals(ServerRecponceType.yes)) {
+            new ClientGetSquadMembersRequest().sendRequest();
             MainFrame.menuPanel.end();
             MainFrame.hasSquadPanel.start();
         }

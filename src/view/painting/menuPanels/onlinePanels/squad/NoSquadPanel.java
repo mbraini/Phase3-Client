@@ -105,7 +105,6 @@ public class NoSquadPanel extends PIG {
                 0,
                 0
         );
-//        container.setLayout(new GridLayout(5 ,2 ,10 ,50));
         container.setBackground(Color.BLACK);
         jScrollPane = new JScrollPane(
                 container,

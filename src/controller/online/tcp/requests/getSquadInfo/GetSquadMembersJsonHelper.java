@@ -1,4 +1,4 @@
-package controller.online.tcp.requests.getSquadMembers;
+package controller.online.tcp.requests.getSquadInfo;
 
 
 import controller.online.tcp.ClientState;

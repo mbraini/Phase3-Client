@@ -2,8 +2,9 @@ package view.painting.menuPanels.onlinePanels.squad;
 
 import constants.SizeConstants;
 import controller.online.tcp.ClientState;
-import controller.online.tcp.requests.getSquadMembers.GetSquadMembersJsonHelper;
+import controller.online.tcp.requests.getSquadInfo.GetSquadMembersJsonHelper;
 import controller.online.tcp.requests.kickOutRequest.ClientKickOutRequest;
+import controller.online.tcp.requests.killSquad.ClientKillSquadRequest;
 import controller.online.tcp.requests.leaveSquad.ClientLeaveSquadRequest;
 import view.painting.menuPanels.MainFrame;
 import view.painting.menuPanels.PIG;
@@ -35,6 +36,7 @@ public class HasSquadPanel extends PIG {
     private JPanel lastClicked;
     private HashMap<JPanel ,MyButton> panelButtonMap;
     private HashMap<MyButton ,String> buttonMemberMap;
+    private MyButton battleSquad;
 
     public HasSquadPanel() {
         this.setLayout(null);
@@ -111,13 +113,12 @@ public class HasSquadPanel extends PIG {
     }
 
     private void initBattleSquad() {
-        killSquad = new MyButton(
+        battleSquad = new MyButton(
                 new Point(getWidth() / 5 ,getHeight() / 20 * 18),
                 new Dimension(getWidth() / 5 ,getHeight() / 20),
                 "battle squad",
                 this
         );
-        killSquad.setVisible(false);
     }
 
     private void initBack() {
@@ -182,7 +183,7 @@ public class HasSquadPanel extends PIG {
     }
 
     public void update(ArrayList<GetSquadMembersJsonHelper> otherMembers, GetSquadMembersJsonHelper thisPlayer
-            ,boolean clientIsOwner)
+            , String squadName ,boolean clientIsOwner)
     {
         container.removeAll();
         GridLayout gridLayout = new GridLayout(otherMembers.size() + 2, 1, 2, 2);
@@ -202,6 +203,7 @@ public class HasSquadPanel extends PIG {
             kickOut.setVisible(false);
             killSquad.setVisible(false);
         }
+        this.squadName.setText(squadName);
         revalidate();
         repaint();
     }
@@ -228,7 +230,7 @@ public class HasSquadPanel extends PIG {
             removeSquad.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    ////todo
+                    new ClientKillSquadRequest(squadName.getText()).sendRequest();
                 }
             });
         }

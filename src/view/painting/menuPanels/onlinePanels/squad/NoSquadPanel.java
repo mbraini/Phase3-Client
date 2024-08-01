@@ -50,7 +50,7 @@ public class NoSquadPanel extends PIG {
 
     private void initBack() {
         back = new MyButton(
-                new Point((getWidth() / 5 * 2) ,getHeight() / 15 * 13),
+                new Point(getWidth() / 5 ,getHeight() / 15 * 13),
                 new Dimension(getWidth() / 5 ,getHeight() / 15),
                 "back",
                 this
@@ -83,7 +83,7 @@ public class NoSquadPanel extends PIG {
 
     private void initCreateNewSquad() {
         createNewSquad = new MyButton(
-                new Point((int) (getWidth() / 5 * (3.5)) ,getHeight() / 15 * 13),
+                new Point(getWidth() / 5 * 3 ,getHeight() / 15 * 13),
                 new Dimension(getWidth() / 5 ,getHeight() / 15),
                 "create new squad",
                 this
@@ -231,7 +231,6 @@ public class NoSquadPanel extends PIG {
             addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    System.out.println("JOINING!");
                     MyButton jPanel = panelButtonMap.get(lastClicked);
                     new ClientJoinSquadRequest(buttonSquadMap.get(jPanel)).sendRequest();
                 }

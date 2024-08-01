@@ -1,15 +1,14 @@
-package controller.online.tcp.requests.getSquadMembers;
+package controller.online.tcp.requests.getSquadInfo;
 
-import com.google.gson.Gson;
 import controller.online.OnlineData;
 import controller.online.tcp.ClientRequest;
 import controller.online.tcp.ClientRequestType;
 
-public class ClientGetSquadMembersRequest extends ClientRequest {
+public class ClientGetSquadInfoRequest extends ClientRequest {
 
 
-    public ClientGetSquadMembersRequest() {
-        type = ClientRequestType.getSquadMembers;
+    public ClientGetSquadInfoRequest() {
+        type = ClientRequestType.getSquadInfo;
     }
 
     @Override

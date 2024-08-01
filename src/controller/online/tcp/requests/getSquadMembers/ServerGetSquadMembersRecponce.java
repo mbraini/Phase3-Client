@@ -30,6 +30,6 @@ public class ServerGetSquadMembersRecponce extends ServerRecponce {
         json = OnlineData.getTCPMessager().readMessage();
         GetSquadMembersJsonHelper thisPlayer = gson.fromJson(json , GetSquadMembersJsonHelper.class);
 
-        MainFrame.hasSquadPanel.update(helpers ,thisPlayer);
+        MainFrame.hasSquadPanel.update(helpers ,thisPlayer ,true);
     }
 }

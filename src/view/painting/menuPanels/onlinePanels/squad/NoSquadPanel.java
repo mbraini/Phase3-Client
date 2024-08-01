@@ -25,13 +25,13 @@ import java.util.HashMap;
 public class NoSquadPanel extends PIG {
 
     private MyLabel youHaveNoSquad;
-    private MyButton joinRequest;
     private MyButton createNewSquad;
     private MyButton back;
     private JScrollPane jScrollPane;
     private JPanel container;
-    private HashMap<JPanel ,String> map;
     private JPanel lastClicked;
+    private HashMap<MyButton ,String> buttonSquadMap;
+    private HashMap<JPanel ,MyButton> panelButtonMap;
 
     public NoSquadPanel() {
         this.setLayout(null);
@@ -44,7 +44,7 @@ public class NoSquadPanel extends PIG {
         initJoinRequest();
         initCreateNewSquad();
         initJScrollPane();
-        initMap();
+        initMaps();
         initAL();
     }
 
@@ -57,8 +57,9 @@ public class NoSquadPanel extends PIG {
         );
     }
 
-    private void initMap() {
-        map = new HashMap<>();
+    private void initMaps() {
+        panelButtonMap = new HashMap<>();
+        buttonSquadMap = new HashMap<>();
     }
 
     private void initAL() {
@@ -67,14 +68,6 @@ public class NoSquadPanel extends PIG {
             public void actionPerformed(ActionEvent e) {
                 end();
                 MainFrame.createNewSquadPanel.start();
-            }
-        });
-
-        joinRequest.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                System.out.println("JOINING!");
-                new ClientJoinSquadRequest(map.get(lastClicked)).sendRequest();
             }
         });
 
@@ -98,12 +91,6 @@ public class NoSquadPanel extends PIG {
     }
 
     private void initJoinRequest() {
-        joinRequest = new MyButton(
-                new Point((int) (getWidth() / 5 * (0.5)) ,getHeight() / 15 * 13),
-                new Dimension(getWidth() / 5 ,getHeight() / 15),
-                "join request",
-                this
-        );
     }
 
     private void initNoSquad() {
@@ -149,7 +136,6 @@ public class NoSquadPanel extends PIG {
     @Override
     public void start() {
         setVisible(true);
-        joinRequest.setEnabled(false);
         if (Configs.GameConfigs.XP <= CostConstants.SQUAD_XP_COST) {
             createNewSquad.setEnabled(false);
         }
@@ -166,7 +152,7 @@ public class NoSquadPanel extends PIG {
 
     public void updateSquads(ArrayList<GetAllSquadHelper> squads) {
         container.removeAll();
-        map = new HashMap<>();
+        buttonSquadMap = new HashMap<>();
 
         GridLayout gridLayout = new GridLayout(squads.size() + 1 ,1 ,2 ,2);
         container.setLayout(gridLayout);
@@ -179,8 +165,7 @@ public class NoSquadPanel extends PIG {
             );
             myPanel.setOpaque(true);
             myPanel.setBackground(Color.BLACK);
-            myPanel.setLayout(new GridLayout(1 ,2 ,2 ,2));
-            map.put(myPanel ,squad.getName());
+            myPanel.setLayout(new GridLayout(1 ,3 ,2 ,2));
             new JScrollerLabel(
                     squad.getName(),
                     Color.PINK,
@@ -195,13 +180,24 @@ public class NoSquadPanel extends PIG {
                 @Override
                 public void mouseClicked(MouseEvent e) {
                     if (lastClicked != null) {
-                        lastClicked.setBackground(Color.BLACK);
+//                        lastClicked.setBackground(Color.BLACK);
+                        panelButtonMap.get(lastClicked).setVisible(false);
                     }
-                    myPanel.setBackground(new Color(204, 230, 255));
+//                    myPanel.setBackground(new Color(204, 230, 255));
+                    panelButtonMap.get(myPanel).setVisible(true);
                     lastClicked = myPanel;
-                    joinRequest.setEnabled(true);
                 }
             });
+            JoinRequestButton joinRequestButton = new JoinRequestButton(
+                    new Point(),
+                    new Dimension(),
+                    "join",
+                    myPanel,
+                    squad.getName()
+            );
+            buttonSquadMap.put(joinRequestButton ,squad.getName());
+            joinRequestButton.setVisible(false);
+            panelButtonMap.put(myPanel ,joinRequestButton);
         }
         revalidate();
         repaint();
@@ -225,4 +221,22 @@ public class NoSquadPanel extends PIG {
                 myPanel
         );
     }
+
+    private class JoinRequestButton extends MyButton{
+        public JoinRequestButton(Point position, Dimension size, String text, JPanel panel ,String squadName) {
+            super(position, size, text, panel);
+            setForeground(Color.GREEN);
+            setBorder(BorderFactory.createLineBorder(Color.GREEN ,2));
+            buttonSquadMap.put(this ,squadName);
+            addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    System.out.println("JOINING!");
+                    MyButton jPanel = panelButtonMap.get(lastClicked);
+                    new ClientJoinSquadRequest(buttonSquadMap.get(jPanel)).sendRequest();
+                }
+            });
+        }
+    }
+
 }

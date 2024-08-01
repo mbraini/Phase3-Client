@@ -3,6 +3,7 @@ package view.painting.menuPanels.onlinePanels.squad;
 import constants.SizeConstants;
 import controller.online.tcp.ClientState;
 import controller.online.tcp.requests.getSquadMembers.GetSquadMembersJsonHelper;
+import controller.online.tcp.requests.kickOutRequest.ClientKickOutRequest;
 import controller.online.tcp.requests.leaveSquad.ClientLeaveSquadRequest;
 import view.painting.menuPanels.MainFrame;
 import view.painting.menuPanels.PIG;
@@ -15,7 +16,10 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class HasSquadPanel extends PIG {
 
@@ -24,7 +28,13 @@ public class HasSquadPanel extends PIG {
     private JPanel container;
     private MyButton leaveSquad;
     private MyButton back;
-    private MyButton battleSquad;
+    private MyButton killSquad;
+    private MyButton kickOut;
+    private MyButton removeSquad;
+    private String ownerUsername;
+    private JPanel lastClicked;
+    private HashMap<JPanel ,MyButton> panelButtonMap;
+    private HashMap<MyButton ,String> buttonMemberMap;
 
     public HasSquadPanel() {
         this.setLayout(null);
@@ -36,8 +46,34 @@ public class HasSquadPanel extends PIG {
         initJScrollPane();
         initLeaveSquad();
         initBack();
+        initKickOut();
+        initKillSquad();
         initBattleSquad();
+        initMaps();
         initAls();
+    }
+
+    private void initMaps() {
+        panelButtonMap = new HashMap<>();
+        buttonMemberMap = new HashMap<>();
+    }
+
+    private void initKillSquad() {
+        killSquad = new MyButton(
+                new Point(),
+                new Dimension(),
+                "kill squad",
+                this
+        );
+    }
+
+    private void initKickOut() {
+        kickOut = new MyButton(
+                new Point(),
+                new Dimension(),
+                "kickOut",
+                this
+        );
     }
 
     private void initAls() {
@@ -75,12 +111,13 @@ public class HasSquadPanel extends PIG {
     }
 
     private void initBattleSquad() {
-        battleSquad = new MyButton(
+        killSquad = new MyButton(
                 new Point(getWidth() / 5 ,getHeight() / 20 * 18),
                 new Dimension(getWidth() / 5 ,getHeight() / 20),
                 "battle squad",
                 this
         );
+        killSquad.setVisible(false);
     }
 
     private void initBack() {
@@ -144,38 +181,66 @@ public class HasSquadPanel extends PIG {
         setVisible(false);
     }
 
-    public void update(ArrayList<GetSquadMembersJsonHelper> otherMembers, GetSquadMembersJsonHelper thisPlayer) {
+    public void update(ArrayList<GetSquadMembersJsonHelper> otherMembers, GetSquadMembersJsonHelper thisPlayer
+            ,boolean clientIsOwner)
+    {
         container.removeAll();
-        GridLayout gridLayout = new GridLayout(otherMembers.size() + 2 ,1 ,2 ,2);
+        GridLayout gridLayout = new GridLayout(otherMembers.size() + 2, 1, 2, 2);
         container.setLayout(gridLayout);
-        setMainInfo();
-        addMember(thisPlayer);
+        setMainInfo(clientIsOwner);
+        addMember(thisPlayer , clientIsOwner);
+        if (clientIsOwner)
+            ownerUsername = thisPlayer.getUsername();
         for (GetSquadMembersJsonHelper otherMember : otherMembers) {
-            addMember(otherMember);
+            addMember(otherMember , clientIsOwner);
+        }
+        if (clientIsOwner) {
+            kickOut.setVisible(true);
+            killSquad.setVisible(true);
+        }
+        else {
+            kickOut.setVisible(false);
+            killSquad.setVisible(false);
         }
         revalidate();
         repaint();
     }
 
-    private void setMainInfo() {
+    private void setMainInfo(boolean isOwner) {
         MyPanel myPanel = new MyPanel(
                 new Point(),
                 new Dimension(),
                 container
         );
-        myPanel.setLayout(new GridLayout(1 ,3 ,2 ,2));
+        myPanel.setLayout(new GridLayout(1 ,4 ,2 ,2));
         new JScrollerLabel("username" ,Color.WHITE ,myPanel);
         new JScrollerLabel("xp" ,Color.WHITE ,myPanel);
         new JScrollerLabel("state" ,Color.WHITE ,myPanel);
+        if (isOwner) {
+            removeSquad = new MyButton(
+                    new Point(),
+                    new Dimension(),
+                    "kill squad",
+                    myPanel
+            );
+            removeSquad.setForeground(Color.RED);
+            removeSquad.setBorder(BorderFactory.createLineBorder(Color.RED ,2));
+            removeSquad.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    ////todo
+                }
+            });
+        }
     }
 
-    private void addMember(GetSquadMembersJsonHelper player) {
+    private void addMember(GetSquadMembersJsonHelper player ,boolean clientIsOwner) {
         MyPanel myPanel = new MyPanel(
                 new Point(),
                 new Dimension(),
                 container
         );
-        myPanel.setLayout(new GridLayout(1 ,3 ,2 ,2));
+        myPanel.setLayout(new GridLayout(1 ,4 ,2 ,2));
         new JScrollerLabel(player.getUsername() ,Color.WHITE ,myPanel);
         new JScrollerLabel(player.getXp() + "" ,Color.MAGENTA ,myPanel);
         if (player.getClientState().equals(ClientState.online)) {
@@ -187,5 +252,44 @@ public class HasSquadPanel extends PIG {
         else {
             new JScrollerLabel(player.getClientState().toString() ,Color.RED ,myPanel);
         }
+        if (clientIsOwner) {
+            KickOutRequestButton kick = new KickOutRequestButton(
+                    new Point(),
+                    new Dimension(),
+                    "kickout",
+                    myPanel,
+                    player.getUsername()
+            );
+            kick.setVisible(false);
+            panelButtonMap.put(myPanel, kick);
+            myPanel.addMouseListener(new MouseAdapter() {
+                @Override
+                public void mouseClicked(MouseEvent e) {
+                    if (lastClicked != null) {
+                        panelButtonMap.get(lastClicked).setVisible(false);
+                    }
+                    if (buttonMemberMap.get(panelButtonMap.get(myPanel)).equals(ownerUsername))
+                        return;
+                    panelButtonMap.get(myPanel).setVisible(true);
+                    lastClicked = myPanel;
+                }
+            });
+        }
     }
+    private class KickOutRequestButton extends MyButton{
+        public KickOutRequestButton(Point position, Dimension size, String text, JPanel panel ,String memberName) {
+            super(position, size, text, panel);
+            setForeground(Color.RED);
+            setBorder(BorderFactory.createLineBorder(Color.RED ,2));
+            buttonMemberMap.put(this ,memberName);
+            addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    MyButton button = panelButtonMap.get(lastClicked);
+                    new ClientKickOutRequest(buttonMemberMap.get(button)).sendRequest();
+                }
+            });
+        }
+    }
+
 }

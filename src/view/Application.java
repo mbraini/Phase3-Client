@@ -15,7 +15,7 @@ import java.io.File;
 import java.io.IOException;
 
 public class Application implements Runnable{
-    private static MainFrame mainFrame;
+    public static MainFrame mainFrame;
 
     @Override
     public void run() {

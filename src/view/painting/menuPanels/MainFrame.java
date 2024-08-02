@@ -5,9 +5,7 @@ import constants.SizeConstants;
 import view.painting.menuPanels.onlinePanels.LogInPanel;
 import view.painting.menuPanels.onlinePanels.OnlineChoicePanel;
 import view.painting.menuPanels.onlinePanels.SignUpPanel;
-import view.painting.menuPanels.onlinePanels.squad.CreateNewSquadPanel;
-import view.painting.menuPanels.onlinePanels.squad.HasSquadPanel;
-import view.painting.menuPanels.onlinePanels.squad.NoSquadPanel;
+import view.painting.menuPanels.onlinePanels.squad.*;
 
 import javax.swing.*;
 
@@ -23,6 +21,8 @@ public class MainFrame extends JFrame {
     public static HasSquadPanel hasSquadPanel;
     public static NoSquadPanel noSquadPanel;
     public static CreateNewSquadPanel createNewSquadPanel;
+    public static HasBattleSquadPanel hasBattleSquadPanel;
+    public static NoBattleSquadPanel noBattleSquadPanel;
 
     public MainFrame(){
         this.setLayout(null);
@@ -49,6 +49,8 @@ public class MainFrame extends JFrame {
         hasSquadPanel = new HasSquadPanel();
         noSquadPanel = new NoSquadPanel();
         createNewSquadPanel = new CreateNewSquadPanel();
+        hasBattleSquadPanel = new HasBattleSquadPanel();
+        noBattleSquadPanel = new NoBattleSquadPanel();
 
         mainPanel.add(menuPanel);
         mainPanel.add(settingsPanel);
@@ -60,5 +62,7 @@ public class MainFrame extends JFrame {
         mainPanel.add(hasSquadPanel);
         mainPanel.add(noSquadPanel);
         mainPanel.add(createNewSquadPanel);
+        mainPanel.add(hasBattleSquadPanel);
+        mainPanel.add(noBattleSquadPanel);
     }
 }

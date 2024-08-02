@@ -3,6 +3,7 @@ package view.painting.menuPanels.onlinePanels.squad;
 import constants.RefreshRateConstants;
 import constants.SizeConstants;
 import controller.online.tcp.ClientState;
+import controller.online.tcp.requests.hasSquadBattle.ClientHasSquadBattleRequest;
 import controller.online.tcp.requests.updateNoSquadPanel.GetSquadMembersJsonHelper;
 import controller.online.tcp.requests.hasSquad.ClientHasSquadRequest;
 import controller.online.tcp.requests.kickOutRequest.ClientKickOutRequest;
@@ -110,8 +111,18 @@ public class HasSquadPanel extends PIG {
                         "",
                         0
                 );
-                if (answer == 0)
+                if (answer == 0) {
+                    end();
+                    MainFrame.menuPanel.start();
                     new ClientLeaveSquadRequest().sendRequest();
+                }
+            }
+        });
+
+        battleSquad.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                new ClientHasSquadBattleRequest().sendRequest();
             }
         });
 
@@ -228,7 +239,6 @@ public class HasSquadPanel extends PIG {
     }
 
     private void setMainInfo(boolean isOwner) {
-        Component[] components = container.getComponents();
         MyPanel myPanel = new MyPanel(
                 new Point(),
                 new Dimension(),
@@ -257,7 +267,6 @@ public class HasSquadPanel extends PIG {
                             0
                     );
                     if (choice == 0) {
-                        updater.stop();
                         end();
                         new ClientKillSquadRequest(squadName.getText()).sendRequest();
                         new ClientHasSquadRequest().sendRequest();

@@ -7,10 +7,12 @@ import controller.online.tcp.messages.ServerYesNoMessage;
 import controller.online.tcp.requests.createSquad.ServerCreateSquadRecponce;
 import controller.online.tcp.requests.getAllSquadsRequest.ServerGetAllSquadsRecponce;
 import controller.online.tcp.requests.hasSquad.ServerHasSquadRecponce;
+import controller.online.tcp.requests.hasSquadBattle.ServerHasSquadBattleRecponce;
 import controller.online.tcp.requests.joinSquad.ServerJoinSquadRecponce;
 import controller.online.tcp.requests.kickOutRequest.ServerKickOutRecponce;
 import controller.online.tcp.requests.killSquad.ServerKillSquadRecponce;
 import controller.online.tcp.requests.leaveSquad.ServerLeaveSquadRecponce;
+import controller.online.tcp.requests.updateBattleSquadPanel.ServerUpdateBattleSquadRecponce;
 import controller.online.tcp.requests.updateNoSquadPanel.ServerUpdateHasSquadRecponce;
 
 import javax.swing.*;
@@ -60,6 +62,12 @@ public class TCPThread extends Thread {
                         break;
                     case updateHasSquad:
                         new ServerUpdateHasSquadRecponce().receiveRecponce();
+                        break;
+                    case hasSquadBattle:
+                        new ServerHasSquadBattleRecponce().receiveRecponce();
+                        break;
+                    case updateBattleSquad:
+                        new ServerUpdateBattleSquadRecponce().receiveRecponce();
                         break;
                     case yes_no_message:
                         new ServerYesNoMessage().showMessage();

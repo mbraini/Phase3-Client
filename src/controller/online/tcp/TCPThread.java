@@ -5,6 +5,7 @@ import controller.online.OnlineData;
 import controller.online.tcp.messages.ServerOKMessage;
 import controller.online.tcp.messages.ServerYesNoMessage;
 import controller.online.tcp.requests.createSquad.ServerCreateSquadRecponce;
+import controller.online.tcp.requests.donateXP.ServerDonateXPRecponce;
 import controller.online.tcp.requests.getAllSquadsRequest.ServerGetAllSquadsRecponce;
 import controller.online.tcp.requests.getTreasuryInfo.ServerUpdateTreasuryRecponce;
 import controller.online.tcp.requests.hasSquad.ServerHasSquadRecponce;
@@ -72,6 +73,9 @@ public class TCPThread extends Thread {
                         break;
                     case updateTreasury:
                         new ServerUpdateTreasuryRecponce().receiveRecponce();
+                        break;
+                    case donateXP:
+                        new ServerDonateXPRecponce().receiveRecponce();
                         break;
                     case yes_no_message:
                         new ServerYesNoMessage().showMessage();

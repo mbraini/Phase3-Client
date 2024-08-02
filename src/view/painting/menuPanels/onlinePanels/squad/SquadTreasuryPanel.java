@@ -1,6 +1,7 @@
 package view.painting.menuPanels.onlinePanels.squad;
 
 import constants.SizeConstants;
+import controller.online.tcp.requests.donateXP.ClientDonateXPRequest;
 import controller.online.tcp.requests.getTreasuryInfo.ClientUpdateTreasuryRequest;
 import view.painting.menuPanels.MainFrame;
 import view.painting.menuPanels.PIG;
@@ -12,6 +13,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 
 public class SquadTreasuryPanel extends PIG {
 
@@ -65,6 +68,28 @@ public class SquadTreasuryPanel extends PIG {
             public void actionPerformed(ActionEvent e) {
                 end();
                 MainFrame.squadTreasuryShopPanel.start();
+            }
+        });
+
+        xpText.addKeyListener(new KeyAdapter() {
+            public void keyPressed(KeyEvent ke) {
+                if (ke.getKeyChar() >= '0' && ke.getKeyChar() <= '9') {
+                    xpText.setEditable(true);
+                } else {
+                    xpText.setEditable(false);
+                    xpText.setText("");
+                }
+            }
+        });
+
+        donate.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String donatedXP = xpText.getText();
+                if (!donatedXP.isEmpty()) {
+                    new ClientDonateXPRequest(donatedXP).sendRequest();
+                    System.out.println();
+                }
             }
         });
     }

@@ -16,6 +16,7 @@ import controller.online.tcp.requests.killSquad.ServerKillSquadRecponce;
 import controller.online.tcp.requests.leaveSquad.ServerLeaveSquadRecponce;
 import controller.online.tcp.requests.updateBattleSquadPanel.ServerUpdateBattleSquadRecponce;
 import controller.online.tcp.requests.updateNoSquadPanel.ServerUpdateHasSquadRecponce;
+import controller.online.tcp.requests.updateTreasuryShop.ServerUpdateTreasuryShopRecponce;
 
 import javax.swing.*;
 
@@ -76,6 +77,9 @@ public class TCPThread extends Thread {
                         break;
                     case donateXP:
                         new ServerDonateXPRecponce().receiveRecponce();
+                        break;
+                    case updateTreasuryShop:
+                        new ServerUpdateTreasuryShopRecponce().receiveRecponce();
                         break;
                     case yes_no_message:
                         new ServerYesNoMessage().showMessage();

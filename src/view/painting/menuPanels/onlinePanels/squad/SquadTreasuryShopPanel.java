@@ -2,6 +2,7 @@ package view.painting.menuPanels.onlinePanels.squad;
 
 import constants.CostConstants;
 import constants.SizeConstants;
+import controller.online.tcp.requests.updateTreasuryShop.ClientUpdateTreasuryShopRequest;
 import view.painting.menuPanels.MainFrame;
 import view.painting.menuPanels.PIG;
 import view.painting.objectViews.panels.MyButton;
@@ -132,11 +133,19 @@ public class SquadTreasuryShopPanel extends PIG {
 
     @Override
     public void start() {
+        new ClientUpdateTreasuryShopRequest().sendRequest();
         setVisible(true);
     }
 
     @Override
     public void end() {
         setVisible(false);
+    }
+
+    public void update(int xp, int palioxisXP) {
+        this.xp = xp;
+        this.palioxisXP = palioxisXP;
+        xpL.setText("squad's xp: " + xp);
+        palioxisXPL.setText(palioxisXP + "");
     }
 }

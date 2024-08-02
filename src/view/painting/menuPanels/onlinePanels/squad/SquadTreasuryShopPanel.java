@@ -2,6 +2,8 @@ package view.painting.menuPanels.onlinePanels.squad;
 
 import constants.CostConstants;
 import constants.SizeConstants;
+import controller.online.CallType;
+import controller.online.tcp.requests.buyCall.ClientBuyCallRequest;
 import controller.online.tcp.requests.updateTreasuryShop.ClientUpdateTreasuryShopRequest;
 import view.painting.menuPanels.MainFrame;
 import view.painting.menuPanels.PIG;
@@ -50,6 +52,28 @@ public class SquadTreasuryShopPanel extends PIG {
                 MainFrame.squadTreasuryPanel.start();
             }
         });
+
+        adonisBuy.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                new ClientBuyCallRequest(CallType.adonis).sendRequest();
+            }
+        });
+
+        gefjonBuy.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                new ClientBuyCallRequest(CallType.gefjon).sendRequest();
+            }
+        });
+
+        palioxisBuy.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                new ClientBuyCallRequest(CallType.palioxis).sendRequest();
+            }
+        });
+
     }
 
     private void initTreasuryShop() {

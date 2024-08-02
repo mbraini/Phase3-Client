@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import controller.online.OnlineData;
 import controller.online.tcp.messages.ServerOKMessage;
 import controller.online.tcp.messages.ServerYesNoMessage;
+import controller.online.tcp.requests.buyCall.ServerBuyCallRecponce;
 import controller.online.tcp.requests.createSquad.ServerCreateSquadRecponce;
 import controller.online.tcp.requests.donateXP.ServerDonateXPRecponce;
 import controller.online.tcp.requests.getAllSquadsRequest.ServerGetAllSquadsRecponce;
@@ -80,6 +81,9 @@ public class TCPThread extends Thread {
                         break;
                     case updateTreasuryShop:
                         new ServerUpdateTreasuryShopRecponce().receiveRecponce();
+                        break;
+                    case buyCall:
+                        new ServerBuyCallRecponce().receiveRecponce();
                         break;
                     case yes_no_message:
                         new ServerYesNoMessage().showMessage();

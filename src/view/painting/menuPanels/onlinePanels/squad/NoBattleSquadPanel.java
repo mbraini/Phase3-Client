@@ -1,6 +1,7 @@
 package view.painting.menuPanels.onlinePanels.squad;
 
 import constants.SizeConstants;
+import controller.online.tcp.requests.getTreasuryInfo.ClientUpdateTreasuryRequest;
 import view.painting.menuPanels.MainFrame;
 import view.painting.menuPanels.PIG;
 import view.painting.objectViews.panels.MyButton;
@@ -14,7 +15,7 @@ import java.awt.event.ActionListener;
 public class NoBattleSquadPanel extends PIG {
     private MyLabel battleL;
     private MyButton back;
-    private MyButton donate;
+    private MyButton treasury;
 
     public NoBattleSquadPanel() {
         this.setLayout(null);
@@ -36,17 +37,26 @@ public class NoBattleSquadPanel extends PIG {
                 MainFrame.hasSquadPanel.start();
             }
         });
+
+        treasury.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                end();
+                MainFrame.squadTreasuryPanel.setHasSquadBattle(false);
+                MainFrame.squadTreasuryPanel.start();
+            }
+        });
     }
 
     private void initDonate() {
-        donate = new MyButton(
+        treasury = new MyButton(
                 new Point(getWidth() / 5 ,getHeight() / 7 * 5),
                 new Dimension(getWidth() / 5 ,getHeight() / 7),
-                "donate",
+                "treasury",
                 this
         );
-        donate.setBorder(BorderFactory.createLineBorder(Color.MAGENTA ,2));
-        donate.setForeground(Color.MAGENTA);
+        treasury.setBorder(BorderFactory.createLineBorder(Color.MAGENTA ,2));
+        treasury.setForeground(Color.MAGENTA);
     }
 
     private void initBack() {

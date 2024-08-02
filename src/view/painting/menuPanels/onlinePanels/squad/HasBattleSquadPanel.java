@@ -3,10 +3,9 @@ package view.painting.menuPanels.onlinePanels.squad;
 import constants.RefreshRateConstants;
 import constants.SizeConstants;
 import controller.online.tcp.ClientState;
-import controller.online.tcp.requests.hasSquadBattle.ClientHasSquadBattleRequest;
+import controller.online.tcp.requests.getTreasuryInfo.ClientUpdateTreasuryRequest;
 import controller.online.tcp.requests.updateBattleSquadPanel.ClientUpdateBattleSquadRequest;
 import controller.online.tcp.requests.updateBattleSquadPanel.GetBattleSquadMemberHelper;
-import controller.online.tcp.requests.updateNoSquadPanel.GetSquadMembersJsonHelper;
 import view.Application;
 import view.painting.menuPanels.MainFrame;
 import view.painting.menuPanels.PIG;
@@ -19,8 +18,6 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 
 public class HasBattleSquadPanel extends PIG {
@@ -29,7 +26,7 @@ public class HasBattleSquadPanel extends PIG {
     private MyLabel myTeamL;
     private MyLabel enemyTeamL;
     private MyButton back;
-    private MyButton donate;
+    private MyButton treasury;
     private JScrollPane mySquad;
     private JScrollPane enemySquad;
     private JPanel mySquadContainer;
@@ -76,20 +73,30 @@ public class HasBattleSquadPanel extends PIG {
             @Override
             public void actionPerformed(ActionEvent e) {
                 end();
+                MainFrame.squadTreasuryPanel.setHasSquadBattle(true);
                 MainFrame.hasSquadPanel.start();
+            }
+        });
+
+        treasury.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                end();
+                MainFrame.squadTreasuryPanel.setHasSquadBattle(true);
+                MainFrame.squadTreasuryPanel.start();
             }
         });
     }
 
     private void initDonate() {
-        donate = new MyButton(
+        treasury = new MyButton(
                 new Point((int) (wUnit * 1.5) ,hHelperUnit * 6 + hUnit * 3),
                 new Dimension(wUnit ,hHelperUnit),
-                "donate",
+                "treasury",
                 this
         );
-        donate.setBorder(BorderFactory.createLineBorder(Color.MAGENTA ,2));
-        donate.setForeground(Color.MAGENTA);
+        treasury.setBorder(BorderFactory.createLineBorder(Color.MAGENTA ,2));
+        treasury.setForeground(Color.MAGENTA);
     }
 
     private void initBack() {

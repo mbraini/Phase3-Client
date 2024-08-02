@@ -23,6 +23,8 @@ public class MainFrame extends JFrame {
     public static CreateNewSquadPanel createNewSquadPanel;
     public static HasBattleSquadPanel hasBattleSquadPanel;
     public static NoBattleSquadPanel noBattleSquadPanel;
+    public static SquadTreasuryPanel squadTreasuryPanel;
+    public static SquadTreasuryShopPanel squadTreasuryShopPanel;
 
     public MainFrame(){
         this.setLayout(null);
@@ -51,6 +53,8 @@ public class MainFrame extends JFrame {
         createNewSquadPanel = new CreateNewSquadPanel();
         hasBattleSquadPanel = new HasBattleSquadPanel();
         noBattleSquadPanel = new NoBattleSquadPanel();
+        squadTreasuryPanel = new SquadTreasuryPanel();
+        squadTreasuryShopPanel = new SquadTreasuryShopPanel();
 
         mainPanel.add(menuPanel);
         mainPanel.add(settingsPanel);
@@ -64,5 +68,7 @@ public class MainFrame extends JFrame {
         mainPanel.add(createNewSquadPanel);
         mainPanel.add(hasBattleSquadPanel);
         mainPanel.add(noBattleSquadPanel);
+        mainPanel.add(squadTreasuryPanel);
+        mainPanel.add(squadTreasuryShopPanel);
     }
 }

@@ -6,12 +6,12 @@ import controller.online.tcp.messages.ServerOKMessage;
 import controller.online.tcp.messages.ServerYesNoMessage;
 import controller.online.tcp.requests.createSquad.ServerCreateSquadRecponce;
 import controller.online.tcp.requests.getAllSquadsRequest.ServerGetAllSquadsRecponce;
-import controller.online.tcp.requests.getSquadInfo.ServerGetSquadInfoRecponce;
 import controller.online.tcp.requests.hasSquad.ServerHasSquadRecponce;
 import controller.online.tcp.requests.joinSquad.ServerJoinSquadRecponce;
 import controller.online.tcp.requests.kickOutRequest.ServerKickOutRecponce;
 import controller.online.tcp.requests.killSquad.ServerKillSquadRecponce;
 import controller.online.tcp.requests.leaveSquad.ServerLeaveSquadRecponce;
+import controller.online.tcp.requests.updateNoSquadPanel.ServerUpdateHasSquadRecponce;
 
 import javax.swing.*;
 
@@ -30,6 +30,7 @@ public class TCPThread extends Thread {
 
     @Override
     public void run() {
+        new ConnectionChecker(OnlineData.getTcpConnectionChecker()).start();
         try {
             while (true) {
                 System.out.println("TCP THREAD!");
@@ -48,9 +49,6 @@ public class TCPThread extends Thread {
                     case joinSquadRecponce:
                         new ServerJoinSquadRecponce().receiveRecponce();
                         break;
-                    case getSquadInfo:
-                        new ServerGetSquadInfoRecponce().receiveRecponce();
-                        break;
                     case leaveSquad:
                         new ServerLeaveSquadRecponce().receiveRecponce();
                         break;
@@ -59,6 +57,9 @@ public class TCPThread extends Thread {
                         break;
                     case killSquad:
                         new ServerKillSquadRecponce().receiveRecponce();
+                        break;
+                    case updateHasSquad:
+                        new ServerUpdateHasSquadRecponce().receiveRecponce();
                         break;
                     case yes_no_message:
                         new ServerYesNoMessage().showMessage();

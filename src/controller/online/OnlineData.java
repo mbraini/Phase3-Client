@@ -14,17 +14,24 @@ public class OnlineData {
 
     public static TCPMessager tcpMessager;
     public static TCPThread tcpThread;
+    public static TCPMessager tcpConnectionChecker;
 
     public static void initTCPMessager() {
         try {
             Socket socket = new Socket(ControllerConstants.SERVER_IP ,ControllerConstants.SERVER_PORT);
             tcpMessager = new TCPMessager(socket);
+            Thread.sleep(1000);
+            int serverConnectionPort = Integer.valueOf(tcpMessager.readMessage());
+            Socket connectionSocket = new Socket(ControllerConstants.SERVER_IP ,serverConnectionPort);
+            tcpConnectionChecker = new TCPMessager(connectionSocket);
             Application.startMainFrame();
             MainFrame.menuPanel.end();
             MainFrame.onlineChoicePanel.start();
         }
         catch (IOException e) {
             failedToConnect();
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
         }
     }
 
@@ -57,5 +64,13 @@ public class OnlineData {
 
     public static void setTcpThread(TCPThread tcpThread) {
         OnlineData.tcpThread = tcpThread;
+    }
+
+    public static TCPMessager getTcpConnectionChecker() {
+        return tcpConnectionChecker;
+    }
+
+    public static void setTcpConnectionChecker(TCPMessager tcpConnectionChecker) {
+        OnlineData.tcpConnectionChecker = tcpConnectionChecker;
     }
 }

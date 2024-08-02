@@ -1,4 +1,4 @@
-package controller.online.tcp.requests.getSquadInfo;
+package controller.online.tcp.requests.updateNoSquadPanel;
 
 
 import controller.online.tcp.ClientState;
@@ -7,6 +7,10 @@ public class GetSquadMembersJsonHelper {
     private String username;
     private int xp;
     private ClientState clientState;
+
+    public GetSquadMembersJsonHelper() {
+
+    }
 
     public GetSquadMembersJsonHelper(String username, int xp, ClientState clientState) {
         this.username = username;

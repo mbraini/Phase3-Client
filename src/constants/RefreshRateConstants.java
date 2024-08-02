@@ -13,8 +13,9 @@ public class RefreshRateConstants {
     public static final int SKILL_TREE_ABILITY_TIMER_REFRESH_RATE = 1000;
     public static final int IN_GAME_ABILITY_TIMER_REFRESH_RATE = 1000;
     public static final int FRAME_THREAD_REFRESH_RATE = 10;
-    public final static int FPS = 5;
-    public static final int UPS = 5;
+    public final static int FPS = 10;
+    public static final int UPS = 10;
     public static final int ABILITY_SETUP_DELAY = 1000;
     public static final int ABILITY_UNSETUP_DELAY = 1000;
+    public static final int HAS_SQUAD_REFRESH_RATE = 2000;
 }

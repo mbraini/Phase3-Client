@@ -11,6 +11,6 @@ public enum ClientRequestType {
     leaveSquad,
     kickOut,
     killSquad,
-    hasSquad
+    updateHasSquad, hasSquad
 
 }

@@ -1,11 +1,14 @@
 package view.painting.menuPanels.onlinePanels.squad;
 
+import constants.RefreshRateConstants;
 import constants.SizeConstants;
 import controller.online.tcp.ClientState;
-import controller.online.tcp.requests.getSquadInfo.GetSquadMembersJsonHelper;
+import controller.online.tcp.requests.updateNoSquadPanel.GetSquadMembersJsonHelper;
+import controller.online.tcp.requests.hasSquad.ClientHasSquadRequest;
 import controller.online.tcp.requests.kickOutRequest.ClientKickOutRequest;
 import controller.online.tcp.requests.killSquad.ClientKillSquadRequest;
 import controller.online.tcp.requests.leaveSquad.ClientLeaveSquadRequest;
+import controller.online.tcp.requests.updateNoSquadPanel.ClientUpdateHasSquadRequest;
 import view.painting.menuPanels.MainFrame;
 import view.painting.menuPanels.PIG;
 import view.painting.objectViews.panels.JScrollerLabel;
@@ -29,20 +32,31 @@ public class HasSquadPanel extends PIG {
     private JPanel container;
     private MyButton leaveSquad;
     private MyButton back;
-    private MyButton killSquad;
     private MyButton kickOut;
-    private MyButton removeSquad;
+    private MyButton killSquad;
+    private MyButton battleSquad;
     private String ownerUsername;
     private JPanel lastClicked;
     private HashMap<JPanel ,MyButton> panelButtonMap;
     private HashMap<MyButton ,String> buttonMemberMap;
-    private MyButton battleSquad;
+    private ArrayList<GetSquadMembersJsonHelper> members = new ArrayList<>();
+    private GetSquadMembersJsonHelper thisPlayer = new GetSquadMembersJsonHelper();
+    private final Timer updater;
 
     public HasSquadPanel() {
         this.setLayout(null);
         this.setBounds(0,0, SizeConstants.GAME_WIDTH, SizeConstants.GAME_HEIGHT);
         this.setBackground(Color.BLACK);
         this.setVisible(false);
+
+        updater = new Timer(RefreshRateConstants.HAS_SQUAD_REFRESH_RATE, new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                new ClientUpdateHasSquadRequest(members ,thisPlayer).sendRequest();
+                jScrollPane.revalidate();
+                jScrollPane.repaint();
+            }
+        });
 
         initSquadName();
         initJScrollPane();
@@ -114,7 +128,7 @@ public class HasSquadPanel extends PIG {
 
     private void initBattleSquad() {
         battleSquad = new MyButton(
-                new Point(getWidth() / 5 ,getHeight() / 20 * 18),
+                new Point(getWidth() / 5 * 3 ,getHeight() / 20 * 18),
                 new Dimension(getWidth() / 5 ,getHeight() / 20),
                 "battle squad",
                 this
@@ -123,7 +137,7 @@ public class HasSquadPanel extends PIG {
 
     private void initBack() {
         back = new MyButton(
-                new Point(getWidth() / 5 * 3 ,getHeight() / 20 * 18),
+                new Point(getWidth() / 5 ,getHeight() / 20 * 18),
                 new Dimension(getWidth() / 5 ,getHeight() / 20),
                 "back",
                 this
@@ -174,17 +188,22 @@ public class HasSquadPanel extends PIG {
 
     @Override
     public void start() {
+        updater.start();
         setVisible(true);
     }
 
     @Override
     public void end() {
+        updater.stop();
         setVisible(false);
     }
 
     public void update(ArrayList<GetSquadMembersJsonHelper> otherMembers, GetSquadMembersJsonHelper thisPlayer
             , String squadName ,boolean clientIsOwner)
     {
+        this.members = otherMembers;
+        this.thisPlayer = thisPlayer;
+
         container.removeAll();
         GridLayout gridLayout = new GridLayout(otherMembers.size() + 2, 1, 2, 2);
         container.setLayout(gridLayout);
@@ -209,6 +228,7 @@ public class HasSquadPanel extends PIG {
     }
 
     private void setMainInfo(boolean isOwner) {
+        Component[] components = container.getComponents();
         MyPanel myPanel = new MyPanel(
                 new Point(),
                 new Dimension(),
@@ -219,18 +239,29 @@ public class HasSquadPanel extends PIG {
         new JScrollerLabel("xp" ,Color.WHITE ,myPanel);
         new JScrollerLabel("state" ,Color.WHITE ,myPanel);
         if (isOwner) {
-            removeSquad = new MyButton(
+            killSquad = new MyButton(
                     new Point(),
                     new Dimension(),
                     "kill squad",
                     myPanel
             );
-            removeSquad.setForeground(Color.RED);
-            removeSquad.setBorder(BorderFactory.createLineBorder(Color.RED ,2));
-            removeSquad.addActionListener(new ActionListener() {
+            killSquad.setForeground(Color.RED);
+            killSquad.setBorder(BorderFactory.createLineBorder(Color.RED ,2));
+            killSquad.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    new ClientKillSquadRequest(squadName.getText()).sendRequest();
+                    int choice = JOptionPane.showConfirmDialog(
+                            null ,
+                            "are you sure that you want to kill the squad?" ,
+                            "" ,
+                            0
+                    );
+                    if (choice == 0) {
+                        updater.stop();
+                        end();
+                        new ClientKillSquadRequest(squadName.getText()).sendRequest();
+                        new ClientHasSquadRequest().sendRequest();
+                    }
                 }
             });
         }

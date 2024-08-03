@@ -2,7 +2,7 @@ package model.objectModel.fighters.finalBoss.abilities.powerPunch;
 
 import constants.DistanceConstants;
 import constants.TimeConstants;
-import model.logics.FrameHitCalculator;
+import model.logics.FrameHitPerformer;
 import model.objectModel.frameModel.FrameLocations;
 import model.objectModel.frameModel.FrameModel;
 
@@ -26,7 +26,7 @@ public class PowerPunchAL implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         switch (frameLocation){
             case top :
-                new FrameHitCalculator(
+                new FrameHitPerformer(
                         epsilonModel,
                         -DistanceConstants.PUNCH_FRAME_PUSH_DISTANCE,
                         0,
@@ -36,7 +36,7 @@ public class PowerPunchAL implements ActionListener {
                 ).frameHit();
                 break;
             case right:
-                new FrameHitCalculator(
+                new FrameHitPerformer(
                         epsilonModel,
                         0,
                         0,
@@ -46,7 +46,7 @@ public class PowerPunchAL implements ActionListener {
                 ).frameHit();
                 break;
             case bottom:
-                new FrameHitCalculator(
+                new FrameHitPerformer(
                         epsilonModel,
                         0,
                         -DistanceConstants.PUNCH_FRAME_PUSH_DISTANCE,
@@ -56,7 +56,7 @@ public class PowerPunchAL implements ActionListener {
                 ).frameHit();
                 break;
             case left:
-                new FrameHitCalculator(
+                new FrameHitPerformer(
                         epsilonModel,
                         0,
                         0,

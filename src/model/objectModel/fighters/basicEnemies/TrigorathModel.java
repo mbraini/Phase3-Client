@@ -18,7 +18,7 @@ import java.util.ArrayList;
 
 public class TrigorathModel extends BasicEnemyModel implements Ability, ImpactAble {
     private ArrayList<Vector> vertices;
-    private boolean isImpacted = false;
+    private volatile boolean isImpacted = false;
     public TrigorathModel(Vector position ,String id){
         this.position = position;
         this.velocity = new Vector(0 ,0);

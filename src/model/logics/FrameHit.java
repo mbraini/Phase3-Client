@@ -34,7 +34,7 @@ public class FrameHit {
     private void resize(FrameModel frame, FrameLocations frameLocation) {
         switch (frameLocation){
             case top :
-                new FrameHitCalculator(
+                new FrameHitPerformer(
                         frame,
                         DistanceConstants.FRAME_BULLET_RESIZE,
                         0,
@@ -56,7 +56,7 @@ public class FrameHit {
                 }
                 break;
             case bottom:
-                new FrameHitCalculator(
+                new FrameHitPerformer(
                         frame,
                         0,
                         DistanceConstants.FRAME_BULLET_RESIZE,
@@ -78,7 +78,7 @@ public class FrameHit {
                 }
                 break;
             case right:
-                new FrameHitCalculator(
+                new FrameHitPerformer(
                         frame,
                         0,
                         0,
@@ -100,7 +100,7 @@ public class FrameHit {
                 }
                 break;
             case left:
-                new FrameHitCalculator(
+                new FrameHitPerformer(
                         frame,
                         0,
                         0,

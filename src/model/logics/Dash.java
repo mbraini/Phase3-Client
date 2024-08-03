@@ -41,13 +41,12 @@ public class Dash {
             oigModel.setOmega(0);
             oigModel.setAlpha(alpha);
         }
-        oigModel.getMovementManager().setUpDownAccTime(time);
-        oigModel.getMovementManager().setLeftRightAccTime(time);
-        oigModel.getMovementManager().setRotateAccTime(time);
-        //////////////////////////////
-
         if (oigModel instanceof ImpactAble) {
             ((ImpactAble) oigModel).setImpacted(true);
         }
+        oigModel.getMovementManager().setUpDownAccTime(time);
+        oigModel.getMovementManager().setLeftRightAccTime(time);
+        oigModel.getMovementManager().setRotateAccTime(time);
+
     }
 }

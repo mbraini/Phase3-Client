@@ -2,6 +2,7 @@ package model.objectModel.fighters.normalEnemies.wyrmModel;
 
 import constants.RefreshRateConstants;
 import constants.SizeConstants;
+import constants.VelocityConstants;
 import controller.ObjectController;
 import controller.enums.ModelType;
 import controller.manager.Spawner;
@@ -19,7 +20,12 @@ import model.objectModel.fighters.normalEnemies.NormalEnemyModel;
 import utils.Math;
 import utils.Vector;
 
+import javax.swing.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
+
+import static constants.TimeConstants.WYRM_SHOOTING_TIME;
 
 public class WyrmModel extends NormalEnemyModel implements Navigator, FrameSticker , MoveAble, CollisionDetector {
 
@@ -27,7 +33,7 @@ public class WyrmModel extends NormalEnemyModel implements Navigator, FrameStick
     private boolean isInRange;
     private ArrayList<Vector> vertices;
     @SkippedByJson
-    private WyrmThread wyrmThread;
+    private WyrmThread shooter;
     private boolean positiveDirection;
     private Vector origin;
 
@@ -63,8 +69,8 @@ public class WyrmModel extends NormalEnemyModel implements Navigator, FrameStick
     public void die() {
         super.die();
         ObjectController.removeFrame(frameModel);
-        if (wyrmThread != null)
-            wyrmThread.interrupt();
+        if (shooter != null)
+            shooter.interrupt();
         Spawner.addCollectives(position ,2 ,8);
     }
 
@@ -114,6 +120,37 @@ public class WyrmModel extends NormalEnemyModel implements Navigator, FrameStick
 
     @Override
     public void move() {
+        if (isInRange) {
+            circularMovement();
+        }
+        else {
+            regularMovement();
+        }
+    }
+
+    private void circularMovement() {
+        Vector newPosition;
+        if (origin == null)
+            return;
+        double thetaD = RefreshRateConstants.UPS * VelocityConstants.WYRM_THETA_UPDATE;
+        if (isPositiveDirection()) {
+            newPosition = Math.RotateByTheta(getPosition(), origin, thetaD);
+            setTheta(getTheta() + thetaD);
+        }
+        else {
+            newPosition = Math.RotateByTheta(getPosition() ,origin ,-thetaD);
+            setTheta(getTheta() - thetaD);
+        }
+        Vector previousPosition = getPosition().clone();
+        setPosition(newPosition);
+        Vector moved = Math.VectorAdd(
+                newPosition,
+                Math.ScalarInVector(-1 ,previousPosition)
+        );
+        UpdateVertices(moved.x ,moved.y ,thetaD);
+    }
+
+    private void regularMovement() {
         velocity = Math.VectorAdd(velocity ,Math.ScalarInVector(RefreshRateConstants.UPS ,acceleration));
         double xMoved = ((2 * velocity.x - acceleration.x * RefreshRateConstants.UPS) / 2) * RefreshRateConstants.UPS;
         double yMoved = ((2 * velocity.y - acceleration.y * RefreshRateConstants.UPS) / 2) * RefreshRateConstants.UPS;
@@ -196,12 +233,12 @@ public class WyrmModel extends NormalEnemyModel implements Navigator, FrameStick
     public void start(){
         if (isInRange) {
             initWyrmThread();
-            wyrmThread.start();
+            shooter.start();
         }
     }
 
     private void initWyrmThread() {
-        wyrmThread = new WyrmThread(this, origin);
+        shooter = new WyrmThread(this);
     }
 
 

@@ -8,6 +8,9 @@ import model.objectModel.fighters.EpsilonModel;
 import utils.Math;
 import utils.Vector;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
 public class WyrmShooter {
 
     private WyrmModel wyrmModel;

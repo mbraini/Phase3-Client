@@ -53,9 +53,6 @@ public class EpsilonModel extends FighterModel implements MoveAble, IsCircle, Ha
 
     @Override
     public void move() {
-        if (GameState.isDizzy())
-            return;
-
         velocity = Math.VectorAdd(velocity ,Math.ScalarInVector(RefreshRateConstants.UPS ,acceleration));
         movementManager.manage(RefreshRateConstants.UPS ,this);
         double xMoved = ((2 * velocity.x - acceleration.x * RefreshRateConstants.UPS) / 2) * RefreshRateConstants.UPS;

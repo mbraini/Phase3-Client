@@ -1,10 +1,10 @@
 package model.animations;
 
-import model.logics.FrameHitCalculator;
+import model.logics.FrameHitPerformer;
 import model.objectModel.frameModel.FrameModel;
 
 public class GameStartAnimation extends TimerAnimation {
-    private FrameHitCalculator frameHitCalculator;
+    private FrameHitPerformer frameHitPerformer;
     private FrameModel frame;
     public GameStartAnimation(FrameModel frame){
         this.frame = frame;
@@ -12,7 +12,7 @@ public class GameStartAnimation extends TimerAnimation {
 
     @Override
     public void StartAnimation(){
-        frameHitCalculator = new FrameHitCalculator(frame ,-250 ,-250 ,-250 ,-250 ,1000);
-        frameHitCalculator.frameHit();
+        frameHitPerformer = new FrameHitPerformer(frame ,-250 ,-250 ,-250 ,-250 ,1000);
+        frameHitPerformer.frameHit();
     }
 }

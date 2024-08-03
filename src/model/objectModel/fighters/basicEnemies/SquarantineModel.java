@@ -18,7 +18,7 @@ import java.util.ArrayList;
 
 public class SquarantineModel extends BasicEnemyModel implements Ability , ImpactAble {
     private ArrayList<Vector> vertices;
-    boolean isImpacted = false;
+    private volatile boolean isImpacted = false;
     public SquarantineModel(Vector position , String id){
         this.position = position;
         this.velocity = new Vector(0 ,0);

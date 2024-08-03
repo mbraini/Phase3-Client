@@ -4,7 +4,7 @@ package model.logics;
 import model.objectModel.frameModel.FrameModel;
 import utils.Vector;
 
-public class FrameHitCalculator {
+public class FrameHitPerformer {
     private FrameModel frame;
     private double time;
     private double upAcceleration;
@@ -12,7 +12,7 @@ public class FrameHitCalculator {
     private double rightAcceleration;
     private double leftAcceleration;
 
-    public FrameHitCalculator(FrameModel frame , double up , double down , double right , double left , double time){
+    public FrameHitPerformer(FrameModel frame , double up , double down , double right , double left , double time){
         this.frame = frame;
         this.time = time;
 

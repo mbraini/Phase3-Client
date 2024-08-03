@@ -70,7 +70,7 @@ public class WyrmModel extends NormalEnemyModel implements Navigator, FrameStick
         super.die();
         ObjectController.removeFrame(frameModel);
         if (shooter != null)
-            shooter.interrupt();
+            shooter.setInterrupt(true);
         Spawner.addCollectives(position ,2 ,8);
     }
 

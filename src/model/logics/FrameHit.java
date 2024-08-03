@@ -1,12 +1,14 @@
 package model.logics;
 
 import constants.DistanceConstants;
+import constants.SizeConstants;
 import constants.TimeConstants;
 import model.interfaces.movementIntefaces.FrameAttacher;
 import model.objectModel.ObjectModel;
 import model.objectModel.frameModel.FrameLocations;
 import model.objectModel.frameModel.FrameModel;
 import utils.FrameHelper.FrameCalculationHelper;
+import utils.Vector;
 
 import java.util.ArrayList;
 
@@ -34,14 +36,7 @@ public class FrameHit {
     private void resize(FrameModel frame, FrameLocations frameLocation) {
         switch (frameLocation){
             case top :
-                new FrameHitPerformer(
-                        frame,
-                        DistanceConstants.FRAME_BULLET_RESIZE,
-                        0,
-                        0,
-                        0,
-                        TimeConstants.FRAME_SHRINKAGE_TIME
-                ).frameHit();
+                topHitIf();
                 for (ObjectModel model1 : models) {
                     if (model1 instanceof FrameAttacher) {
                         FrameLocations frameLocations = ((FrameAttacher) model1).getAttachedLocation();
@@ -56,14 +51,7 @@ public class FrameHit {
                 }
                 break;
             case bottom:
-                new FrameHitPerformer(
-                        frame,
-                        0,
-                        DistanceConstants.FRAME_BULLET_RESIZE,
-                        0,
-                        0,
-                        TimeConstants.FRAME_SHRINKAGE_TIME
-                ).frameHit();
+                bottomHitIf();
                 for (ObjectModel model1 : models) {
                     if (model1 instanceof FrameAttacher) {
                         FrameLocations frameLocations = ((FrameAttacher) model1).getAttachedLocation();
@@ -78,14 +66,7 @@ public class FrameHit {
                 }
                 break;
             case right:
-                new FrameHitPerformer(
-                        frame,
-                        0,
-                        0,
-                        DistanceConstants.FRAME_BULLET_RESIZE,
-                        0,
-                        TimeConstants.FRAME_SHRINKAGE_TIME
-                ).frameHit();
+                rightHitIf();
                 for (ObjectModel model1 : models) {
                     if (model1 instanceof FrameAttacher) {
                         FrameLocations frameLocations = ((FrameAttacher) model1).getAttachedLocation();
@@ -100,14 +81,7 @@ public class FrameHit {
                 }
                 break;
             case left:
-                new FrameHitPerformer(
-                        frame,
-                        0,
-                        0,
-                        0,
-                        DistanceConstants.FRAME_BULLET_RESIZE,
-                        TimeConstants.FRAME_SHRINKAGE_TIME
-                ).frameHit();
+                leftHitIf();
                 for (ObjectModel model1 : models) {
                     if (model1 instanceof FrameAttacher) {
                         FrameLocations frameLocations = ((FrameAttacher) model1).getAttachedLocation();
@@ -123,4 +97,62 @@ public class FrameHit {
                 break;
         }
     }
+
+    private void topHitIf() {
+        Vector framePosition = frame.getPosition();
+        if (framePosition.y <= 0)
+            return;
+        new FrameHitPerformer(
+                frame,
+                DistanceConstants.FRAME_BULLET_RESIZE,
+                0,
+                0,
+                0,
+                TimeConstants.FRAME_SHRINKAGE_TIME
+        ).frameHit();
+    }
+
+    private void bottomHitIf() {
+        Vector framePosition = frame.getPosition();
+        if (framePosition.y >= SizeConstants.SCREEN_SIZE.height)
+            return;
+        new FrameHitPerformer(
+                frame,
+                0,
+                DistanceConstants.FRAME_BULLET_RESIZE,
+                0,
+                0,
+                TimeConstants.FRAME_SHRINKAGE_TIME
+        ).frameHit();
+    }
+
+    private void leftHitIf() {
+        Vector framePosition = frame.getPosition();
+        if (framePosition.x <= 0)
+            return;
+        new FrameHitPerformer(
+                frame,
+                0,
+                0,
+                0,
+                DistanceConstants.FRAME_BULLET_RESIZE,
+                TimeConstants.FRAME_SHRINKAGE_TIME
+        ).frameHit();
+    }
+
+    private void rightHitIf() {
+        Vector framePosition = frame.getPosition();
+        if (framePosition.x >= SizeConstants.SCREEN_SIZE.width)
+            return;
+        new FrameHitPerformer(
+                frame,
+                0,
+                0,
+                DistanceConstants.FRAME_BULLET_RESIZE,
+                0,
+                TimeConstants.FRAME_SHRINKAGE_TIME
+        ).frameHit();
+    }
+
+
 }

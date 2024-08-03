@@ -5,6 +5,7 @@ import controller.manager.GameState;
 
 public class WyrmThread extends Thread{
     private WyrmModel wyrmModel;
+    private boolean interrupt;
     public WyrmThread(WyrmModel wyrmModel){
         this.wyrmModel = wyrmModel;
     }
@@ -20,7 +21,7 @@ public class WyrmThread extends Thread{
             if (GameState.isPause() || GameState.isDizzy()){
                 continue;
             }
-            if (isInterrupted())
+            if (isInterrupt())
                 return;
             shoot();
         }
@@ -32,4 +33,12 @@ public class WyrmThread extends Thread{
         new WyrmShooter(wyrmModel).shoot();
     }
 
+
+    public boolean isInterrupt() {
+        return interrupt;
+    }
+
+    public void setInterrupt(boolean interrupt) {
+        this.interrupt = interrupt;
+    }
 }

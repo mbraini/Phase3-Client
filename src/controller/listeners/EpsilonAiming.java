@@ -3,6 +3,7 @@ package controller.listeners;
 
 import constants.SizeConstants;
 import constants.SoundPathConstants;
+import constants.TimeConstants;
 import controller.ViewRequestController;
 import controller.manager.GameState;
 import model.ModelData;
@@ -32,6 +33,8 @@ public class EpsilonAiming extends MouseAdapter {
             return;
         }
         if (GameState.isPause())
+            return;
+        if (GameState.getTime() - timer < TimeConstants.EPSILON_SHOOTIN_TIME)
             return;
         timer = GameState.getTime();
         EpsilonModel epsilon = ModelData.getEpsilon();

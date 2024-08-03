@@ -23,4 +23,5 @@ public class TimeConstants {
     public static final int DISMAY_DURATION = 10000;
     public static final int SLAUGHTER_COOLDOWN = 120000;
     public static final int CERBERUS_COOLDOWN = 15000;
+    public static final int EPSILON_SHOOTIN_TIME = 500;
 }

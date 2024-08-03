@@ -7,11 +7,10 @@ import constants.VelocityConstants;
 import controller.enums.ModelType;
 import controller.manager.Spawner;
 import model.ModelData;
-import model.animations.DashAnimation;
+import model.logics.Dash;
 import model.interfaces.Ability;
-import model.interfaces.collisionInterfaces.HasVertices;
 import model.interfaces.movementIntefaces.ImpactAble;
-import model.interfaces.collisionInterfaces.IsPolygon;
+import model.logics.MovementManager;
 import utils.Math;
 import utils.Vector;
 
@@ -30,6 +29,7 @@ public class SquarantineModel extends BasicEnemyModel implements Ability , Impac
         this.hasMeleeAttack = true;
         this.vulnerableToEpsilonMelee = true;
         this.vulnerableToEpsilonBullet = true;
+        movementManager = new MovementManager();
         type = ModelType.squarantine;
         omega = VelocityConstants.ENEMY_ROTATION_SPEED;
         initVertices();
@@ -73,7 +73,7 @@ public class SquarantineModel extends BasicEnemyModel implements Ability , Impac
 
     @Override
     public void ability() {
-        new DashAnimation(
+        new Dash(
                 this ,
                 Math.VectorAdd(
                         Math.ScalarInVector(-1 ,position) ,
@@ -83,7 +83,7 @@ public class SquarantineModel extends BasicEnemyModel implements Ability , Impac
                 90 ,
                 java.lang.Math.PI,
                 false
-        ).StartAnimation();
+        ).startDash();
     }
 
     @Override

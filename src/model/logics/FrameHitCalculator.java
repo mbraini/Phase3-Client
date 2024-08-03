@@ -1,10 +1,10 @@
-package model.animations;
+package model.logics;
 
 
 import model.objectModel.frameModel.FrameModel;
 import utils.Vector;
 
-public class FrameAnimation extends ThreadAnimation {
+public class FrameHitCalculator {
     private FrameModel frame;
     private double time;
     private double upAcceleration;
@@ -12,7 +12,7 @@ public class FrameAnimation extends ThreadAnimation {
     private double rightAcceleration;
     private double leftAcceleration;
 
-    public FrameAnimation(FrameModel frame , double up ,double down ,double right ,double left ,double time){
+    public FrameHitCalculator(FrameModel frame , double up , double down , double right , double left , double time){
         this.frame = frame;
         this.time = time;
 
@@ -25,32 +25,13 @@ public class FrameAnimation extends ThreadAnimation {
     }
 
 
-    @Override
-    public void StartAnimation() {
+    public void frameHit() {
         frame.setUpDownA(new Vector(upAcceleration ,downAcceleration));
         frame.setLeftRightA(new Vector(leftAcceleration ,rightAcceleration));
+        frame.getMovementManager().setLeftRightAccTime((int) time);
+        frame.getMovementManager().setLeftRightAccTimePassed(0);
+        frame.getMovementManager().setUpDownAccTime((int) time);
+        frame.getMovementManager().setUpDownAccTimePassed(0);
         frame.setResizing(true);
-        start();
-    }
-
-    @Override
-    public void run() {
-        try {
-            sleep((int)time);
-        }
-        catch (Exception e) {
-
-        }
-        frame.setUpDownA(0 ,0);
-        frame.setLeftRightA(0 ,0);
-        frame.setUpDownV(0 ,0);
-        frame.setLeftRightV(0 ,0);
-        frame.setResizing(false);
-    }
-
-    public boolean isDone(){
-        if (frame.isResizing())
-            return false;
-        return true;
     }
 }

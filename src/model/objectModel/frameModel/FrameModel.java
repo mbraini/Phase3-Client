@@ -3,6 +3,7 @@ package model.objectModel.frameModel;
 import controller.ObjectController;
 import model.interfaces.collisionInterfaces.HasVertices;
 import model.interfaces.collisionInterfaces.IsPolygon;
+import model.logics.MovementManager;
 import model.objectModel.ObjectModel;
 import utils.Math;
 import utils.Vector;
@@ -28,7 +29,6 @@ public class FrameModel extends ObjectModel implements IsPolygon , HasVertices {
     private boolean canBottomResize = true;
     private boolean canRightResize = true;
     private boolean canLeftResize = true;
-    private boolean isShrinking;
 
     public FrameModel(Vector positionInit ,Dimension dimensionInit ,String id){
         this.position = positionInit.clone();
@@ -36,6 +36,7 @@ public class FrameModel extends ObjectModel implements IsPolygon , HasVertices {
         this.id = id;
         this.positionInit = positionInit.clone();
         this.dimensionInit = dimensionInit;
+        movementManager = new MovementManager();
         initVertices();
     }
 
@@ -201,13 +202,6 @@ public class FrameModel extends ObjectModel implements IsPolygon , HasVertices {
         isSolid = solid;
     }
 
-    public boolean isShrinking() {
-        return isShrinking;
-    }
-
-    public void setShrinking(boolean shrinking) {
-        isShrinking = shrinking;
-    }
 
     public boolean canTopResize() {
         return canTopResize;

@@ -3,7 +3,7 @@ package model.objectModel.fighters.finalBoss.bossAI;
 import constants.DistanceConstants;
 import constants.SizeConstants;
 import constants.TimeConstants;
-import model.animations.DashAnimation;
+import model.logics.Dash;
 import model.logics.collision.Collision;
 import model.objectModel.ObjectModel;
 import model.objectModel.fighters.EpsilonModel;
@@ -84,24 +84,24 @@ public class BossAI {
 
     private void handDash(BossHelperModel helperModel) {
         if (helperModel.dashedInPositiveWay()) {
-            new DashAnimation(
+            new Dash(
                     helperModel,
                     new Vector(0,1),
                     TimeConstants.BOSS_HELPER_DASH_TIME,
                     DistanceConstants.BOSS_HELPER_DASH_DISTANCE,
                     0,
                     false
-            ).StartAnimation();
+            ).startDash();
         }
         else {
-            new DashAnimation(
+            new Dash(
                     helperModel,
                     new Vector(0,-1),
                     TimeConstants.BOSS_HELPER_DASH_TIME,
                     DistanceConstants.BOSS_HELPER_DASH_DISTANCE,
                     0,
                     false
-            ).StartAnimation();
+            ).startDash();
         }
         helperModel.setInDash(true);
         Timer timer = new Timer(
@@ -121,24 +121,24 @@ public class BossAI {
 
     private void headDash(BossHelperModel helperModel) {
         if (helperModel.dashedInPositiveWay()) {
-            new DashAnimation(
+            new Dash(
                     helperModel,
                     new Vector(1,0),
                     TimeConstants.BOSS_HELPER_DASH_TIME,
                     DistanceConstants.BOSS_HELPER_DASH_DISTANCE,
                     0,
                     false
-            ).StartAnimation();
+            ).startDash();
         }
         else {
-            new DashAnimation(
+            new Dash(
                     helperModel,
                     new Vector(-1,0),
                     TimeConstants.BOSS_HELPER_DASH_TIME,
                     DistanceConstants.BOSS_HELPER_DASH_DISTANCE,
                     0,
                     false
-            ).StartAnimation();
+            ).startDash();
         }
         helperModel.setInDash(true);
         Timer timer = new Timer(

@@ -3,7 +3,7 @@ package model.objectModel.fighters.finalBoss.abilities.quake;
 import constants.RefreshRateConstants;
 import constants.SizeConstants;
 import controller.ModelRequestController;
-import model.animations.DashAnimation;
+import model.logics.Dash;
 import model.logics.Impact;
 import model.objectModel.fighters.finalBoss.Boss;
 import model.objectModel.fighters.finalBoss.abilities.Ability;
@@ -86,14 +86,14 @@ public class Quake extends Ability {
                 destination ,
                 Math.ScalarInVector(-1 ,boss.getPunch().getPosition())
         );
-        new DashAnimation(
+        new Dash(
                 boss.getPunch(),
                 direction,
                 RefreshRateConstants.ABILITY_SETUP_DELAY,
                 Math.VectorSize(direction),
                 0,
                 true
-        ).StartAnimation();
+        ).startDash();
     }
 
 

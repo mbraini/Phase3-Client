@@ -8,12 +8,14 @@ import controller.Controller;
 import controller.configs.Configs;
 import controller.enums.ModelType;
 import controller.interfaces.SizeChanger;
+import controller.manager.GameState;
 import controller.manager.Spawner;
 import constants.ControllerConstants;
 import model.interfaces.collisionInterfaces.HasVertices;
 import model.interfaces.collisionInterfaces.IsCircle;
 import model.interfaces.movementIntefaces.ImpactAble;
 import model.interfaces.movementIntefaces.MoveAble;
+import model.logics.MovementManager;
 import model.logics.collision.Collision;
 import model.objectModel.FighterModel;
 import utils.Helper;
@@ -39,6 +41,7 @@ public class EpsilonModel extends FighterModel implements MoveAble, IsCircle, Ha
                 SizeConstants.EPSILON_DIMENSION.width,
                 SizeConstants.EPSILON_DIMENSION.height
         );
+        movementManager = new MovementManager();
         this.id =  id;
         this.HP = 100;
         this.epsilonBulletDamage = DamageConstants.INITIAL_EPSILON_DAMAGE;
@@ -50,12 +53,20 @@ public class EpsilonModel extends FighterModel implements MoveAble, IsCircle, Ha
 
     @Override
     public void move() {
+        if (GameState.isDizzy())
+            return;
+
         velocity = Math.VectorAdd(velocity ,Math.ScalarInVector(RefreshRateConstants.UPS ,acceleration));
+        movementManager.manage(RefreshRateConstants.UPS ,this);
         double xMoved = ((2 * velocity.x - acceleration.x * RefreshRateConstants.UPS) / 2) * RefreshRateConstants.UPS;
         double yMoved = ((2 * velocity.y - acceleration.y * RefreshRateConstants.UPS) / 2) * RefreshRateConstants.UPS;
         setPosition(position.x + xMoved ,position.y + yMoved);
-        ((HasVertices) this).UpdateVertices(xMoved ,yMoved ,omega);
-        checkMaxSpeed();
+
+
+        omega += alpha * RefreshRateConstants.UPS;
+        double thetaMoved = ((2 * omega - alpha * RefreshRateConstants.UPS) / 2) * RefreshRateConstants.UPS;
+        theta = theta + thetaMoved;
+        UpdateVertices(xMoved ,yMoved ,thetaMoved);
     }
 
     void checkMaxSpeed(){

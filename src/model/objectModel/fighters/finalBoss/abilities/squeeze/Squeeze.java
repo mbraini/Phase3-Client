@@ -2,7 +2,7 @@ package model.objectModel.fighters.finalBoss.abilities.squeeze;
 
 import constants.RefreshRateConstants;
 import constants.SizeConstants;
-import model.animations.DashAnimation;
+import model.logics.Dash;
 import model.interfaces.movementIntefaces.Navigator;
 import model.objectModel.fighters.finalBoss.Boss;
 import model.objectModel.fighters.finalBoss.abilities.Ability;
@@ -73,14 +73,14 @@ public class Squeeze extends Ability implements Navigator {
                 ),
                 Math.ScalarInVector(-1, boss.getLeftHand().getPosition())
         );
-        new DashAnimation(
+        new Dash(
                 boss.getLeftHand(),
                 leftD,
                 1000,
                 Math.VectorSize(leftD),
                 0,
                 false
-        ).StartAnimation();
+        ).startDash();
         Vector rightD = Math.VectorAdd(
                 new Vector(
                         SizeConstants.SCREEN_SIZE.width - SizeConstants.HAND_DIMENSION.width / 2d,
@@ -88,14 +88,14 @@ public class Squeeze extends Ability implements Navigator {
                 ),
                 Math.ScalarInVector(-1, boss.getRightHand().getPosition())
         );
-        new DashAnimation(
+        new Dash(
                 boss.getRightHand(),
                 rightD,
                 1000,
                 Math.VectorSize(rightD),
                 0,
                 false
-        ).StartAnimation();
+        ).startDash();
     }
 
     @Override

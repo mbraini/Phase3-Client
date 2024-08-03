@@ -2,14 +2,11 @@ package model.logics;
 
 import constants.DistanceConstants;
 import constants.TimeConstants;
-import model.animations.FrameAnimation;
 import model.interfaces.movementIntefaces.FrameAttacher;
 import model.objectModel.ObjectModel;
 import model.objectModel.frameModel.FrameLocations;
 import model.objectModel.frameModel.FrameModel;
 import utils.FrameHelper.FrameCalculationHelper;
-import utils.Math;
-import utils.Vector;
 
 import java.util.ArrayList;
 
@@ -37,14 +34,14 @@ public class FrameHit {
     private void resize(FrameModel frame, FrameLocations frameLocation) {
         switch (frameLocation){
             case top :
-                new FrameAnimation(
+                new FrameHitCalculator(
                         frame,
                         DistanceConstants.FRAME_BULLET_RESIZE,
                         0,
                         0,
                         0,
                         TimeConstants.FRAME_SHRINKAGE_TIME
-                ).StartAnimation();
+                ).frameHit();
                 for (ObjectModel model1 : models) {
                     if (model1 instanceof FrameAttacher) {
                         FrameLocations frameLocations = ((FrameAttacher) model1).getAttachedLocation();
@@ -59,14 +56,14 @@ public class FrameHit {
                 }
                 break;
             case bottom:
-                new FrameAnimation(
+                new FrameHitCalculator(
                         frame,
                         0,
                         DistanceConstants.FRAME_BULLET_RESIZE,
                         0,
                         0,
                         TimeConstants.FRAME_SHRINKAGE_TIME
-                ).StartAnimation();
+                ).frameHit();
                 for (ObjectModel model1 : models) {
                     if (model1 instanceof FrameAttacher) {
                         FrameLocations frameLocations = ((FrameAttacher) model1).getAttachedLocation();
@@ -81,14 +78,14 @@ public class FrameHit {
                 }
                 break;
             case right:
-                new FrameAnimation(
+                new FrameHitCalculator(
                         frame,
                         0,
                         0,
                         DistanceConstants.FRAME_BULLET_RESIZE,
                         0,
                         TimeConstants.FRAME_SHRINKAGE_TIME
-                ).StartAnimation();
+                ).frameHit();
                 for (ObjectModel model1 : models) {
                     if (model1 instanceof FrameAttacher) {
                         FrameLocations frameLocations = ((FrameAttacher) model1).getAttachedLocation();
@@ -103,14 +100,14 @@ public class FrameHit {
                 }
                 break;
             case left:
-                new FrameAnimation(
+                new FrameHitCalculator(
                         frame,
                         0,
                         0,
                         0,
                         DistanceConstants.FRAME_BULLET_RESIZE,
                         TimeConstants.FRAME_SHRINKAGE_TIME
-                ).StartAnimation();
+                ).frameHit();
                 for (ObjectModel model1 : models) {
                     if (model1 instanceof FrameAttacher) {
                         FrameLocations frameLocations = ((FrameAttacher) model1).getAttachedLocation();

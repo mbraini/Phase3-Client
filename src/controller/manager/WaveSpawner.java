@@ -50,7 +50,7 @@ public class WaveSpawner {
 
         switch (wave) {
             case 1 :
-                firstWave(enemyKilled);
+//                firstWave(enemyKilled);
                 break;
             case 2 :
                 secondWave(enemyKilled);

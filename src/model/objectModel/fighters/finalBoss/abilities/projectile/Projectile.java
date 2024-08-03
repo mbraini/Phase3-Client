@@ -3,7 +3,7 @@ package model.objectModel.fighters.finalBoss.abilities.projectile;
 import constants.RefreshRateConstants;
 import constants.SizeConstants;
 import model.ModelData;
-import model.animations.DashAnimation;
+import model.logics.Dash;
 import model.objectModel.fighters.EpsilonModel;
 import model.objectModel.fighters.finalBoss.Boss;
 import model.objectModel.fighters.finalBoss.abilities.Ability;
@@ -74,14 +74,14 @@ public class Projectile extends Ability {
                 destination,
                 Math.ScalarInVector(-1 ,headModel.getPosition())
         );
-        new DashAnimation(
+        new Dash(
                 headModel,
                 distance,
                 RefreshRateConstants.ABILITY_SETUP_DELAY,
                 Math.VectorSize(distance),
                 0,
                 false
-        ).StartAnimation();
+        ).startDash();
     }
 
 
@@ -94,14 +94,14 @@ public class Projectile extends Ability {
     }
 
     private void helperAnimation(BossHelperModel helper, Vector direction) {
-        new DashAnimation(
+        new Dash(
                 helper,
                 direction,
                 1000,
                 Math.VectorSize(direction),
                 0,
                 false
-        ).StartAnimation();
+        ).startDash();
     }
 
 

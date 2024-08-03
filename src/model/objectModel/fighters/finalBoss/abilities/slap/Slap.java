@@ -2,7 +2,7 @@ package model.objectModel.fighters.finalBoss.abilities.slap;
 
 import constants.RefreshRateConstants;
 import constants.SizeConstants;
-import model.animations.DashAnimation;
+import model.logics.Dash;
 import model.objectModel.fighters.EpsilonModel;
 import model.objectModel.fighters.finalBoss.Boss;
 import model.objectModel.fighters.finalBoss.abilities.Ability;
@@ -112,14 +112,14 @@ public class Slap extends Ability {
     }
 
     private void HelperAnimation(BossHelperModel helper, Vector direction) {
-        new DashAnimation(
+        new Dash(
                 helper,
                 direction,
                 RefreshRateConstants.ABILITY_UNSETUP_DELAY,
                 Math.VectorSize(direction),
                 0,
                 false
-        ).StartAnimation();
+        ).startDash();
     }
 
 
@@ -131,14 +131,14 @@ public class Slap extends Ability {
         );
 
         double distance = Math.VectorSize(direction) - SizeConstants.HAND_DIMENSION.width / 2d;
-        new DashAnimation(
+        new Dash(
                 helper,
                 direction,
                 RefreshRateConstants.ABILITY_SETUP_DELAY,
                 distance,
                 0,
                 true
-        ).StartAnimation();
+        ).startDash();
 
     }
 

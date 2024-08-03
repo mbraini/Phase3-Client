@@ -30,6 +30,7 @@ public class FrameResizer {
                 frameModel.getLeftRightV().x + frameModel.getLeftRightA().x * RefreshRateConstants.FRAME_ANIMATION_REFRESH_RATE ,
                 frameModel.getLeftRightV().y + frameModel.getLeftRightA().y * RefreshRateConstants.FRAME_ANIMATION_REFRESH_RATE
         );
+        frameModel.getMovementManager().manage(RefreshRateConstants.FRAME_THREAD_REFRESH_RATE ,frameModel);
         Vector upDownMoved = new Vector();
         Vector leftRightMoved = new Vector();
         if (frameModel.canTopResize()){
@@ -52,21 +53,12 @@ public class FrameResizer {
         frameModel.setLeftRightP(Math.VectorAdd(leftRightMoved ,frameModel.getLeftRightP()));
         frameModel.revalidate(upDownMoved ,leftRightMoved);
 
-        if (Collision.IsCollidingWithSolidFrames(frameModel ,frames)){
-            frameModel.setUpDownP(Math.VectorAdd(
-                    frameModel.getUpDownP() ,
-                    Math.ScalarInVector(-1 ,upDownMoved))
-            );
-            frameModel.setLeftRightP(Math.VectorAdd(
-                    frameModel.getLeftRightP() ,
-                    Math.ScalarInVector(-1 ,leftRightMoved))
-            );
-            frameModel.revalidate(
-                    Math.ScalarInVector(-1 ,upDownMoved) ,
-                    Math.ScalarInVector(-1 ,leftRightMoved)
-            );
-        }
+        checkSolidFrames(upDownMoved ,leftRightMoved);
+        checkMinimumSize(upDownMoved ,leftRightMoved);
 
+    }
+
+    private void checkMinimumSize(Vector upDownMoved ,Vector leftRightMoved) {
         if (frameModel.getSize().width < SizeConstants.MINIMUM_FRAME_DIMENSION.width) {
             frameModel.setLeftRightP(Math.VectorAdd(
                     frameModel.getLeftRightP() ,
@@ -88,7 +80,23 @@ public class FrameResizer {
                     new Vector()
             );
         }
+    }
 
+    private void checkSolidFrames(Vector upDownMoved ,Vector leftRightMoved) {
+        if (Collision.IsCollidingWithSolidFrames(frameModel ,frames)){
+            frameModel.setUpDownP(Math.VectorAdd(
+                    frameModel.getUpDownP() ,
+                    Math.ScalarInVector(-1 ,upDownMoved))
+            );
+            frameModel.setLeftRightP(Math.VectorAdd(
+                    frameModel.getLeftRightP() ,
+                    Math.ScalarInVector(-1 ,leftRightMoved))
+            );
+            frameModel.revalidate(
+                    Math.ScalarInVector(-1 ,upDownMoved) ,
+                    Math.ScalarInVector(-1 ,leftRightMoved)
+            );
+        }
     }
 
 

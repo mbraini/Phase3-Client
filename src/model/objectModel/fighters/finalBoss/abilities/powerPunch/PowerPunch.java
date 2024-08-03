@@ -2,7 +2,7 @@ package model.objectModel.fighters.finalBoss.abilities.powerPunch;
 
 import constants.RefreshRateConstants;
 import constants.SizeConstants;
-import model.animations.DashAnimation;
+import model.logics.Dash;
 import model.objectModel.fighters.finalBoss.Boss;
 import model.objectModel.fighters.finalBoss.abilities.Ability;
 import model.objectModel.fighters.finalBoss.bossHelper.PunchModel;
@@ -67,14 +67,14 @@ public class PowerPunch extends Ability {
                 destination ,
                 Math.ScalarInVector(-1 ,boss.getPunch().getPosition())
         );
-        new DashAnimation(
+        new Dash(
                 boss.getPunch(),
                 direction,
                 1000,
                 Math.VectorSize(direction),
                 0,
                 true
-        ).StartAnimation();
+        ).startDash();
     }
 
     private Vector setDestination() {

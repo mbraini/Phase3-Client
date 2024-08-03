@@ -2,6 +2,7 @@ package model.objectModel;
 
 
 import controller.enums.ModelType;
+import model.logics.MovementManager;
 import utils.Vector;
 
 public abstract class ObjectModel {
@@ -11,6 +12,7 @@ public abstract class ObjectModel {
     protected double theta;
     protected double omega;
     protected double alpha;
+    protected MovementManager movementManager;
     protected String id;
     protected double HP;
     protected boolean isHovering;
@@ -130,5 +132,13 @@ public abstract class ObjectModel {
 
     public void setMotionless(boolean motionless) {
         isMotionless = motionless;
+    }
+
+    public MovementManager getMovementManager() {
+        return movementManager;
+    }
+
+    public void setMovementManager(MovementManager movementManager) {
+        this.movementManager = movementManager;
     }
 }

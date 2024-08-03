@@ -2,7 +2,7 @@ package model.objectModel.fighters.finalBoss.abilities.powerPunch;
 
 import constants.DistanceConstants;
 import constants.TimeConstants;
-import model.animations.FrameAnimation;
+import model.logics.FrameHitCalculator;
 import model.objectModel.frameModel.FrameLocations;
 import model.objectModel.frameModel.FrameModel;
 
@@ -26,44 +26,44 @@ public class PowerPunchAL implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         switch (frameLocation){
             case top :
-                new FrameAnimation(
+                new FrameHitCalculator(
                         epsilonModel,
                         -DistanceConstants.PUNCH_FRAME_PUSH_DISTANCE,
                         0,
                         0,
                         0,
                         TimeConstants.FRAME_SHRINKAGE_TIME
-                ).StartAnimation();
+                ).frameHit();
                 break;
             case right:
-                new FrameAnimation(
+                new FrameHitCalculator(
                         epsilonModel,
                         0,
                         0,
                         -DistanceConstants.PUNCH_FRAME_PUSH_DISTANCE,
                         0,
                         TimeConstants.FRAME_SHRINKAGE_TIME
-                ).StartAnimation();
+                ).frameHit();
                 break;
             case bottom:
-                new FrameAnimation(
+                new FrameHitCalculator(
                         epsilonModel,
                         0,
                         -DistanceConstants.PUNCH_FRAME_PUSH_DISTANCE,
                         0,
                         0,
                         TimeConstants.FRAME_SHRINKAGE_TIME
-                ).StartAnimation();
+                ).frameHit();
                 break;
             case left:
-                new FrameAnimation(
+                new FrameHitCalculator(
                         epsilonModel,
                         0,
                         0,
                         0,
                         -DistanceConstants.PUNCH_FRAME_PUSH_DISTANCE,
                         TimeConstants.FRAME_SHRINKAGE_TIME
-                ).StartAnimation();
+                ).frameHit();
                 break;
         }
         powerPunch.endAbility();

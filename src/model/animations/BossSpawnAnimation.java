@@ -3,6 +3,7 @@ package model.animations;
 import constants.SizeConstants;
 import controller.manager.GameState;
 import model.ModelData;
+import model.logics.Dash;
 import model.objectModel.fighters.finalBoss.Boss;
 import model.objectModel.frameModel.FrameModel;
 import utils.Math;
@@ -37,14 +38,14 @@ public class BossSpawnAnimation extends TimerAnimation {
 
     private void headAnimation() {
         Vector direction = findDirection();
-        new DashAnimation(
+        new Dash(
                 boss.getHead(),
                 direction,
                 3000,
                 Math.VectorSize(direction),
                 0,
                 false
-        ).StartAnimation();
+        ).startDash();
         timer.start();
     }
 

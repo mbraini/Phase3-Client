@@ -10,6 +10,7 @@ import model.interfaces.Ability;
 import model.interfaces.collisionInterfaces.HasVertices;
 import model.interfaces.movementIntefaces.ImpactAble;
 import model.interfaces.collisionInterfaces.IsPolygon;
+import model.logics.MovementManager;
 import utils.Math;
 import utils.Vector;
 
@@ -28,6 +29,7 @@ public class TrigorathModel extends BasicEnemyModel implements Ability, ImpactAb
         this.hasMeleeAttack = true;
         this.vulnerableToEpsilonMelee = true;
         this.vulnerableToEpsilonBullet = true;
+        movementManager = new MovementManager();
         type = ModelType.trigorath;
         omega = VelocityConstants.ENEMY_ROTATION_SPEED;
         initVertices();

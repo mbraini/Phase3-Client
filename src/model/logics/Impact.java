@@ -1,19 +1,12 @@
 package model.logics;
 
 
-import constants.SoundPathConstants;
 import constants.TimeConstants;
 import model.ModelData;
-import model.animations.DashAnimation;
 import model.interfaces.movementIntefaces.ImpactAble;
 import model.objectModel.fighters.EpsilonModel;
 import utils.Math;
 import utils.Vector;
-import view.painting.soundEffects.Sound;
-
-import javax.sound.sampled.LineUnavailableException;
-import javax.sound.sampled.UnsupportedAudioFileException;
-import java.io.IOException;
 
 public class Impact {
     private final Vector collisionPoint;
@@ -63,35 +56,35 @@ public class Impact {
                     dashDistance = this.distance - distance;
                 }
                 if (!(ModelData.getModels().get(i) instanceof EpsilonModel)) {
-                    new DashAnimation(
+                    new Dash(
                             ModelData.getModels().get(i),
                             direction,
                             time,
                             dashDistance,
                             dashDistance / 100 * java.lang.Math.PI,
                             false
-                    ).StartAnimation();
+                    ).startDash();
                 }
                 else {
                     if (sameForce) {
-                        new DashAnimation(
+                        new Dash(
                                 ModelData.getModels().get(i),
                                 direction,
                                 time,
                                 dashDistance,
                                 0,
                                 false
-                        ).StartAnimation();
+                        ).startDash();
                     }
                     else {
-                        new DashAnimation(
+                        new Dash(
                                 ModelData.getModels().get(i),
                                 direction,
                                 time,
                                 100,
                                 0,
                                 false
-                        ).StartAnimation();
+                        ).startDash();
                     }
                 }
             }

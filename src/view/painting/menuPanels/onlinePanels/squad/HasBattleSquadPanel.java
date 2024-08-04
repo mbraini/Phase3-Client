@@ -3,7 +3,6 @@ package view.painting.menuPanels.onlinePanels.squad;
 import constants.RefreshRateConstants;
 import constants.SizeConstants;
 import controller.online.tcp.ClientState;
-import controller.online.tcp.requests.getTreasuryInfo.ClientUpdateTreasuryRequest;
 import controller.online.tcp.requests.updateBattleSquadPanel.ClientUpdateBattleSquadRequest;
 import controller.online.tcp.requests.updateBattleSquadPanel.GetBattleSquadMemberHelper;
 import view.Application;

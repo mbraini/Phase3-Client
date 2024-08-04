@@ -3,6 +3,7 @@ package view.painting.painter;
 import constants.RefreshRateConstants;
 import constants.SizeConstants;
 import controller.ViewRequestController;
+import controller.online.OnlineData;
 import utils.Vector;
 import view.painting.ViewData;
 import view.painting.ViewRequest;
@@ -36,7 +37,8 @@ public class Render extends Thread {
             lastTime = now;
             if (deltaPaint >= RefreshRateConstants.FPS) {
                 ViewRequest.checkRequests();
-                ViewRequestController.updateView();
+                if (OnlineData.getCurrentOnlineGame() == null)
+                    ViewRequestController.updateView();
                 paint();
                 deltaPaint = 0;
             }

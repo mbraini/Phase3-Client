@@ -3,6 +3,7 @@ package controller.listeners.epsilonMovement;
 
 import controller.configs.Configs;
 import controller.manager.GameState;
+import controller.online.OnlineData;
 import model.ModelData;
 import model.objectModel.fighters.EpsilonModel;
 
@@ -25,7 +26,8 @@ public class EpsilonMovement extends KeyAdapter {
     public static int DOWN_KEY = 40;
 
     public EpsilonMovement(){
-        this.epsilon = (EpsilonModel) (ModelData.getModels().getFirst());
+        if (OnlineData.getCurrentOnlineGame() == null)
+            this.epsilon = (EpsilonModel) (ModelData.getModels().getFirst());
     }
 
     @Override

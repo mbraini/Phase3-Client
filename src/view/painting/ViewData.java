@@ -209,9 +209,10 @@ public class ViewData {
                 ViewData.addAbility(
                         new AthenaView(coolDown,timePassed,isAvailable)
                 );
-                break;case proteus:
+                break;
+            case proteus:
                 ViewData.addAbility(
-                        new ProteusView(coolDown,timePassed,isAvailable)
+                    new ProteusView(coolDown,timePassed,isAvailable)
                 );
                 break;
             case empusa:
@@ -238,5 +239,35 @@ public class ViewData {
 
     private static void addAbility(AbilityView abilityView) {
         abilityViews.add(abilityView);
+    }
+
+    public synchronized static FrameView getFrame(String id) {
+        synchronized (frames) {
+            for (FrameView frameView : frames) {
+                if (frameView.getId().equals(id))
+                    return frameView;
+            }
+        }
+        return null;
+    }
+
+    public static ObjectView getView(String id) {
+        synchronized (views) {
+            for (ObjectView view : views) {
+                if (view.getId().equals(id))
+                    return view;
+            }
+        }
+        return null;
+    }
+
+    public static EffectView getEffectView(String id) {
+        synchronized (effectViews) {
+            for (EffectView effectView : effectViews) {
+                if (effectView.getId().equals(id))
+                    return effectView;
+            }
+        }
+        return null;
     }
 }

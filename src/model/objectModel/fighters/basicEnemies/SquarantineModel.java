@@ -73,6 +73,8 @@ public class SquarantineModel extends BasicEnemyModel implements Ability , Impac
 
     @Override
     public void ability() {
+        if (isImpacted)
+            return;
         new Dash(
                 this ,
                 Math.VectorAdd(
@@ -80,7 +82,7 @@ public class SquarantineModel extends BasicEnemyModel implements Ability , Impac
                         ModelData.getModels().getFirst().getPosition()
                 ) ,
                 700 ,
-                90 ,
+                110 ,
                 java.lang.Math.PI,
                 false
         ).startDash();

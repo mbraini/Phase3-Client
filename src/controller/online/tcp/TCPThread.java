@@ -4,20 +4,21 @@ import com.google.gson.Gson;
 import controller.online.OnlineData;
 import controller.online.tcp.messages.ServerOKMessage;
 import controller.online.tcp.messages.ServerYesNoMessage;
-import controller.online.tcp.requests.buyCall.ServerBuyCallRecponce;
-import controller.online.tcp.requests.createSquad.ServerCreateSquadRecponce;
-import controller.online.tcp.requests.donateXP.ServerDonateXPRecponce;
-import controller.online.tcp.requests.getAllSquadsRequest.ServerGetAllSquadsRecponce;
-import controller.online.tcp.requests.getTreasuryInfo.ServerUpdateTreasuryRecponce;
-import controller.online.tcp.requests.hasSquad.ServerHasSquadRecponce;
-import controller.online.tcp.requests.hasSquadBattle.ServerHasSquadBattleRecponce;
-import controller.online.tcp.requests.joinSquad.ServerJoinSquadRecponce;
-import controller.online.tcp.requests.kickOutRequest.ServerKickOutRecponce;
-import controller.online.tcp.requests.killSquad.ServerKillSquadRecponce;
-import controller.online.tcp.requests.leaveSquad.ServerLeaveSquadRecponce;
-import controller.online.tcp.requests.updateBattleSquadPanel.ServerUpdateBattleSquadRecponce;
-import controller.online.tcp.requests.updateNoSquadPanel.ServerUpdateHasSquadRecponce;
-import controller.online.tcp.requests.updateTreasuryShop.ServerUpdateTreasuryShopRecponce;
+import controller.online.tcp.serverMessages.messages.ServerGetPortsMessage;
+import controller.online.tcp.serverMessages.recponces.ServerBuyCallRecponce;
+import controller.online.tcp.serverMessages.recponces.ServerCreateSquadRecponce;
+import controller.online.tcp.serverMessages.recponces.ServerDonateXPRecponce;
+import controller.online.tcp.serverMessages.recponces.ServerGetAllSquadsRecponce;
+import controller.online.tcp.serverMessages.recponces.ServerUpdateTreasuryRecponce;
+import controller.online.tcp.serverMessages.recponces.ServerHasSquadRecponce;
+import controller.online.tcp.serverMessages.recponces.ServerHasSquadBattleRecponce;
+import controller.online.tcp.serverMessages.recponces.ServerJoinSquadRecponce;
+import controller.online.tcp.serverMessages.recponces.ServerKickOutRecponce;
+import controller.online.tcp.serverMessages.recponces.ServerKillSquadRecponce;
+import controller.online.tcp.serverMessages.recponces.ServerLeaveSquadRecponce;
+import controller.online.tcp.serverMessages.recponces.ServerUpdateBattleSquadRecponce;
+import controller.online.tcp.serverMessages.recponces.ServerUpdateHasSquadRecponce;
+import controller.online.tcp.serverMessages.recponces.ServerUpdateTreasuryShopRecponce;
 
 import javax.swing.*;
 
@@ -84,6 +85,9 @@ public class TCPThread extends Thread {
                         break;
                     case buyCall:
                         new ServerBuyCallRecponce().receiveRecponce();
+                        break;
+                    case getPorts:
+                        new ServerGetPortsMessage();
                         break;
                     case yes_no_message:
                         new ServerYesNoMessage().showMessage();

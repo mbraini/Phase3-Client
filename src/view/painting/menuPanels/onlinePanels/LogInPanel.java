@@ -1,7 +1,7 @@
 package view.painting.menuPanels.onlinePanels;
 
 import constants.SizeConstants;
-import controller.online.tcp.requests.logIn.ClientLogInRequest;
+import controller.online.tcp.requests.ClientLogInRequest;
 import view.painting.menuPanels.MainFrame;
 import view.painting.menuPanels.PIG;
 import view.painting.objectViews.panels.MyButton;

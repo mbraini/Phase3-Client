@@ -7,6 +7,7 @@ import controller.manager.loading.SkippedByJson;
 import model.animations.BossDeathAnimation;
 import model.interfaces.collisionInterfaces.CollisionDetector;
 import model.interfaces.collisionInterfaces.IsCircle;
+import model.logics.MovementManager;
 import model.objectModel.fighters.finalBoss.Boss;
 import model.objectModel.frameModel.FrameModelBuilder;
 import utils.Math;
@@ -25,6 +26,7 @@ public class HeadModel extends BossHelperModel implements IsCircle , CollisionDe
         this.image = ImageConstants.smiley;
         this.velocity = new Vector();
         this.acceleration = new Vector();
+        movementManager = new MovementManager();
         this.boss = boss;
         size = new Dimension(
                 SizeConstants.HEAD_DIMENSION.width,

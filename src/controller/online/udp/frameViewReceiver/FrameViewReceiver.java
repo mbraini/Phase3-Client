@@ -1,0 +1,119 @@
+package controller.online.udp.frameViewReceiver;
+
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+import utils.Helper;
+import view.painting.ViewData;
+import view.painting.ViewRequest;
+import view.painting.objectViews.FrameView;
+
+import java.io.IOException;
+import java.lang.reflect.Type;
+import java.net.DatagramPacket;
+import java.net.DatagramSocket;
+import java.net.SocketException;
+import java.util.ArrayList;
+
+public class FrameViewReceiver extends Thread{
+
+    private int port;
+    private DatagramSocket datagramSocket;
+    private DatagramPacket datagramPacket;
+    private Gson gson;
+    private final Type type;
+    private volatile ArrayList<JFrameView> lastFrameViews;
+
+    public FrameViewReceiver() {
+        gson = new Gson();
+        type = new TypeToken<ArrayList<JFrameView>>(){}.getType();
+        lastFrameViews = new ArrayList<>();
+    }
+
+    @Override
+    public void run() {
+        while (!isInterrupted()) {
+
+            try {
+                datagramSocket.receive(datagramPacket);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+            try {
+                String JObjects = new String(Helper.getDataUntil(datagramPacket.getData() ,datagramPacket.getLength()));
+                ArrayList<JFrameView> jFrameViews = gson.fromJson(JObjects , type);
+                updateFrameViews(jFrameViews);
+                lastFrameViews = (ArrayList<JFrameView>) jFrameViews.clone();
+            }
+            catch (Exception e) {
+
+            }
+        }
+    }
+
+    private void updateFrameViews(ArrayList<JFrameView> jFrameViews) {
+        for (JFrameView jFrameView : jFrameViews) {
+            if (created(jFrameViews ,jFrameView)) {
+                ViewRequest.addFrameView(
+                        new FrameView(
+                                jFrameView.getPosition(),
+                                jFrameView.getDimension(),
+                                jFrameView.getId()
+                        )
+                );
+                continue;
+            }
+            if (killed(jFrameViews ,jFrameView)) {
+                ViewRequest.removeFrameView(jFrameView.getId());
+                continue;
+            }
+
+            FrameView frameView = ViewData.getFrame(jFrameView.getId());
+            if (frameView == null)
+                continue;
+            frameView.setPosition(jFrameView.getPosition());
+            frameView.setDimension(jFrameView.getDimension());
+        }
+
+    }
+
+    private boolean killed(ArrayList<JFrameView> jFrameViews ,JFrameView jFrameView) {
+        if (!contains(jFrameViews ,jFrameView) && contains(lastFrameViews ,jFrameView)) {
+            return true;
+        }
+        return false;
+    }
+
+    private boolean created(ArrayList<JFrameView> jFrameViews ,JFrameView jFrameView) {
+        if (contains(jFrameViews ,jFrameView) && !contains(lastFrameViews ,jFrameView)) {
+            return true;
+        }
+        return false;
+    }
+
+    private boolean contains(ArrayList<JFrameView> jFrameViews ,JFrameView jFrameView) {
+        for (JFrameView frame : jFrameViews) {
+            if (frame.getId().equals(jFrameView.getId()))
+                return true;
+        }
+        return false;
+    }
+
+    public int getPort() {
+        return port;
+    }
+
+    public void setPort(int port) {
+        this.port = port;
+    }
+
+    public void setUp() {
+        try {
+            datagramSocket = new DatagramSocket(port);
+        } catch (SocketException e) {
+            throw new RuntimeException(e);
+        }
+        datagramPacket = new DatagramPacket(new byte[10000] ,10000);
+    }
+
+
+}

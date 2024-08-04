@@ -14,7 +14,6 @@ public class AbilityView {
     protected int theta;
     protected Image image;
     protected Vector position;
-    protected FrameView frame;
     protected Color color;
 
     public AbilityView(int coolDownTime ,int timePassed ,boolean isAvailable) {
@@ -62,10 +61,6 @@ public class AbilityView {
 
     public void setTimePassed(int timePassed) {
         this.timePassed = timePassed;
-    }
-
-    public void setFrame(FrameView frame) {
-        this.frame = frame;
     }
 
     public void setUp() {

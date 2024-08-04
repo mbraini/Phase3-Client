@@ -5,6 +5,7 @@ import constants.SizeConstants;
 import controller.enums.ModelType;
 import model.interfaces.collisionInterfaces.HasVertices;
 import model.interfaces.collisionInterfaces.IsPolygon;
+import model.logics.MovementManager;
 import model.objectModel.frameModel.FrameModelBuilder;
 import utils.Math;
 import utils.Vector;
@@ -26,6 +27,7 @@ public class PunchModel extends BossHelperModel implements IsPolygon, HasVertice
                 SizeConstants.PUNCH_DIMENSION.height
         );
         type = ModelType.punch;
+        movementManager = new MovementManager();
         HP = 100000;
         this.acceleration = new Vector();
         initFrame();

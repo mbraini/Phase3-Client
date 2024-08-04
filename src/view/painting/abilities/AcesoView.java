@@ -4,6 +4,7 @@ import constants.ImageConstants;
 import constants.SizeConstants;
 import utils.Vector;
 import view.painting.ViewData;
+import view.painting.objectViews.FrameView;
 
 public class AcesoView extends AbilityView {
 
@@ -15,7 +16,7 @@ public class AcesoView extends AbilityView {
     @Override
     public void setUp() {
         super.setUp();
-        frame = ViewData.getEpsilonFrame();
+        FrameView frame = ViewData.getEpsilonFrame();
         if (frame == null)
             return;
         position = new Vector(

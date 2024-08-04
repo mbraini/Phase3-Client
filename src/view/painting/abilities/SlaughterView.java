@@ -4,6 +4,7 @@ import constants.ImageConstants;
 import constants.SizeConstants;
 import utils.Vector;
 import view.painting.ViewData;
+import view.painting.objectViews.FrameView;
 
 public class SlaughterView extends AbilityView {
     public SlaughterView(int coolDownTime, int timePassed, boolean isAvailable) {
@@ -14,7 +15,7 @@ public class SlaughterView extends AbilityView {
     @Override
     public void setUp() {
         super.setUp();
-        frame = ViewData.getEpsilonFrame();
+        FrameView frame = ViewData.getEpsilonFrame();
         if (frame == null)
             return;
         position = new Vector(

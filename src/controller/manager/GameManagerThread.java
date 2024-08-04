@@ -65,7 +65,7 @@ public class GameManagerThread extends Thread{
         }
         interfaces();
         checkAoeDamage();
-        if (time % 1000 == 0) {
+        if (time % TimeConstants.SAVE_GAME_TIME == 0) {
             synchronized (jsonLock) {
                 new GameSaver(
                         models,

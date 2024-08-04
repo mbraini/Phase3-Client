@@ -17,7 +17,7 @@ public class Impact {
     public Impact(Vector collisionPoint ,double distance){
         this.collisionPoint = collisionPoint;
         this.distance = distance;
-        time = TimeConstants.DASH_TIME;
+        time = TimeConstants.REGULAR_IMPACT_TIME;
     }
 
 

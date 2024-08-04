@@ -3,6 +3,7 @@ package model.objectModel.fighters.finalBoss.bossHelper;
 import constants.RefreshRateConstants;
 import controller.ObjectController;
 import controller.interfaces.SizeChanger;
+import controller.manager.GameState;
 import controller.manager.loading.SkippedByJson;
 import model.interfaces.FrameSticker;
 import model.interfaces.collisionInterfaces.HasVertices;
@@ -75,7 +76,11 @@ public abstract class BossHelperModel extends EnemyModel implements ImageChanger
 
     @Override
     public void move() {
+        if (GameState.isDizzy())
+            return;
+
         velocity = Math.VectorAdd(velocity ,Math.ScalarInVector(RefreshRateConstants.UPS ,acceleration));
+        movementManager.manage(RefreshRateConstants.UPS ,this);
         double xMoved = ((2 * velocity.x - acceleration.x * RefreshRateConstants.UPS) / 2) * RefreshRateConstants.UPS;
         double yMoved = ((2 * velocity.y - acceleration.y * RefreshRateConstants.UPS) / 2) * RefreshRateConstants.UPS;
         setPosition(position.x + xMoved ,position.y + yMoved);
@@ -85,7 +90,7 @@ public abstract class BossHelperModel extends EnemyModel implements ImageChanger
         double thetaMoved = ((2 * omega - alpha * RefreshRateConstants.UPS) / 2) * RefreshRateConstants.UPS;
         theta = theta + thetaMoved;
         if (this instanceof HasVertices)
-            ((HasVertices) this).UpdateVertices(xMoved ,yMoved ,thetaMoved);
+            ((HasVertices)this).UpdateVertices(xMoved ,yMoved ,thetaMoved);
     }
 
     @Override

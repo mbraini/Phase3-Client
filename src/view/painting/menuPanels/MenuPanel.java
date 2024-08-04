@@ -2,7 +2,7 @@ package view.painting.menuPanels;
 
 import constants.SizeConstants;
 import controller.Controller;
-import controller.online.tcp.requests.hasSquad.ClientHasSquadRequest;
+import controller.online.tcp.requests.ClientHasSquadRequest;
 import view.Application;
 import controller.online.OnlineData;
 import view.painting.objectViews.panels.MyButton;

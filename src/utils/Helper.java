@@ -167,4 +167,11 @@ public class Helper {
         }
     }
 
+    public static byte[] getDataUntil(byte[] data, int length) {
+        byte[] newData = new byte[length];
+        for (int i = 0 ;i < length ;i++) {
+            newData[i] = data[i];
+        }
+        return newData;
+    }
 }

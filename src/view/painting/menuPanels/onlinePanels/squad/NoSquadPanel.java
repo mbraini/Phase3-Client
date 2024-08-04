@@ -3,7 +3,7 @@ package view.painting.menuPanels.onlinePanels.squad;
 import constants.CostConstants;
 import constants.SizeConstants;
 import controller.configs.Configs;
-import controller.online.tcp.requests.joinSquad.ClientJoinSquadRequest;
+import controller.online.tcp.requests.ClientJoinSquadRequest;
 import controller.online.tcp.requests.getAllSquadsRequest.ClientGetAllSquadsRequest;
 import controller.online.tcp.requests.getAllSquadsRequest.GetAllSquadHelper;
 import view.painting.menuPanels.MainFrame;

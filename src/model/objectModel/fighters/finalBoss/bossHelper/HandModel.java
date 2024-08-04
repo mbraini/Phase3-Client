@@ -5,6 +5,7 @@ import constants.SizeConstants;
 import controller.enums.ModelType;
 import model.interfaces.collisionInterfaces.HasVertices;
 import model.interfaces.collisionInterfaces.IsPolygon;
+import model.logics.MovementManager;
 import model.objectModel.frameModel.FrameModelBuilder;
 import utils.Math;
 import utils.Vector;
@@ -23,6 +24,7 @@ public class HandModel extends BossHelperModel implements IsPolygon , HasVertice
         this.image = ImageConstants.hand;
         this.velocity = new Vector();
         this.acceleration = new Vector();
+        movementManager = new MovementManager();
         size = new Dimension(
                 SizeConstants.HAND_DIMENSION.width,
                 SizeConstants.HAND_DIMENSION.height

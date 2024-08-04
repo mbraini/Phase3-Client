@@ -1,8 +1,8 @@
 package view.painting.menuPanels.onlinePanels.squad;
 
 import constants.SizeConstants;
-import controller.online.tcp.requests.donateXP.ClientDonateXPRequest;
-import controller.online.tcp.requests.getTreasuryInfo.ClientUpdateTreasuryRequest;
+import controller.online.tcp.requests.ClientDonateXPRequest;
+import controller.online.tcp.requests.ClientUpdateTreasuryRequest;
 import view.painting.menuPanels.MainFrame;
 import view.painting.menuPanels.PIG;
 import view.painting.objectViews.panels.MyButton;

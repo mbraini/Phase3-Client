@@ -1,10 +1,28 @@
 package view.painting;
 
+import controller.enums.EffectType;
+import controller.enums.ModelType;
+import utils.Vector;
+import utils.area.Area;
+import utils.area.Circle;
+import utils.area.Polygon;
 import view.painting.ViewData;
 import view.painting.gamePanels.ImaginaryPanel;
+import view.painting.objectViews.EpsilonView;
 import view.painting.objectViews.FrameView;
 import view.painting.objectViews.ObjectView;
+import view.painting.objectViews.basicEnemyView.SquarantineView;
+import view.painting.objectViews.basicEnemyView.TrigorathView;
+import view.painting.objectViews.bossView.BossAoeEffectView;
 import view.painting.objectViews.effectView.EffectView;
+import view.painting.objectViews.miniBossEnemyView.BarricadosView;
+import view.painting.objectViews.miniBossEnemyView.BlackOrbLaserEffectView;
+import view.painting.objectViews.miniBossEnemyView.OrbView;
+import view.painting.objectViews.normalEnemyView.NecropickView;
+import view.painting.objectViews.normalEnemyView.OmenoctView;
+import view.painting.objectViews.normalEnemyView.WyrmView;
+import view.painting.objectViews.normalEnemyView.archmireView.ArchmireEffectView;
+import view.painting.objectViews.normalEnemyView.archmireView.ArchmireView;
 
 import java.util.ArrayList;
 
@@ -108,4 +126,64 @@ public class ViewRequest {
     }
 
 
+    public static void addObjectView(Vector position, ModelType modelType, String id) {
+        switch (modelType) {
+            case epsilon :
+                addObjectView(new EpsilonView(
+                        position,
+                        id
+                ));
+                break;
+            case trigorath:
+                addObjectView(new TrigorathView(
+                        position,
+                        id
+                ));
+                break;
+            case squarantine:
+                addObjectView(new SquarantineView(
+                        position,
+                        id
+                ));
+                break;
+            case wyrm:
+                addObjectView(new WyrmView(position ,id));
+                break;
+            case omenoct:
+                addObjectView(new OmenoctView(position ,id));
+                break;
+            case necropick:
+                addObjectView(new NecropickView(position ,id));
+                break;
+            case archmire:
+                addObjectView(new ArchmireView(position ,id));
+                break;
+            case barricadosTheFirst:
+                addObjectView(new BarricadosView(position ,id));
+                break;
+            case barricadosTheSecond:
+                addObjectView(new BarricadosView(position ,id));
+                break;
+            case orb:
+                addObjectView(new OrbView(position ,id));
+                break;
+        }
+    }
+
+    public static void addEffectView(EffectType effectType, String id, Polygon polygon, Circle circle) {
+        switch (effectType) {
+            case archmireEffect :
+                addEffectView(new ArchmireEffectView(
+                        polygon,
+                        id
+                ));
+                break;
+            case BlackOrbEffect:
+                addEffectView(new BlackOrbLaserEffectView(polygon ,id));
+                break;
+            case VomitEffect:
+                addEffectView(new BossAoeEffectView(circle ,id));
+                break;
+        }
+    }
 }

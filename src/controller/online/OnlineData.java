@@ -2,6 +2,7 @@ package controller.online;
 
 import constants.ControllerConstants;
 import controller.online.tcp.TCPThread;
+import controller.online.udp.Game;
 import utils.TCPMessager;
 import view.Application;
 import view.painting.menuPanels.MainFrame;
@@ -9,12 +10,15 @@ import view.painting.menuPanels.MainFrame;
 import javax.swing.*;
 import java.io.IOException;
 import java.net.Socket;
+import java.util.ArrayList;
 
 public class OnlineData {
 
     public static TCPMessager tcpMessager;
     public static TCPThread tcpThread;
     public static TCPMessager tcpConnectionChecker;
+    public static Game currentOnlineGame;
+    public static int availablePort = 10000;
 
     public static void initTCPMessager() {
         try {
@@ -72,5 +76,18 @@ public class OnlineData {
 
     public static void setTcpConnectionChecker(TCPMessager tcpConnectionChecker) {
         OnlineData.tcpConnectionChecker = tcpConnectionChecker;
+    }
+
+    public static int getAvailablePort() {
+        availablePort++;
+        return availablePort;
+    }
+
+    public static Game getCurrentOnlineGame() {
+        return currentOnlineGame;
+    }
+
+    public static void setCurrentOnlineGame(Game currentOnlineGame) {
+        OnlineData.currentOnlineGame = currentOnlineGame;
     }
 }

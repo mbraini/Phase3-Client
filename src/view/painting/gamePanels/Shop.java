@@ -10,6 +10,7 @@ import controller.enums.InGameAbilityType;
 import controller.listeners.PanelKeyListener;
 import controller.manager.GameState;
 import controller.online.OnlineData;
+import controller.online.tcp.ClientRequestType;
 import utils.Helper;
 import view.painting.ViewData;
 import view.painting.menuPanels.PIG;
@@ -62,8 +63,14 @@ public class Shop extends PIG {
         slaughter.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                ViewRequestController.inGameAbilityRequest(InGameAbilityType.slaughter);
-                updateXP();
+                if (OnlineData.getCurrentOnlineGame() == null) {
+                    ViewRequestController.inGameAbilityRequest(InGameAbilityType.slaughter);
+                    updateXP();
+                }
+                else {
+                    OnlineData.getTCPMessager().sendMessage(ClientRequestType.buyInGameAbility);
+                    OnlineData.getTCPMessager().sendMessage(InGameAbilityType.slaughter);
+                }
             }
         });
     }
@@ -72,8 +79,14 @@ public class Shop extends PIG {
         slumber.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                ViewRequestController.inGameAbilityRequest(InGameAbilityType.slumber);
-                updateXP();
+                if (OnlineData.getCurrentOnlineGame() == null) {
+                    ViewRequestController.inGameAbilityRequest(InGameAbilityType.slumber);
+                    updateXP();
+                }
+                else {
+                    OnlineData.getTCPMessager().sendMessage(ClientRequestType.buyInGameAbility);
+                    OnlineData.getTCPMessager().sendMessage(InGameAbilityType.slumber);
+                }
             }
         });
     }
@@ -82,8 +95,14 @@ public class Shop extends PIG {
         dismay.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                ViewRequestController.inGameAbilityRequest(InGameAbilityType.dismay);
-                updateXP();
+                if (OnlineData.getCurrentOnlineGame() == null) {
+                    ViewRequestController.inGameAbilityRequest(InGameAbilityType.dismay);
+                    updateXP();
+                }
+                else {
+                    OnlineData.getTCPMessager().sendMessage(ClientRequestType.buyInGameAbility);
+                    OnlineData.getTCPMessager().sendMessage(InGameAbilityType.dismay);
+                }
             }
         });
     }
@@ -211,8 +230,14 @@ public class Shop extends PIG {
         heal.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                ViewRequestController.inGameAbilityRequest(InGameAbilityType.heal);
-                updateXP();
+                if (OnlineData.getCurrentOnlineGame() == null) {
+                    ViewRequestController.inGameAbilityRequest(InGameAbilityType.heal);
+                    updateXP();
+                }
+                else {
+                    OnlineData.getTCPMessager().sendMessage(ClientRequestType.buyInGameAbility);
+                    OnlineData.getTCPMessager().sendMessage(InGameAbilityType.heal);
+                }
             }
         });
     }
@@ -221,8 +246,14 @@ public class Shop extends PIG {
         empower.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                ViewRequestController.inGameAbilityRequest(InGameAbilityType.empower);
-                updateXP();
+                if (OnlineData.getCurrentOnlineGame() == null) {
+                    ViewRequestController.inGameAbilityRequest(InGameAbilityType.empower);
+                    updateXP();
+                }
+                else {
+                    OnlineData.getTCPMessager().sendMessage(ClientRequestType.buyInGameAbility);
+                    OnlineData.getTCPMessager().sendMessage(InGameAbilityType.empower);
+                }
             }
         });
     }
@@ -231,8 +262,14 @@ public class Shop extends PIG {
         banish.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                ViewRequestController.inGameAbilityRequest(InGameAbilityType.banish);
-                updateXP();
+                if (OnlineData.getCurrentOnlineGame() == null) {
+                    ViewRequestController.inGameAbilityRequest(InGameAbilityType.banish);
+                    updateXP();
+                }
+                else {
+                    OnlineData.getTCPMessager().sendMessage(ClientRequestType.buyInGameAbility);
+                    OnlineData.getTCPMessager().sendMessage(InGameAbilityType.banish);
+                }
             }
         });
     }
@@ -248,7 +285,9 @@ public class Shop extends PIG {
         back.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                end();
+                PanelKeyListener.typedKeys.add('p');
+                if (OnlineData.getCurrentOnlineGame() == null)
+                    end();
             }
         });
     }

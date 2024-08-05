@@ -17,7 +17,6 @@ public class OnlineData {
     public static TCPMessager tcpMessager;
     public static TCPThread tcpThread;
     public static TCPMessager tcpConnectionChecker;
-    public static TCPMessager tcpGameConnection;
     public static Game currentOnlineGame;
     public static int availablePort = 11000;
 

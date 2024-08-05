@@ -8,9 +8,7 @@ import utils.area.Circle;
 import utils.area.Polygon;
 import view.painting.ViewData;
 import view.painting.gamePanels.ImaginaryPanel;
-import view.painting.objectViews.EpsilonView;
-import view.painting.objectViews.FrameView;
-import view.painting.objectViews.ObjectView;
+import view.painting.objectViews.*;
 import view.painting.objectViews.basicEnemyView.SquarantineView;
 import view.painting.objectViews.basicEnemyView.TrigorathView;
 import view.painting.objectViews.bossView.BossAoeEffectView;
@@ -25,6 +23,7 @@ import view.painting.objectViews.normalEnemyView.archmireView.ArchmireEffectView
 import view.painting.objectViews.normalEnemyView.archmireView.ArchmireView;
 import view.painting.objectViews.projectiles.EpsilonBulletView;
 
+import java.awt.*;
 import java.util.ArrayList;
 
 public class ViewRequest {
@@ -127,13 +126,15 @@ public class ViewRequest {
     }
 
 
-    public static void addObjectView(Vector position, ModelType modelType, String id) {
+    public static void addObjectView(Vector position, ModelType modelType, Dimension size , String id) {
         switch (modelType) {
             case epsilon :
-                addObjectView(new EpsilonView(
+                EpsilonView epsilonView = new EpsilonView(
                         position,
                         id
-                ));
+                );
+                epsilonView.setSize(size);
+                addObjectView(epsilonView);
                 break;
             case trigorath:
                 addObjectView(new TrigorathView(
@@ -170,6 +171,12 @@ public class ViewRequest {
                 break;
             case epsilonBullet:
                 addObjectView(new EpsilonBulletView(position ,id));
+                break;
+            case cerberus:
+                addObjectView(new CerberusView(position ,id));
+                break;
+            case epsilonProtector:
+                addObjectView(new EpsilonProtectorView(position ,id));
                 break;
         }
     }

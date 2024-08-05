@@ -5,6 +5,7 @@ import controller.ViewRequestController;
 import controller.configs.Configs;
 import controller.enums.SkillTreeAbilityType;
 import controller.manager.GameState;
+import controller.online.OnlineData;
 import view.painting.gamePanels.Shop;
 import view.painting.gamePanels.ShopFrame;
 
@@ -34,42 +35,45 @@ public class PanelKeyListener extends KeyAdapter {
 
     @Override
     public void keyTyped(KeyEvent e) {
-        if (GameState.isInAnimation())
+        if (GameState.isInAnimation()) {
             return;
-        if (e.getKeyChar() == SHOP_KEY && !GameState.isPause()){
-            Controller.pause();
-            new Shop(new ShopFrame());
-        }
-        if (e.getKeyChar() == ARES_KEY) {
-            ViewRequestController.skillTreeAbilityRequest(SkillTreeAbilityType.ares);
-        }
-        if (e.getKeyChar() == ASTRAPE_KEY) {
-            ViewRequestController.skillTreeAbilityRequest(SkillTreeAbilityType.astrape);
-        }
-        if (e.getKeyChar() == CERBERUS_KEY) {
-            ViewRequestController.skillTreeAbilityRequest(SkillTreeAbilityType.cerberus);
-        }
-        if (e.getKeyChar() == ACESO_KEY) {
-            ViewRequestController.skillTreeAbilityRequest(SkillTreeAbilityType.aceso);
-        }
-        if (e.getKeyChar() == MELAMPUS_KEY) {
-            ViewRequestController.skillTreeAbilityRequest(SkillTreeAbilityType.melampus);
-        }
-        if (e.getKeyChar() == CHIRON_KEY) {
-            ViewRequestController.skillTreeAbilityRequest(SkillTreeAbilityType.chiron);
-        }
-        if (e.getKeyChar() == PROTEUS_KEY) {
-            ViewRequestController.skillTreeAbilityRequest(SkillTreeAbilityType.proteus);
-        }
-        if (e.getKeyChar() == EMPUSA_KEY) {
-            ViewRequestController.skillTreeAbilityRequest(SkillTreeAbilityType.empusa);
-        }
-        if (e.getKeyChar() == DOLUS_KEY) {
-            ViewRequestController.skillTreeAbilityRequest(SkillTreeAbilityType.dolus);
-        }
-        if (e.getKeyChar() == ATHENA_KEY) {
-            ViewRequestController.skillTreeAbilityRequest(SkillTreeAbilityType.athena);
         }
         typedKeys.add(e.getKeyChar());
+        if (OnlineData.getCurrentOnlineGame() == null) {
+            if (e.getKeyChar() == SHOP_KEY && !GameState.isPause()) {
+                Controller.pause();
+                new Shop(new ShopFrame());
+            }
+            if (e.getKeyChar() == ARES_KEY) {
+                ViewRequestController.skillTreeAbilityRequest(SkillTreeAbilityType.ares);
+            }
+            if (e.getKeyChar() == ASTRAPE_KEY) {
+                ViewRequestController.skillTreeAbilityRequest(SkillTreeAbilityType.astrape);
+            }
+            if (e.getKeyChar() == CERBERUS_KEY) {
+                ViewRequestController.skillTreeAbilityRequest(SkillTreeAbilityType.cerberus);
+            }
+            if (e.getKeyChar() == ACESO_KEY) {
+                ViewRequestController.skillTreeAbilityRequest(SkillTreeAbilityType.aceso);
+            }
+            if (e.getKeyChar() == MELAMPUS_KEY) {
+                ViewRequestController.skillTreeAbilityRequest(SkillTreeAbilityType.melampus);
+            }
+            if (e.getKeyChar() == CHIRON_KEY) {
+                ViewRequestController.skillTreeAbilityRequest(SkillTreeAbilityType.chiron);
+            }
+            if (e.getKeyChar() == PROTEUS_KEY) {
+                ViewRequestController.skillTreeAbilityRequest(SkillTreeAbilityType.proteus);
+            }
+            if (e.getKeyChar() == EMPUSA_KEY) {
+                ViewRequestController.skillTreeAbilityRequest(SkillTreeAbilityType.empusa);
+            }
+            if (e.getKeyChar() == DOLUS_KEY) {
+                ViewRequestController.skillTreeAbilityRequest(SkillTreeAbilityType.dolus);
+            }
+            if (e.getKeyChar() == ATHENA_KEY) {
+                ViewRequestController.skillTreeAbilityRequest(SkillTreeAbilityType.athena);
+            }
+        }
     }
 }

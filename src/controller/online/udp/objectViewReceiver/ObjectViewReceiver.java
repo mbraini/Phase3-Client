@@ -66,6 +66,7 @@ public class ObjectViewReceiver extends Thread{
                 ViewRequest.addObjectView(
                         jView.getPosition(),
                         jView.getModelType(),
+                        jView.getSize(),
                         jView.getId()
                 );
                 continue;

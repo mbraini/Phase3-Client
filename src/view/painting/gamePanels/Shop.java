@@ -7,7 +7,9 @@ import controller.Controller;
 import controller.ViewRequestController;
 import controller.configs.Configs;
 import controller.enums.InGameAbilityType;
+import controller.listeners.PanelKeyListener;
 import controller.manager.GameState;
+import controller.online.OnlineData;
 import utils.Helper;
 import view.painting.ViewData;
 import view.painting.menuPanels.PIG;
@@ -90,8 +92,10 @@ public class Shop extends PIG {
         this.addKeyListener(new KeyAdapter() {
             @Override
             public void keyTyped(KeyEvent e) {
+                PanelKeyListener.typedKeys.add('p');
                 if (e.getKeyChar() == 'p' && GameState.isPause()){
-                    end();
+                    if (OnlineData.getCurrentOnlineGame() == null)
+                        end();
                 }
             }
         });

@@ -1,6 +1,7 @@
 package controller.online.tcp;
 
 import com.google.gson.Gson;
+import controller.PauseController;
 import controller.online.OnlineData;
 import controller.online.tcp.messages.ServerOKMessage;
 import controller.online.tcp.messages.ServerYesNoMessage;
@@ -92,6 +93,12 @@ public class TCPThread extends Thread {
                         break;
                     case givePorts:
                         new ServerGivePortsMessage();
+                        break;
+                    case gamePause:
+                        PauseController.createPausePanel();
+                        break;
+                    case gameUnpause:
+                        PauseController.endPausePanel();
                         break;
                     case yes_no_message:
                         new ServerYesNoMessage().showMessage();

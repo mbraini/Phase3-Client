@@ -17,8 +17,9 @@ public class OnlineData {
     public static TCPMessager tcpMessager;
     public static TCPThread tcpThread;
     public static TCPMessager tcpConnectionChecker;
+    public static TCPMessager tcpGameConnection;
     public static Game currentOnlineGame;
-    public static int availablePort = 10000;
+    public static int availablePort = 11000;
 
     public static void initTCPMessager() {
         try {
@@ -90,4 +91,7 @@ public class OnlineData {
     public static void setCurrentOnlineGame(Game currentOnlineGame) {
         OnlineData.currentOnlineGame = currentOnlineGame;
     }
+
+
+
 }

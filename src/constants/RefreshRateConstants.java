@@ -17,4 +17,5 @@ public class RefreshRateConstants {
     public static final int ABILITY_UNSETUP_DELAY = 1000;
     public static final int HAS_SQUAD_REFRESH_RATE = 2000;
     public static final int SQUAD_BATTLE_UPDATE_REFRESH_RATE = 2000;
+    public static final int GAME_INFO_SENDER_REFRESH_RATE = 100;
 }

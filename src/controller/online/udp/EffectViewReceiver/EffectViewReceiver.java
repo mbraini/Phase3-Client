@@ -54,18 +54,26 @@ public class EffectViewReceiver extends Thread {
     }
 
     private void updateEffectView(ArrayList<JEffect> jEffects) {
+
+        ArrayList<EffectView> effectViews;
+        synchronized (ViewData.getEffectViews()) {
+            effectViews = (ArrayList<EffectView>) ViewData.getEffectViews().clone();
+        }
+        for (EffectView effectView : effectViews) {
+            if (killed(jEffects ,effectView.getId())) {
+                ViewRequest.removeEffectView(effectView.getId());
+                continue;
+            }
+        }
+
         for (JEffect jEffect : jEffects) {
-            if (created(jEffects ,jEffect)) {
+            if (created(jEffects ,jEffect.getId())) {
                 ViewRequest.addEffectView(
                         jEffect.getEffectType(),
                         jEffect.getId(),
                         jEffect.getPolygon(),
                         jEffect.getCircle()
                 );
-                continue;
-            }
-            if (killed(jEffects ,jEffect)) {
-                ViewRequest.removeEffectView(jEffect.getId());
                 continue;
             }
             EffectView effectView = ViewData.getEffectView(jEffect.getId());
@@ -90,21 +98,21 @@ public class EffectViewReceiver extends Thread {
 
     }
 
-    private boolean killed(ArrayList<JEffect> jEffects, JEffect jEffect) {
-        if (!contains(jEffects ,jEffect) && contains(lastEffects ,jEffect))
+    private boolean killed(ArrayList<JEffect> jEffects, String id) {
+        if (!contains(jEffects ,id) && contains(lastEffects ,id) || !contains(jEffects ,id) && contains(lastEffects ,id))
             return true;
         return false;
     }
 
-    private boolean created(ArrayList<JEffect> jEffects, JEffect jEffect) {
-        if (contains(jEffects ,jEffect) && !contains(lastEffects ,jEffect))
+    private boolean created(ArrayList<JEffect> jEffects, String id) {
+        if (contains(jEffects ,id) && !contains(lastEffects ,id))
             return true;
         return false;
     }
 
-    private boolean contains(ArrayList<JEffect> jEffects ,JEffect jEffect) {
+    private boolean contains(ArrayList<JEffect> jEffects ,String id) {
         for (JEffect effect : jEffects) {
-            if (effect.getId().equals(jEffect.getId()))
+            if (effect.getId().equals(id))
                 return true;
         }
         return false;

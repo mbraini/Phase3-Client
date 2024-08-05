@@ -51,8 +51,21 @@ public class FrameViewReceiver extends Thread{
     }
 
     private void updateFrameViews(ArrayList<JFrameView> jFrameViews) {
+
+        ArrayList<FrameView> frameViews;
+        synchronized (ViewData.getFrames()) {
+            frameViews = (ArrayList<FrameView>) ViewData.getFrames().clone();
+        }
+
+        for (FrameView frameView : frameViews) {
+            if (killed(jFrameViews ,frameView.getId())) {
+                ViewRequest.removeFrameView(frameView.getId());
+                continue;
+            }
+        }
+
         for (JFrameView jFrameView : jFrameViews) {
-            if (created(jFrameViews ,jFrameView)) {
+            if (created(jFrameViews ,jFrameView.getId())) {
                 ViewRequest.addFrameView(
                         new FrameView(
                                 jFrameView.getPosition(),
@@ -60,10 +73,6 @@ public class FrameViewReceiver extends Thread{
                                 jFrameView.getId()
                         )
                 );
-                continue;
-            }
-            if (killed(jFrameViews ,jFrameView)) {
-                ViewRequest.removeFrameView(jFrameView.getId());
                 continue;
             }
 
@@ -76,23 +85,23 @@ public class FrameViewReceiver extends Thread{
 
     }
 
-    private boolean killed(ArrayList<JFrameView> jFrameViews ,JFrameView jFrameView) {
-        if (!contains(jFrameViews ,jFrameView) && contains(lastFrameViews ,jFrameView)) {
+    private boolean killed(ArrayList<JFrameView> jFrameViews ,String id) {
+        if (!contains(jFrameViews ,id) && contains(lastFrameViews ,id) || (!contains(jFrameViews ,id) && !contains(lastFrameViews ,id))) {
             return true;
         }
         return false;
     }
 
-    private boolean created(ArrayList<JFrameView> jFrameViews ,JFrameView jFrameView) {
-        if (contains(jFrameViews ,jFrameView) && !contains(lastFrameViews ,jFrameView)) {
+    private boolean created(ArrayList<JFrameView> jFrameViews ,String id) {
+        if (contains(jFrameViews ,id) && !contains(lastFrameViews ,id)) {
             return true;
         }
         return false;
     }
 
-    private boolean contains(ArrayList<JFrameView> jFrameViews ,JFrameView jFrameView) {
+    private boolean contains(ArrayList<JFrameView> jFrameViews ,String id) {
         for (JFrameView frame : jFrameViews) {
-            if (frame.getId().equals(jFrameView.getId()))
+            if (frame.getId().equals(id))
                 return true;
         }
         return false;

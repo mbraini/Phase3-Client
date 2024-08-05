@@ -10,6 +10,7 @@ import view.painting.gamePanels.ShopFrame;
 
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.util.ArrayList;
 
 public class PanelKeyListener extends KeyAdapter {
 
@@ -24,6 +25,7 @@ public class PanelKeyListener extends KeyAdapter {
     public static char EMPUSA_KEY = 'd';
     public static char DOLUS_KEY = 'c';
     public static char ATHENA_KEY = 'r';
+    public static ArrayList<Character> typedKeys = new ArrayList<>();
 
     public PanelKeyListener(){
         SHOP_KEY = Configs.KeyConfigs.SHOP_KEY;
@@ -68,5 +70,6 @@ public class PanelKeyListener extends KeyAdapter {
         if (e.getKeyChar() == ATHENA_KEY) {
             ViewRequestController.skillTreeAbilityRequest(SkillTreeAbilityType.athena);
         }
+        typedKeys.add(e.getKeyChar());
     }
 }

@@ -23,6 +23,7 @@ import view.painting.objectViews.normalEnemyView.OmenoctView;
 import view.painting.objectViews.normalEnemyView.WyrmView;
 import view.painting.objectViews.normalEnemyView.archmireView.ArchmireEffectView;
 import view.painting.objectViews.normalEnemyView.archmireView.ArchmireView;
+import view.painting.objectViews.projectiles.EpsilonBulletView;
 
 import java.util.ArrayList;
 
@@ -166,6 +167,9 @@ public class ViewRequest {
                 break;
             case orb:
                 addObjectView(new OrbView(position ,id));
+                break;
+            case epsilonBullet:
+                addObjectView(new EpsilonBulletView(position ,id));
                 break;
         }
     }

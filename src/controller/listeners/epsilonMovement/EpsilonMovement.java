@@ -9,6 +9,7 @@ import model.objectModel.fighters.EpsilonModel;
 
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.util.ArrayList;
 
 public class EpsilonMovement extends KeyAdapter {
     private EpsilonModel epsilon;
@@ -20,6 +21,8 @@ public class EpsilonMovement extends KeyAdapter {
     private boolean RIGHT_RELEASED;
     private boolean UP_RELEASED;
     private boolean DOWN_RELEASED;
+    public static ArrayList<Integer> pressedKeys = new ArrayList<>();
+    public static ArrayList<Integer> releasedKeys = new ArrayList<>();
     public static int LEFT_KEY = 37;
     public static int UP_KEY = 38;
     public static int RIGHT_KEY = 39;
@@ -35,6 +38,12 @@ public class EpsilonMovement extends KeyAdapter {
         if (GameState.isInAnimation())
             return;
         detectKeyPressed(e.getKeyCode());
+        synchronized (pressedKeys) {
+            if (!pressedKeys.contains(e.getKeyCode()))
+                pressedKeys.add(e.getKeyCode());
+        }
+        if (epsilon == null)
+            return;
         addAcc();
     }
 
@@ -43,6 +52,16 @@ public class EpsilonMovement extends KeyAdapter {
         if (GameState.isInAnimation())
             return;
         detectKeyReleased(e.getKeyCode());
+        synchronized (releasedKeys) {
+            if (!releasedKeys.contains(e.getKeyCode()))
+                releasedKeys.add(e.getKeyCode());
+        }
+        synchronized (pressedKeys) {
+            if (pressedKeys.contains(e.getKeyCode()))
+                pressedKeys.remove(Integer.valueOf(e.getKeyCode()));
+        }
+        if (epsilon == null)
+            return;
         addDec();
     }
 

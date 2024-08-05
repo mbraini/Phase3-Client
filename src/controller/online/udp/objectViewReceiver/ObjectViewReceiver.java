@@ -23,8 +23,6 @@ public class ObjectViewReceiver extends Thread{
     private DatagramPacket datagramPacket;
     private final Type type;
     private ArrayList<JView> lastJViews = new ArrayList<>();
-    private volatile boolean added;
-    private volatile boolean deleted;
 
     public ObjectViewReceiver() {
         gson = new Gson();
@@ -43,11 +41,7 @@ public class ObjectViewReceiver extends Thread{
             try {
                 String JObjects = new String(Helper.getDataUntil(datagramPacket.getData() ,datagramPacket.getLength()));
                 ArrayList<JView> jViews = gson.fromJson(JObjects , type);
-                deleted = false;
-                added = false;
                 updateObjectView(jViews);
-                if (!deleted && !added && jViews.size() != lastJViews.size())
-                    continue;
                 lastJViews = jViews;
             }
             catch (Exception e) {
@@ -57,20 +51,23 @@ public class ObjectViewReceiver extends Thread{
     }
 
     private void updateObjectView(ArrayList<JView> jViews) {
-
+        ArrayList<ObjectView> views;
+        synchronized (ViewData.getViews()) {
+            views = (ArrayList<ObjectView>) ViewData.getViews().clone();
+        }
+        for (ObjectView view : views) {
+            if (killed(jViews ,view.getId())) {
+                ViewRequest.removeObjectView(view.getId());
+                continue;
+            }
+        }
         for (JView jView : jViews) {
-            if (created(jViews ,jView)) {
-                added = true;
+            if (created(jViews ,jView.getId())) {
                 ViewRequest.addObjectView(
                         jView.getPosition(),
                         jView.getModelType(),
                         jView.getId()
                 );
-                continue;
-            }
-            if (killed(jViews ,jView)) {
-                deleted = true;
-                ViewRequest.removeObjectView(jView.getId());
                 continue;
             }
 
@@ -88,22 +85,22 @@ public class ObjectViewReceiver extends Thread{
 
     }
 
-    private boolean killed(ArrayList<JView> jViews, JView jView) {
-        if (!contains(jViews ,jView) && contains(lastJViews ,jView))
+    private boolean killed(ArrayList<JView> jViews, String id) {
+        if (!contains(jViews ,id) && contains(lastJViews ,id) || (!contains(jViews ,id) && !contains(lastJViews ,id)))
             return true;
         return false;
     }
 
-    private boolean created(ArrayList<JView> jViews, JView jView) {
-        if (contains(jViews ,jView) && !contains(lastJViews ,jView)) {
+    private boolean created(ArrayList<JView> jViews, String id) {
+        if (contains(jViews ,id) && !contains(lastJViews ,id)) {
             return true;
         }
         return false;
     }
 
-    private boolean contains(ArrayList<JView> jViews, JView jView) {
+    private boolean contains(ArrayList<JView> jViews, String id) {
         for (JView view : jViews) {
-            if (view.getId().equals(jView.getId()))
+            if (view.getId().equals(id))
                 return true;
         }
         return false;

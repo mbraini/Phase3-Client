@@ -5,6 +5,7 @@ import controller.online.OnlineData;
 import controller.online.tcp.messages.ServerOKMessage;
 import controller.online.tcp.messages.ServerYesNoMessage;
 import controller.online.tcp.serverMessages.messages.ServerGetPortsMessage;
+import controller.online.tcp.serverMessages.messages.ServerGivePortsMessage;
 import controller.online.tcp.serverMessages.recponces.ServerBuyCallRecponce;
 import controller.online.tcp.serverMessages.recponces.ServerCreateSquadRecponce;
 import controller.online.tcp.serverMessages.recponces.ServerDonateXPRecponce;
@@ -88,6 +89,9 @@ public class TCPThread extends Thread {
                         break;
                     case getPorts:
                         new ServerGetPortsMessage();
+                        break;
+                    case givePorts:
+                        new ServerGivePortsMessage();
                         break;
                     case yes_no_message:
                         new ServerYesNoMessage().showMessage();

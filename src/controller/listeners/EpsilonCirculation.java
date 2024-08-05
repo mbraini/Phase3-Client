@@ -14,6 +14,9 @@ import java.awt.event.MouseMotionAdapter;
 
 public class EpsilonCirculation extends MouseMotionAdapter {
     private EpsilonModel epsilon;
+
+    public static Vector lastTimePosition = new Vector();
+
     public EpsilonCirculation(){
         if (OnlineData.getCurrentOnlineGame() == null)
             this.epsilon = ModelData.getEpsilon();
@@ -21,17 +24,18 @@ public class EpsilonCirculation extends MouseMotionAdapter {
 
     @Override
     public void mouseMoved(MouseEvent e) {
+        Vector mousePosition = new Vector(e.getX(), e.getY());
+        mousePosition = Math.VectorAdd(
+                mousePosition,
+                new Vector(
+                        -SizeConstants.SCREEN_SIZE.width,
+                        -SizeConstants.SCREEN_SIZE.height
+                )
+        );
+        lastTimePosition = mousePosition.clone();
         if (GameState.isInAnimation())
             return;
         if (OnlineData.getCurrentOnlineGame() == null) {
-            Vector mousePosition = new Vector(e.getX(), e.getY());
-            mousePosition = Math.VectorAdd(
-                    mousePosition,
-                    new Vector(
-                            -SizeConstants.SCREEN_SIZE.width,
-                            -SizeConstants.SCREEN_SIZE.height
-                    )
-            );
             Vector epsilonPosition = epsilon.getPosition();
             if (mousePosition.Equals(epsilonPosition))
                 return;

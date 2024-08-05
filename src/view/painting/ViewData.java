@@ -1,10 +1,12 @@
 package view.painting;
 
+import controller.PauseController;
 import controller.enums.InGameAbilityType;
 import controller.enums.SkillTreeAbilityType;
 import controller.listeners.EpsilonAiming;
 import controller.listeners.EpsilonCirculation;
 import controller.listeners.epsilonMovement.EpsilonMovement;
+import controller.online.udp.AbilityReceiver.JAbility;
 import view.painting.abilities.*;
 import view.painting.objectViews.FrameView;
 import view.painting.objectViews.ObjectView;
@@ -269,5 +271,55 @@ public class ViewData {
             }
         }
         return null;
+    }
+
+    public static void initAbilities() {
+        for (SkillTreeAbilityType skillTreeAbilityType : SkillTreeAbilityType.values()) {
+            addAbilityWithType(
+                    0 ,0 ,true ,skillTreeAbilityType
+            );
+        }
+        addAbilityWithType(
+                0 ,0 ,true ,InGameAbilityType.slaughter
+        );
+        addAbilityWithType(
+                0 ,0 ,true ,InGameAbilityType.slumber
+        );
+    }
+
+    public static AbilityView getAbility(JAbility jAbility) {
+        synchronized (abilityViews) {
+            for (AbilityView abilityView : abilityViews) {
+                if (jAbility.getSkillTreeAbilityType() != null) {
+                    if (jAbility.getSkillTreeAbilityType().equals(SkillTreeAbilityType.ares) && abilityView instanceof AresView)
+                        return abilityView;
+                    if (jAbility.getSkillTreeAbilityType().equals(SkillTreeAbilityType.astrape) && abilityView instanceof AstrapeView)
+                        return abilityView;
+                    if (jAbility.getSkillTreeAbilityType().equals(SkillTreeAbilityType.cerberus) && abilityView instanceof CerberusView)
+                        return abilityView;
+                    if (jAbility.getSkillTreeAbilityType().equals(SkillTreeAbilityType.melampus) && abilityView instanceof MelampusView)
+                        return abilityView;
+                    if (jAbility.getSkillTreeAbilityType().equals(SkillTreeAbilityType.aceso) && abilityView instanceof AcesoView)
+                        return abilityView;
+                    if (jAbility.getSkillTreeAbilityType().equals(SkillTreeAbilityType.athena) && abilityView instanceof AthenaView)
+                        return abilityView;
+                    if (jAbility.getSkillTreeAbilityType().equals(SkillTreeAbilityType.chiron) && abilityView instanceof ChironView)
+                        return abilityView;
+                    if (jAbility.getSkillTreeAbilityType().equals(SkillTreeAbilityType.dolus) && abilityView instanceof DolusView)
+                        return abilityView;
+                    if (jAbility.getSkillTreeAbilityType().equals(SkillTreeAbilityType.empusa) && abilityView instanceof EmpusaView)
+                        return abilityView;
+                    if (jAbility.getSkillTreeAbilityType().equals(SkillTreeAbilityType.proteus) && abilityView instanceof ProteusView)
+                        return abilityView;
+                }
+                else {
+                    if (jAbility.getInGameAbilityType().equals(InGameAbilityType.slaughter) && abilityView instanceof SlaughterView)
+                        return abilityView;
+                    if (jAbility.getInGameAbilityType().equals(InGameAbilityType.slumber) && abilityView instanceof SlumberView)
+                        return abilityView;
+                }
+            }
+            return null;
+        }
     }
 }

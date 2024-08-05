@@ -63,6 +63,14 @@ public class AbilityView {
         this.timePassed = timePassed;
     }
 
+    public boolean isAvailable() {
+        return isAvailable;
+    }
+
+    public void setAvailable(boolean available) {
+        isAvailable = available;
+    }
+
     public void setUp() {
         theta =(int) Math.toDegrees((timePassed * (1d) / coolDownTime) * Math.PI * 2);
         if (isAvailable) {

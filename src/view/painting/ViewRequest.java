@@ -12,6 +12,9 @@ import view.painting.objectViews.*;
 import view.painting.objectViews.basicEnemyView.SquarantineView;
 import view.painting.objectViews.basicEnemyView.TrigorathView;
 import view.painting.objectViews.bossView.BossAoeEffectView;
+import view.painting.objectViews.bossView.HandView;
+import view.painting.objectViews.bossView.HeadView;
+import view.painting.objectViews.bossView.PunchView;
 import view.painting.objectViews.effectView.EffectView;
 import view.painting.objectViews.miniBossEnemyView.BarricadosView;
 import view.painting.objectViews.miniBossEnemyView.BlackOrbLaserEffectView;
@@ -21,7 +24,7 @@ import view.painting.objectViews.normalEnemyView.OmenoctView;
 import view.painting.objectViews.normalEnemyView.WyrmView;
 import view.painting.objectViews.normalEnemyView.archmireView.ArchmireEffectView;
 import view.painting.objectViews.normalEnemyView.archmireView.ArchmireView;
-import view.painting.objectViews.projectiles.EpsilonBulletView;
+import view.painting.objectViews.projectiles.*;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -177,6 +180,36 @@ public class ViewRequest {
                 break;
             case epsilonProtector:
                 addObjectView(new EpsilonProtectorView(position ,id));
+                break;
+            case slaughterBullet:
+                addObjectView(new SlaughterBulletView(position, id));
+                break;
+            case hand:
+                addObjectView(new HandView(position ,id));
+                break;
+            case head:
+                addObjectView(new HeadView(position, id));
+                break;
+            case punch:
+                addObjectView(new PunchView(position, id));
+                break;
+            case necropickBullet:
+                addObjectView(new NecropickBulletView(position, id));
+                break;
+            case collective:
+                addObjectView(new CollectiveView(position, id));
+                break;
+            case bossBullet:
+                addObjectView(new BossBulletView(position, id));
+                break;
+            case wyrmBullet:
+                addObjectView(new WyrmBulletView(position, id));
+                break;
+            case epsilonVertex:
+                addObjectView(new EpsilonVertexView(position, id));
+                break;
+            case omenoctBullet:
+                addObjectView(new OmenoctBulletView(position, id));
                 break;
         }
     }

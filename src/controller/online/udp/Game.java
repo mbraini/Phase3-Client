@@ -21,6 +21,7 @@ public class Game {
         render = new Render();
         ViewRequest.resetAll();
         ViewData.resetAll();
+        ViewData.initAbilities();
     }
 
     public GameInfoReceiver getGameInfoReceiver() {

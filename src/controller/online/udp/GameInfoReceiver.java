@@ -1,6 +1,8 @@
 package controller.online.udp;
 
+import controller.online.udp.AbilityReceiver.AbilityViewReceiver;
 import controller.online.udp.EffectViewReceiver.EffectViewReceiver;
+import controller.online.udp.VariablesReceiver.VariablesReceiver;
 import controller.online.udp.frameViewReceiver.FrameViewReceiver;
 import controller.online.udp.objectViewReceiver.ObjectViewReceiver;
 

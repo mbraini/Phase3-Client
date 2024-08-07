@@ -1,16 +1,14 @@
 package model;
 
-import controller.enums.InGameAbilityType;
 import model.inGameAbilities.*;
-import model.inGameAbilities.Dismay.Dismay;
 import model.objectModel.effects.EffectModel;
 import model.objectModel.fighters.AbstractEnemy;
 import model.objectModel.fighters.EpsilonModel;
+import model.objectModel.fighters.finalBoss.bossAI.ImaginaryObject;
 import model.objectModel.frameModel.FrameModel;
 import model.objectModel.ObjectModel;
 import model.skillTreeAbilities.SkillTreeAbility;
 
-import javax.swing.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -28,6 +26,7 @@ public class ModelData {
     }
     private static EpsilonModel epsilon;
     private static FrameModel epsilonFrame;
+    private static ArrayList<ImaginaryObject> solidObjects = new ArrayList<>();
 
     public static void resetAll() {
         frames = new ArrayList<>();
@@ -158,4 +157,26 @@ public class ModelData {
     public static void setEpsilonFrame(FrameModel epsilonFrame) {
         ModelData.epsilonFrame = epsilonFrame;
     }
+
+    public static ArrayList<ImaginaryObject> getSolidObjects() {
+        return solidObjects;
+    }
+
+    public static void setSolidObjects(ArrayList<ImaginaryObject> solidObjects) {
+        ModelData.solidObjects = solidObjects;
+    }
+
+    public static synchronized void addImaginaryObject(ImaginaryObject imaginaryObject) {
+        solidObjects.add(imaginaryObject);
+    }
+
+    public static synchronized void removeImaginaryObject(String id) {
+        for (ImaginaryObject imaginaryObject : solidObjects) {
+            if (imaginaryObject.getId().equals(id)) {
+                solidObjects.remove(imaginaryObject);
+                return;
+            }
+        }
+    }
+
 }

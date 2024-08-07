@@ -42,7 +42,6 @@ public class TCPThread extends Thread {
         new ConnectionChecker(OnlineData.getTcpConnectionChecker()).start();
         try {
             while (true) {
-                System.out.println("TCP THREAD!");
                 String json = OnlineData.getTCPMessager().readMessage();
                 ServerMessageType type = gson.fromJson(json ,ServerMessageType.class);
                 switch (type) {

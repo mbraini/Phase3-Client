@@ -136,7 +136,6 @@ public abstract class Controller {
                     @Override
                     public void actionPerformed(ActionEvent e) {
                         GameState.setPause(false);
-                        System.out.println("UNPAUSE!");
                     }
                 });
                 timer.setRepeats(false);

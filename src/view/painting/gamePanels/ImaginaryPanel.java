@@ -55,9 +55,6 @@ public class ImaginaryPanel extends JPanel {
             abilityView.draw(g2d);
         }
         for (int i = 0; i < effectViews.size() ;i++){
-            if (effectViews.get(i) == null) {
-                System.out.println("NULL IN PAINTER :(");
-            }
             effectViews.get(i).setEffect();
             effectViews.get(i).draw(g2d);
         }

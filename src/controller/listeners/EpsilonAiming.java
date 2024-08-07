@@ -9,6 +9,7 @@ import controller.manager.GameState;
 import controller.online.OnlineData;
 import model.ModelData;
 import model.objectModel.fighters.EpsilonModel;
+import utils.Math;
 import utils.Vector;
 import view.painting.soundEffects.Sound;
 
@@ -27,6 +28,7 @@ public class EpsilonAiming extends MouseAdapter {
     }
 
     public volatile static Vector lastTimeClicked = new Vector();
+    public volatile static Vector lastTimeClickedOnPanel = new Vector();
 
     @Override
     public void mousePressed(MouseEvent e) {
@@ -47,7 +49,6 @@ public class EpsilonAiming extends MouseAdapter {
                     e.getY() - SizeConstants.SCREEN_SIZE.height
             );
             lastTimeClicked = clickedPoint.clone();
-            System.out.println(lastTimeClicked.x);
             if (clickedPoint.Equals(epsilon.getPosition()))
                 return;
             if (!ViewRequestController.shootRequest(clickedPoint))
@@ -65,11 +66,21 @@ public class EpsilonAiming extends MouseAdapter {
             }
         }
         else {
-            lastTimeClicked = new Vector(
+            Vector newClick = new Vector(
                     e.getX() - SizeConstants.SCREEN_SIZE.width,
                     e.getY() - SizeConstants.SCREEN_SIZE.height
             );
-            System.out.println(lastTimeClicked.x);
+            if (newClick.Equals(lastTimeClickedOnPanel)) {
+                lastTimeClicked = Math.VectorAdd(
+                        newClick,
+                        new Vector(0.0001 ,0.001)
+                );
+                lastTimeClickedOnPanel = lastTimeClicked;
+            }
+            else {
+                lastTimeClicked = newClick;
+                lastTimeClickedOnPanel = newClick;
+            }
         }
     }
 }

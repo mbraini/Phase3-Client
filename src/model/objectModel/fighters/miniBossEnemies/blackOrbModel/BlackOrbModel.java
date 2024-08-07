@@ -1,12 +1,16 @@
 package model.objectModel.fighters.miniBossEnemies.blackOrbModel;
 
+import constants.SizeConstants;
 import controller.enums.AbstractEnemyType;
 import controller.manager.Spawner;
 import controller.manager.loading.SkippedByJson;
+import model.ModelData;
 import model.ModelRequests;
 import model.objectModel.effects.BlackOrbAoeEffectModel;
 import model.objectModel.fighters.AbstractEnemy;
+import model.objectModel.fighters.finalBoss.bossAI.ImaginaryObject;
 import model.objectModel.frameModel.FrameModel;
+import utils.Math;
 import utils.Vector;
 
 import java.util.ArrayList;
@@ -29,7 +33,25 @@ public class BlackOrbModel extends AbstractEnemy {
         blackOrbThread = new BlackOrbThread(this);
         type = AbstractEnemyType.blackOrb;
         this.center = center;
+        addSolidObject();
     }
+
+    private void addSolidObject() {
+        ArrayList<Vector> vertices = new ArrayList<>();
+        Vector firstVertex = Math.VectorAdd(
+                center,
+                new Vector(0 , SizeConstants.BLACK_ORB_DIAGONAL_SIZE + SizeConstants.ORB_DIMENSION.height)
+        );
+        for (int i = 0 ;i < 5 ;i++) {
+            vertices.add(firstVertex);
+            firstVertex = Math.RotateByTheta(firstVertex ,center , java.lang.Math.PI / 5);
+        }
+        ModelData.addImaginaryObject(new ImaginaryObject(
+                vertices,
+                id
+        ));
+    }
+
 
     public ArrayList<OrbModel> getOrbModels() {
         return orbModels;
@@ -129,6 +151,7 @@ public class BlackOrbModel extends AbstractEnemy {
     public void checkDeath() {
         if (orbModels.isEmpty()) {
             ModelRequests.removeAbstractEnemy(id);
+            ModelData.removeImaginaryObject(id);
         }
     }
 }

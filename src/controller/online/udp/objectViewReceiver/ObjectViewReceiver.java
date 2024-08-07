@@ -121,7 +121,7 @@ public class ObjectViewReceiver extends Thread{
         } catch (SocketException e) {
             throw new RuntimeException(e);
         }
-        datagramPacket = new DatagramPacket(new byte[10000] ,10000);
+        datagramPacket = new DatagramPacket(new byte[20000] ,20000);
     }
 
 }

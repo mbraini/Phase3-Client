@@ -3,10 +3,13 @@ package model.objectModel.fighters.miniBossEnemies.barricadosModel;
 import constants.SizeConstants;
 import constants.TimeConstants;
 import controller.ObjectController;
+import model.ModelData;
 import model.interfaces.Fader;
 import model.interfaces.collisionInterfaces.HasVertices;
 import model.interfaces.collisionInterfaces.IsPolygon;
+import model.objectModel.fighters.finalBoss.bossAI.ImaginaryObject;
 import model.objectModel.fighters.miniBossEnemies.MiniBossModel;
+import utils.Helper;
 import utils.Math;
 import utils.Vector;
 
@@ -72,10 +75,15 @@ public abstract class BarricadosModel extends MiniBossModel implements Fader , I
                         SizeConstants.BARRICADOS_DIMENSION.height /2d
                 )
         ));
+        ModelData.addImaginaryObject(new ImaginaryObject(
+                (ArrayList<Vector>) vertices.clone(),
+                id
+        ));
     }
 
     @Override
     public void die() {
         ObjectController.removeObject(this);
+        ModelData.removeImaginaryObject(id);
     }
 }

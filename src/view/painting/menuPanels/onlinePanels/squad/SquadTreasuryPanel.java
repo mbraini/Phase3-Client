@@ -88,7 +88,6 @@ public class SquadTreasuryPanel extends PIG {
                 String donatedXP = xpText.getText();
                 if (!donatedXP.isEmpty()) {
                     new ClientDonateXPRequest(donatedXP).sendRequest();
-                    System.out.println();
                 }
             }
         });

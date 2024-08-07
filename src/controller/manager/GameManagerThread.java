@@ -66,17 +66,15 @@ public class GameManagerThread extends Thread{
         interfaces();
         checkAoeDamage();
         if (time % TimeConstants.SAVE_GAME_TIME == 0) {
-            synchronized (jsonLock) {
-                new GameSaver(
-                        models,
-                        effects,
-                        frames,
-                        abstractEnemies ,
-                        abilities ,
-                        skillTreeAbilities,
-                        "src/controller/manager/saving/inGameSaved"
-                ).save();
-            }
+            new GameSaver(
+                    models,
+                    effects,
+                    frames,
+                    abstractEnemies ,
+                    abilities ,
+                    skillTreeAbilities,
+                    "src/controller/manager/saving/inGameSaved"
+            ).save();
         }
         GameState.update(models , TimeConstants.MANAGER_THREAD_REFRESH_TIME);
         killObjects();
@@ -119,9 +117,4 @@ public class GameManagerThread extends Thread{
             }
         }
     }
-
-    public static Object getJsonLock() {
-        return jsonLock;
-    }
-
 }

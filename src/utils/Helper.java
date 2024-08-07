@@ -7,6 +7,10 @@ import constants.DistanceConstants;
 import constants.SizeConstants;
 import controller.configs.Configs;
 import controller.configs.helper.GameConfigsJsonHelper;
+import model.ModelData;
+import model.logics.collision.Collision;
+import model.logics.collision.CollisionHandler;
+import model.objectModel.fighters.finalBoss.bossAI.ImaginaryObject;
 import model.objectModel.frameModel.FrameModel;
 
 import java.awt.*;
@@ -124,7 +128,36 @@ public class Helper {
                     (2 * epsilonFrame.getPosition().x + epsilonFrame.getSize().width) / 2d,
                     epsilonFrame.getPosition().y + epsilonFrame.getSize().height + size.height            );
         }
+        solution = checkSolids(solution ,size);
         return solution;
+    }
+
+    private static Vector checkSolids(Vector center, Dimension size) {
+        ArrayList<Vector> vertices = new ArrayList<>();
+        vertices.add(new Vector(
+                center.x - size.width / 2d,
+                center.y - size.height /2d
+        ));
+        vertices.add(new Vector(
+                center.x + size.width / 2d,
+                center.y - size.height /2d
+        ));
+        vertices.add(new Vector(
+                center.x + size.width / 2d,
+                center.y + size.height /2d
+        ));
+        vertices.add(new Vector(
+                center.x - size.width / 2d,
+                center.y + size.height /2d
+        ));
+        ImaginaryObject imaginaryObject = new ImaginaryObject(vertices);
+        ArrayList<ImaginaryObject> solidObjects = (ArrayList<ImaginaryObject>) ModelData.getSolidObjects().clone();
+        for (ImaginaryObject solidObject : solidObjects) {
+            if (Collision.IsColliding(solidObject ,imaginaryObject)) {
+                new CollisionHandler(imaginaryObject ,solidObject).handle();
+            }
+        }
+        return imaginaryObject.getPosition();
     }
 
     public static void resetAllJsons(String path) {

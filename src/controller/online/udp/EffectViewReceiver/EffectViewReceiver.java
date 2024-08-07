@@ -2,12 +2,10 @@ package controller.online.udp.EffectViewReceiver;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
-import model.objectModel.effects.EffectModel;
 import utils.Helper;
 import view.painting.ViewData;
 import view.painting.ViewRequest;
 import view.painting.objectViews.effectView.EffectView;
-import view.painting.objectViews.normalEnemyView.archmireView.ArchmireEffectView;
 
 import java.awt.*;
 import java.io.IOException;
@@ -47,7 +45,7 @@ public class EffectViewReceiver extends Thread {
                 lastEffects = jEffects;
             }
             catch (Exception e) {
-                System.out.println("EXPETION!");
+
             }
 
         }

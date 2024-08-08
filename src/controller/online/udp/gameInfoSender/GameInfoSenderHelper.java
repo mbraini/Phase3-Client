@@ -1,4 +1,4 @@
-package controller.online.gameInfoSender;
+package controller.online.udp.gameInfoSender;
 
 import utils.Vector;
 

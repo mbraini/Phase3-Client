@@ -23,6 +23,7 @@ public class EffectViewReceiver extends Thread {
     private final Type type;
     private ArrayList<JEffect> lastEffects;
     private Gson gson;
+    private volatile boolean canReceive = true;
 
     public EffectViewReceiver() {
         gson = new Gson();
@@ -32,7 +33,7 @@ public class EffectViewReceiver extends Thread {
 
     @Override
     public void run() {
-        while (true) {
+        while (canReceive) {
             try {
                 datagramSocket.receive(datagramPacket);
             } catch (IOException e) {
@@ -133,5 +134,7 @@ public class EffectViewReceiver extends Thread {
         datagramPacket = new DatagramPacket(new byte[10000] ,10000);
     }
 
-
+    public void setCanReceive(boolean canReceive) {
+        this.canReceive = canReceive;
+    }
 }

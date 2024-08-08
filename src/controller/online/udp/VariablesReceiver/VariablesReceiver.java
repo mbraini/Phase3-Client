@@ -19,6 +19,7 @@ public class VariablesReceiver extends Thread{
     private DatagramSocket datagramSocket;
     private DatagramPacket datagramPacket;
     private Gson gson;
+    private volatile boolean canReceive = true;
 
 
     public VariablesReceiver() {
@@ -27,7 +28,7 @@ public class VariablesReceiver extends Thread{
 
     @Override
     public void run() {
-        while (true) {
+        while (canReceive) {
 
             try {
                 datagramSocket.receive(datagramPacket);
@@ -70,5 +71,7 @@ public class VariablesReceiver extends Thread{
         datagramPacket = new DatagramPacket(new byte[10000] ,10000);
     }
 
-
+    public void setCanReceive(boolean canReceive) {
+        this.canReceive = canReceive;
+    }
 }

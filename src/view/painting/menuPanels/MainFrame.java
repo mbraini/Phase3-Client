@@ -5,6 +5,7 @@ import constants.SizeConstants;
 import view.painting.menuPanels.onlinePanels.LogInPanel;
 import view.painting.menuPanels.onlinePanels.OnlineChoicePanel;
 import view.painting.menuPanels.onlinePanels.SignUpPanel;
+import view.painting.menuPanels.onlinePanels.WaitingRoomPanel;
 import view.painting.menuPanels.onlinePanels.squad.*;
 
 import javax.swing.*;
@@ -25,6 +26,7 @@ public class MainFrame extends JFrame {
     public static NoBattleSquadPanel noBattleSquadPanel;
     public static SquadTreasuryPanel squadTreasuryPanel;
     public static SquadTreasuryShopPanel squadTreasuryShopPanel;
+    public static WaitingRoomPanel waitingRoomPanel;
 
     public MainFrame(){
         this.setLayout(null);
@@ -55,6 +57,7 @@ public class MainFrame extends JFrame {
         noBattleSquadPanel = new NoBattleSquadPanel();
         squadTreasuryPanel = new SquadTreasuryPanel();
         squadTreasuryShopPanel = new SquadTreasuryShopPanel();
+        waitingRoomPanel = new WaitingRoomPanel();
 
         mainPanel.add(menuPanel);
         mainPanel.add(settingsPanel);
@@ -70,5 +73,6 @@ public class MainFrame extends JFrame {
         mainPanel.add(noBattleSquadPanel);
         mainPanel.add(squadTreasuryPanel);
         mainPanel.add(squadTreasuryShopPanel);
+        mainPanel.add(waitingRoomPanel);
     }
 }

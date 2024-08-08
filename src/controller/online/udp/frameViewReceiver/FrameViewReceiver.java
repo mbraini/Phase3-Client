@@ -22,6 +22,7 @@ public class FrameViewReceiver extends Thread{
     private Gson gson;
     private final Type type;
     private volatile ArrayList<JFrameView> lastFrameViews;
+    private volatile boolean canReceive = true;
 
     public FrameViewReceiver() {
         gson = new Gson();
@@ -31,7 +32,7 @@ public class FrameViewReceiver extends Thread{
 
     @Override
     public void run() {
-        while (!isInterrupted()) {
+        while (canReceive) {
 
             try {
                 datagramSocket.receive(datagramPacket);
@@ -124,5 +125,7 @@ public class FrameViewReceiver extends Thread{
         datagramPacket = new DatagramPacket(new byte[10000] ,10000);
     }
 
-
+    public void setCanReceive(boolean canReceive) {
+        this.canReceive = canReceive;
+    }
 }

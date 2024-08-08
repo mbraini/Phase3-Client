@@ -11,7 +11,7 @@ public class HandView extends BossHelperView {
     public HandView(Vector position , String id){
         this.position = position;
         this.id = id;
-        this.image = ImageConstants.omenoct;
+        this.image = ImageConstants.hand;
         this.size = new Dimension(
                 SizeConstants.HAND_DIMENSION.width,
                 SizeConstants.HAND_DIMENSION.height

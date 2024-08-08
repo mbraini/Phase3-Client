@@ -23,6 +23,7 @@ public class ObjectViewReceiver extends Thread{
     private DatagramPacket datagramPacket;
     private final Type type;
     private ArrayList<JView> lastJViews = new ArrayList<>();
+    private volatile boolean canReceive = true;
 
     public ObjectViewReceiver() {
         gson = new Gson();
@@ -31,7 +32,7 @@ public class ObjectViewReceiver extends Thread{
 
     @Override
     public void run() {
-        while (!isInterrupted()) {
+        while (canReceive) {
 
             try {
                 datagramSocket.receive(datagramPacket);
@@ -124,4 +125,7 @@ public class ObjectViewReceiver extends Thread{
         datagramPacket = new DatagramPacket(new byte[20000] ,20000);
     }
 
+    public void setCanReceive(boolean canReceive) {
+        this.canReceive = canReceive;
+    }
 }

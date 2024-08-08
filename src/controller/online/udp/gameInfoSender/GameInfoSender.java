@@ -1,4 +1,4 @@
-package controller.online.gameInfoSender;
+package controller.online.udp.gameInfoSender;
 
 import com.google.gson.Gson;
 import constants.ControllerConstants;
@@ -9,9 +9,6 @@ import controller.listeners.PanelKeyListener;
 import controller.listeners.epsilonMovement.EpsilonMovement;
 import controller.online.OnlineData;
 
-import javax.swing.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
@@ -26,6 +23,7 @@ public class GameInfoSender extends Thread{
     private GameInfoSenderHelper helper;
     private final int port;
     private volatile DatagramPacket datagramPacket;
+    private volatile boolean canSend = true;
 
     public GameInfoSender(int port) {
         this.port = port;
@@ -40,7 +38,7 @@ public class GameInfoSender extends Thread{
     @Override
     public void run() {
 
-        while (!isInterrupted()) {
+        while (canSend) {
             try {
                 Thread.sleep(RefreshRateConstants.GAME_INFO_SENDER_REFRESH_RATE);
             } catch (InterruptedException e) {
@@ -83,5 +81,13 @@ public class GameInfoSender extends Thread{
         PanelKeyListener.typedKeys = new ArrayList<>();
         EpsilonMovement.pressedKeys = new ArrayList<>();
         EpsilonMovement.releasedKeys = new ArrayList<>();
+    }
+
+    public void setCanSend(boolean canSend) {
+        this.canSend = canSend;
+    }
+
+    public void end() {
+        canSend = false;
     }
 }

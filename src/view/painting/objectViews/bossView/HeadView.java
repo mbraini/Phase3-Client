@@ -11,7 +11,7 @@ public class HeadView extends BossHelperView {
     public HeadView(Vector position , String id){
         this.position = position;
         this.id = id;
-        this.image = ImageConstants.omenoct;
+        this.image = ImageConstants.smiley;
         this.size = new Dimension(
                 SizeConstants.HEAD_DIMENSION.width,
                 SizeConstants.HEAD_DIMENSION.height

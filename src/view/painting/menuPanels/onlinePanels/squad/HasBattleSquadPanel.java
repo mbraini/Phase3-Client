@@ -3,6 +3,8 @@ package view.painting.menuPanels.onlinePanels.squad;
 import constants.RefreshRateConstants;
 import constants.SizeConstants;
 import controller.online.tcp.ClientState;
+import controller.online.tcp.GameType;
+import controller.online.tcp.requests.ClientInviteGameRequest;
 import controller.online.tcp.requests.updateBattleSquadPanel.ClientUpdateBattleSquadRequest;
 import controller.online.tcp.requests.updateBattleSquadPanel.GetBattleSquadMemberHelper;
 import view.Application;
@@ -18,6 +20,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class HasBattleSquadPanel extends PIG {
 
@@ -38,6 +41,7 @@ public class HasBattleSquadPanel extends PIG {
     private final int wUnit;
     private final int hUnit;
     private final int hHelperUnit;
+    private HashMap<JButton ,String> map;
 
     public HasBattleSquadPanel() {
         this.setLayout(null);
@@ -208,6 +212,7 @@ public class HasBattleSquadPanel extends PIG {
         this.mySquadMembers = mySquadMembers;
         this.me = me;
         this.enemySquadMembers = enemySquadMembers;
+        map = new HashMap<>();
 
         enemyTeamL.setText(enemySquadName);
         updateMySquad();
@@ -270,14 +275,24 @@ public class HasBattleSquadPanel extends PIG {
         }
         MyButton battleButton;
         if (isMySquad) {
-            battleButton = new MyButton(
-                    new Point(),
-                    new Dimension(),
-                    "colosseum",
-                    myPanel
-            );
+            if (!player.getUsername().equals(me.getUsername())) {
+                battleButton = new MyButton(
+                        new Point(),
+                        new Dimension(),
+                        "colosseum",
+                        myPanel
+                );
+            }
+            else
+                return;
             if (!player.getClientState().equals(ClientState.online) || player.playedColosseum())
                 battleButton.setEnabled(false);
+            battleButton.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    new ClientInviteGameRequest(GameType.colosseum ,map.get(battleButton)).sendRequest();
+                }
+            });
         }
         else {
             battleButton = new MyButton(
@@ -288,7 +303,14 @@ public class HasBattleSquadPanel extends PIG {
             );
             if (!player.getClientState().equals(ClientState.online) || player.playedMonomachia())
                 battleButton.setEnabled(false);
+            battleButton.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    new ClientInviteGameRequest(GameType.monomachia ,map.get(battleButton)).sendRequest();
+                }
+            });
         }
+        map.put(battleButton ,player.getUsername());
     }
 
 }

@@ -12,14 +12,15 @@ public class PauseController {
 
     public static void createPausePanel() {
         shopFrame = new ShopFrame();
-        shop = new Shop(shopFrame);
+        shop = new Shop(shopFrame ,true);
         shop.grabFocus();
         shop.revalidate();
         shop.repaint();
     }
 
     public static void endPausePanel() {
-        shop.end();
+        if (shop != null)
+            shop.end();
     }
 
 }

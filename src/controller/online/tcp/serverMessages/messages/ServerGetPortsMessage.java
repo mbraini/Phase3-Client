@@ -2,9 +2,10 @@ package controller.online.tcp.serverMessages.messages;
 
 import controller.online.OnlineData;
 import controller.online.tcp.ClientRequestType;
-import controller.online.gameInfoSender.GameInfoSender;
 import controller.online.udp.Game;
 import controller.online.udp.GameInfoReceiver;
+import view.Application;
+import view.painting.menuPanels.MainFrame;
 
 public class ServerGetPortsMessage {
 
@@ -26,6 +27,8 @@ public class ServerGetPortsMessage {
         OnlineData.getTCPMessager().sendMessage(gameInfoReceiver.framePort);
         OnlineData.getTCPMessager().sendMessage(gameInfoReceiver.objectPort);
         OnlineData.getTCPMessager().sendMessage(gameInfoReceiver.variablesPort);
+
+        Application.endMainFrame();
     }
 
 }

@@ -21,6 +21,7 @@ public class AbilityViewReceiver extends Thread{
     private DatagramPacket datagramPacket;
     private final Type type;
     private Gson gson;
+    private volatile boolean canReceive = true;
 
     public AbilityViewReceiver() {
         gson = new Gson();
@@ -31,7 +32,7 @@ public class AbilityViewReceiver extends Thread{
     @Override
     public void run() {
 
-        while (!isInterrupted()) {
+        while (canReceive) {
 
             try {
                 datagramSocket.receive(datagramPacket);
@@ -96,5 +97,7 @@ public class AbilityViewReceiver extends Thread{
         datagramPacket = new DatagramPacket(new byte[10000] ,10000);
     }
 
-
+    public void setCanReceive(boolean canReceive) {
+        this.canReceive = canReceive;
+    }
 }

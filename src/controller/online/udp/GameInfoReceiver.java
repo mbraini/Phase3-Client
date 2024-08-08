@@ -36,10 +36,6 @@ public class GameInfoReceiver {
         variablesReceiver.start();
     }
 
-    public void endAll() {
-        ///todo
-    }
-
 
     public int getFramePort() {
         return framePort;
@@ -101,5 +97,14 @@ public class GameInfoReceiver {
         objectViewReceiver.setPort(objectPort);
         variablesReceiver.setPort(variablesPort);
         abilityViewReceiver.setPort(abilityPort);
+    }
+
+    public void end() {
+        frameViewReceiver.setCanReceive(false);
+        effectViewReceiver.setCanReceive(false);
+        objectViewReceiver.setCanReceive(false);
+        variablesReceiver.setCanReceive(false);
+        abilityViewReceiver.setCanReceive(false);
+
     }
 }

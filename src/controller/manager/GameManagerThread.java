@@ -64,7 +64,6 @@ public class GameManagerThread extends Thread{
             skillTreeAbilities =(ArrayList<SkillTreeAbility>) ModelData.getSkillTreeAbilities().clone();
         }
         interfaces();
-        checkAoeDamage();
         if (time % TimeConstants.SAVE_GAME_TIME == 0) {
             new GameSaver(
                     models,
@@ -78,10 +77,6 @@ public class GameManagerThread extends Thread{
         }
         GameState.update(models , TimeConstants.MANAGER_THREAD_REFRESH_TIME);
         killObjects();
-    }
-
-    private void checkAoeDamage() {
-
     }
 
     private void interfaces() {

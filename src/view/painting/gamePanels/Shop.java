@@ -11,6 +11,7 @@ import controller.listeners.PanelKeyListener;
 import controller.manager.GameState;
 import controller.online.OnlineData;
 import controller.online.tcp.ClientRequestType;
+import controller.online.tcp.requests.ClientSpawnAllyRequest;
 import utils.Helper;
 import view.painting.ViewData;
 import view.painting.menuPanels.PIG;
@@ -22,6 +23,7 @@ import java.awt.*;
 import java.awt.event.*;
 
 public class Shop extends PIG {
+    private boolean isOnline;
     private ShopFrame shopFrame;
     private MyButton back;
     private MyPanel banish;
@@ -37,8 +39,9 @@ public class Shop extends PIG {
     private MyLabel dismayL;
     private MyLabel slumberL;
     private MyLabel slaughterL;
+    private MyButton spawnAlly;
 
-    public Shop(ShopFrame shopFrame){
+    public Shop(ShopFrame shopFrame ,boolean isOnline){
         this.setLayout(null);
         this.setBounds(0,0, SizeConstants.GAME_WIDTH, SizeConstants.GAME_HEIGHT);
         this.setBackground(Color.BLACK);
@@ -52,11 +55,29 @@ public class Shop extends PIG {
         initSlaughter();
         initLabels();
         initKeyListener();
+        this.isOnline = isOnline;
+        if (isOnline)
+            initSpawn();
         this.shopFrame.add(this);
         this.grabFocus();
         this.setFocusable(true);
         initBack();
         this.setVisible(true);
+    }
+
+    private void initSpawn() {
+        spawnAlly = new MyButton(
+                new Point(0 ,0),
+                new Dimension(getWidth() / 5 ,getHeight() / 16),
+                "spawn an ally",
+                this
+        );
+        spawnAlly.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                new ClientSpawnAllyRequest().sendRequest();
+            }
+        });
     }
 
     private void initSlaughter() {

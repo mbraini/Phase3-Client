@@ -15,21 +15,43 @@ public class EndGamePanel extends PIG {
     private final int xpGained;
     private final int totalShots;
     private final int successfulShots;
-    private final int enemyKilled;
-    private final int timePassed;
+    private int enemyKilled;
+    private final int survivalTime;
+    private int mostXpGained;
+    private int mostSurvivalTime;
     private MyButton menu;
     private final EndGameFrame endGameFrame;
-    public EndGamePanel(EndGameFrame endGameFrame ,int xpGained ,int enemyKilled ,int totalShots ,int successfulShots ,int timePassed){
-        this.setLayout(null);
-        this.setBounds(0,0, SizeConstants.GAME_WIDTH, SizeConstants.GAME_HEIGHT);
-        this.setBackground(Color.BLACK);
+    private boolean onlineGame;
+    public EndGamePanel(EndGameFrame endGameFrame ,int xpGained ,int enemyKilled ,int totalShots ,int successfulShots ,int survivalTime){
         this.endGameFrame = endGameFrame;
-
-        this.timePassed = timePassed;
+        this.survivalTime = survivalTime;
         this.successfulShots = successfulShots;
         this.enemyKilled = enemyKilled;
         this.xpGained = xpGained;
         this.totalShots = totalShots;
+        setUp();
+    }
+
+    public EndGamePanel(EndGameFrame endGameFrame , int xpGained , int survivalTime, int totalShots ,
+                        int successfulShots ,int mostXpGained ,int mostSurvivalTime)
+    {
+
+        this.endGameFrame = endGameFrame;
+        this.xpGained = xpGained;
+        this.survivalTime = survivalTime;
+        this.totalShots = totalShots;
+        this.successfulShots = successfulShots;
+        this.mostXpGained = mostXpGained;
+        this.mostSurvivalTime = mostSurvivalTime;
+        onlineGame = true;
+
+        setUp();
+    }
+
+    private void setUp() {
+        this.setLayout(null);
+        this.setBounds(0,0, SizeConstants.GAME_WIDTH, SizeConstants.GAME_HEIGHT);
+        this.setBackground(Color.BLACK);
         endGameFrame.add(this);
         this.setFocusable(true);
         this.grabFocus();
@@ -70,14 +92,28 @@ public class EndGamePanel extends PIG {
         super.paintComponent(g);
         g.drawImage(ImageConstants.endGameImage ,getWidth() / 3 ,getHeight() / 6 ,getWidth() / 3 ,getHeight() / 3 ,null);
         g.setFont(new Font(null,Font.BOLD ,15));
-        g.setColor(Color.MAGENTA);
-        g.drawString("xp earned: " + xpGained ,getWidth() / 7 * 4 ,getHeight() / 14 * 8);
-        g.setColor(Color.RED);
-        g.drawString("successfulShots: " + successfulShots ,getWidth() / 7 * 2 ,getHeight() / 14 * 8);
-        g.drawString("enemyKilled: " + enemyKilled,getWidth() / 7 * 3 ,getHeight() / 14 * 10);
-        g.setColor(Color.WHITE);
-        g.drawString("timePassed: " + timePassed,getWidth() / 7 ,getHeight() / 14 * 10);
-        g.setColor(Color.BLUE);
-        g.drawString("totalShots: " + totalShots,getWidth() / 7 * 5 ,getHeight() / 14 * 10);
+        if (!onlineGame) {
+            g.setColor(Color.MAGENTA);
+            g.drawString("xp earned: " + xpGained, getWidth() / 7 * 4, getHeight() / 14 * 8);
+            g.setColor(Color.RED);
+            g.drawString("successfulShots: " + successfulShots, getWidth() / 7 * 2, getHeight() / 14 * 8);
+            g.drawString("enemyKilled: " + enemyKilled, getWidth() / 7 * 3, getHeight() / 14 * 10);
+            g.setColor(Color.WHITE);
+            g.drawString("survival time: " + survivalTime, getWidth() / 7, getHeight() / 14 * 10);
+            g.setColor(Color.BLUE);
+            g.drawString("totalShots: " + totalShots, getWidth() / 7 * 5, getHeight() / 14 * 10);
+        }
+        else {
+            g.setColor(Color.MAGENTA);
+            g.drawString("xp earned: " + xpGained, getWidth() / 7 * 3, getHeight() / 14 * 8);
+            g.setColor(Color.RED);
+            g.drawString("successfulShots: " + successfulShots, getWidth() / 7 * 5, getHeight() / 14 * 10);
+            g.setColor(Color.WHITE);
+            g.drawString("most survival time record: " + mostSurvivalTime, 10, getHeight() / 14 * 10 );
+            g.drawString("most xp earned record: " + mostXpGained, 10, getHeight() / 14 * 8 );
+            g.drawString("survival time: " + survivalTime, getWidth() / 7 * 3, getHeight() / 14 * 10);
+            g.setColor(Color.BLUE);
+            g.drawString("totalShots: " + totalShots, getWidth() / 7 * 5, getHeight() / 14 * 8);
+        }
     }
 }

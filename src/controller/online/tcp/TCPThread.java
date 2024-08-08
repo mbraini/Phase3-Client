@@ -1,26 +1,18 @@
 package controller.online.tcp;
 
 import com.google.gson.Gson;
+import controller.ModelRequestController;
 import controller.PauseController;
 import controller.online.OnlineData;
 import controller.online.tcp.messages.ServerOKMessage;
 import controller.online.tcp.messages.ServerYesNoMessage;
+import controller.online.tcp.serverMessages.messages.ServerEndGameMessage;
 import controller.online.tcp.serverMessages.messages.ServerGetPortsMessage;
 import controller.online.tcp.serverMessages.messages.ServerGivePortsMessage;
-import controller.online.tcp.serverMessages.recponces.ServerBuyCallRecponce;
-import controller.online.tcp.serverMessages.recponces.ServerCreateSquadRecponce;
-import controller.online.tcp.serverMessages.recponces.ServerDonateXPRecponce;
-import controller.online.tcp.serverMessages.recponces.ServerGetAllSquadsRecponce;
-import controller.online.tcp.serverMessages.recponces.ServerUpdateTreasuryRecponce;
-import controller.online.tcp.serverMessages.recponces.ServerHasSquadRecponce;
-import controller.online.tcp.serverMessages.recponces.ServerHasSquadBattleRecponce;
-import controller.online.tcp.serverMessages.recponces.ServerJoinSquadRecponce;
-import controller.online.tcp.serverMessages.recponces.ServerKickOutRecponce;
-import controller.online.tcp.serverMessages.recponces.ServerKillSquadRecponce;
-import controller.online.tcp.serverMessages.recponces.ServerLeaveSquadRecponce;
-import controller.online.tcp.serverMessages.recponces.ServerUpdateBattleSquadRecponce;
-import controller.online.tcp.serverMessages.recponces.ServerUpdateHasSquadRecponce;
-import controller.online.tcp.serverMessages.recponces.ServerUpdateTreasuryShopRecponce;
+import controller.online.tcp.serverMessages.messages.giveStats.ServerGiveStatsMessage;
+import controller.online.tcp.serverMessages.recponces.*;
+import view.Application;
+import view.painting.menuPanels.MainFrame;
 
 import javax.swing.*;
 
@@ -98,6 +90,33 @@ public class TCPThread extends Thread {
                         break;
                     case gameUnpause:
                         PauseController.endPausePanel();
+                        break;
+                    case endGame:
+                        new ServerEndGameMessage().end();
+                        break;
+                    case giveStats:
+                        new ServerGiveStatsMessage().receiveMessage();
+                        break;
+                    case waitingRoom:
+                        Application.endMainFrame();
+                        Application.startMainFrame();
+                        MainFrame.menuPanel.end();
+                        MainFrame.waitingRoomPanel.start();
+                        break;
+                    case waitingTime:
+                        MainFrame.waitingRoomPanel.update(OnlineData.getTCPMessager().readMessage());
+                        break;
+                    case endWaitingTime:
+                        Application.endMainFrame();
+                        break;
+                    case randomizeKeys:
+                        ModelRequestController.randomizeKeys();
+                        break;
+                    case reorderKeys:
+                        ModelRequestController.reorderKeys();
+                        break;
+                    case spawnAlly:
+                        new ServerSpawnAllyRecponce().receiveRecponce();
                         break;
                     case yes_no_message:
                         new ServerYesNoMessage().showMessage();

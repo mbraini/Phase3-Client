@@ -42,7 +42,7 @@ public class PanelKeyListener extends KeyAdapter {
         if (OnlineData.getCurrentOnlineGame() == null) {
             if (e.getKeyChar() == SHOP_KEY && !GameState.isPause()) {
                 Controller.pause();
-                new Shop(new ShopFrame());
+                new Shop(new ShopFrame() ,false);
             }
             if (e.getKeyChar() == ARES_KEY) {
                 ViewRequestController.skillTreeAbilityRequest(SkillTreeAbilityType.ares);

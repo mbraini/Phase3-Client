@@ -180,10 +180,8 @@ public class NoSquadPanel extends PIG {
                 @Override
                 public void mouseClicked(MouseEvent e) {
                     if (lastClicked != null) {
-//                        lastClicked.setBackground(Color.BLACK);
                         panelButtonMap.get(lastClicked).setVisible(false);
                     }
-//                    myPanel.setBackground(new Color(204, 230, 255));
                     panelButtonMap.get(myPanel).setVisible(true);
                     lastClicked = myPanel;
                 }

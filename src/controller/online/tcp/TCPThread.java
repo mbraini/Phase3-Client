@@ -11,6 +11,7 @@ import controller.online.tcp.serverMessages.messages.ServerGetPortsMessage;
 import controller.online.tcp.serverMessages.messages.ServerGivePortsMessage;
 import controller.online.tcp.serverMessages.messages.giveStats.ServerGiveStatsMessage;
 import controller.online.tcp.serverMessages.recponces.*;
+import controller.online.tcp.serverMessages.recponces.squadHistory.ServerGetBattleSquadHistoryRecponce;
 import view.Application;
 import view.painting.menuPanels.MainFrame;
 
@@ -78,6 +79,9 @@ public class TCPThread extends Thread {
                         break;
                     case buyCall:
                         new ServerBuyCallRecponce().receiveRecponce();
+                        break;
+                    case battleHistory:
+                        new ServerGetBattleSquadHistoryRecponce().receiveRecponce();
                         break;
                     case getPorts:
                         new ServerGetPortsMessage();

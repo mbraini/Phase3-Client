@@ -3,12 +3,8 @@ package view.painting.menuPanels.onlinePanels.squad;
 import constants.RefreshRateConstants;
 import constants.SizeConstants;
 import controller.online.tcp.ClientState;
-import controller.online.tcp.requests.ClientHasSquadBattleRequest;
+import controller.online.tcp.requests.*;
 import controller.online.tcp.requests.updateNoSquadPanel.GetSquadMembersJsonHelper;
-import controller.online.tcp.requests.ClientHasSquadRequest;
-import controller.online.tcp.requests.ClientKickOutRequest;
-import controller.online.tcp.requests.ClientKillSquadRequest;
-import controller.online.tcp.requests.ClientLeaveSquadRequest;
 import controller.online.tcp.requests.updateNoSquadPanel.ClientUpdateHasSquadRequest;
 import view.painting.menuPanels.MainFrame;
 import view.painting.menuPanels.PIG;
@@ -36,6 +32,7 @@ public class HasSquadPanel extends PIG {
     private MyButton kickOut;
     private MyButton killSquad;
     private MyButton battleSquad;
+    private MyButton battleHistory;
     private String ownerUsername;
     private JPanel lastClicked;
     private HashMap<JPanel ,MyButton> panelButtonMap;
@@ -65,9 +62,19 @@ public class HasSquadPanel extends PIG {
         initBack();
         initKickOut();
         initKillSquad();
+        initBattleHistory();
         initBattleSquad();
         initMaps();
         initAls();
+    }
+
+    private void initBattleHistory() {
+        battleHistory = new MyButton(
+                new Point(getWidth() / 10 ,getHeight() / 20 * 18),
+                new Dimension(getWidth() / 5 ,getHeight() / 20),
+                "battle history",
+                this
+        );
     }
 
     private void initMaps() {
@@ -126,6 +133,15 @@ public class HasSquadPanel extends PIG {
             }
         });
 
+        battleHistory.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                end();
+                MainFrame.squadBattleHistory.start();
+                new ClientGetBattleHistoryRequest().sendRequest();
+            }
+        });
+
     }
 
     private void initSquadName() {
@@ -139,7 +155,7 @@ public class HasSquadPanel extends PIG {
 
     private void initBattleSquad() {
         battleSquad = new MyButton(
-                new Point(getWidth() / 5 * 3 ,getHeight() / 20 * 18),
+                new Point(getWidth() / 10 * 4 ,getHeight() / 20 * 18),
                 new Dimension(getWidth() / 5 ,getHeight() / 20),
                 "battle squad",
                 this
@@ -148,7 +164,7 @@ public class HasSquadPanel extends PIG {
 
     private void initBack() {
         back = new MyButton(
-                new Point(getWidth() / 5 ,getHeight() / 20 * 18),
+                new Point(getWidth() / 10 * 7 ,getHeight() / 20 * 18),
                 new Dimension(getWidth() / 5 ,getHeight() / 20),
                 "back",
                 this

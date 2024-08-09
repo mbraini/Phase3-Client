@@ -27,6 +27,7 @@ public class MainFrame extends JFrame {
     public static SquadTreasuryPanel squadTreasuryPanel;
     public static SquadTreasuryShopPanel squadTreasuryShopPanel;
     public static WaitingRoomPanel waitingRoomPanel;
+    public static SquadBattleHistory squadBattleHistory;
 
     public MainFrame(){
         this.setLayout(null);
@@ -58,6 +59,7 @@ public class MainFrame extends JFrame {
         squadTreasuryPanel = new SquadTreasuryPanel();
         squadTreasuryShopPanel = new SquadTreasuryShopPanel();
         waitingRoomPanel = new WaitingRoomPanel();
+        squadBattleHistory = new SquadBattleHistory();
 
         mainPanel.add(menuPanel);
         mainPanel.add(settingsPanel);
@@ -74,5 +76,6 @@ public class MainFrame extends JFrame {
         mainPanel.add(squadTreasuryPanel);
         mainPanel.add(squadTreasuryShopPanel);
         mainPanel.add(waitingRoomPanel);
+        mainPanel.add(squadBattleHistory);
     }
 }

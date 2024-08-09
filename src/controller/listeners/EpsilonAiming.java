@@ -39,7 +39,7 @@ public class EpsilonAiming extends MouseAdapter {
         }
         if (GameState.isPause())
             return;
-        if (OnlineData.getTCPMessager() == null) {
+        if (OnlineData.getCurrentOnlineGame() == null) {
             if (GameState.getTime() - timer < TimeConstants.EPSILON_SHOOTIN_TIME)
                 return;
             timer = GameState.getTime();

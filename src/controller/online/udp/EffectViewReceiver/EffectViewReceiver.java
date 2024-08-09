@@ -131,7 +131,7 @@ public class EffectViewReceiver extends Thread {
         } catch (SocketException e) {
             throw new RuntimeException(e);
         }
-        datagramPacket = new DatagramPacket(new byte[10000] ,10000);
+        datagramPacket = new DatagramPacket(new byte[25000] ,25000);
     }
 
     public void setCanReceive(boolean canReceive) {

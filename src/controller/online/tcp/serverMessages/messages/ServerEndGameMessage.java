@@ -9,7 +9,7 @@ public class ServerEndGameMessage {
 
         Game game = OnlineData.getCurrentOnlineGame();
         game.end();
-
+        OnlineData.setCurrentOnlineGame(null);
     }
 
 }

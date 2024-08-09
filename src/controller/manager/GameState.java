@@ -29,10 +29,6 @@ public class GameState {
     private volatile static boolean isDizzy;
     private volatile static boolean isInAnimation;
 
-    public GameState(){
-        /////todo
-    }
-
 
     public static void reset(){
         enemyKilled = 0;

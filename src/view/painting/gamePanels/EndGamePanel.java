@@ -5,6 +5,7 @@ import com.google.gson.Gson;
 import constants.ImageConstants;
 import constants.SizeConstants;
 import controller.online.OnlineData;
+import controller.online.tcp.requests.ClientEndingOfflineGameRequest;
 import controller.online.tcp.requests.ClientSendMatchHistoryRequest;
 import view.Application;
 import view.painting.menuPanels.PIG;
@@ -55,7 +56,10 @@ public class EndGamePanel extends PIG {
         menu.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                new ClientSendMatchHistoryRequest().sendRequest();
+                if (OnlineData.getTCPMessager() != null) {
+                    new ClientSendMatchHistoryRequest().sendRequest();
+                    new ClientEndingOfflineGameRequest().sendRequest();
+                }
                 endGameFrame.dispose();
                 Application.startMainFrame();
             }

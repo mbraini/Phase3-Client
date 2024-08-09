@@ -41,11 +41,9 @@ public class Impact {
                 Vector direction;
                 direction = Math.VectorAdd(Math.ScalarInVector(-1, collisionPoint), ModelData.getModels().get(i).getPosition());
                 distance = Math.VectorSize(direction);
-                //////////////////todo
                 if (distance >= this.distance) {
                     continue;
                 }
-                //////////////////todo
                 if (distance == 0)
                     continue;
                 double dashDistance;

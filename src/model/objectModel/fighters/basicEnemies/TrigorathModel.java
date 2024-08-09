@@ -76,7 +76,6 @@ public class TrigorathModel extends BasicEnemyModel implements Ability, ImpactAb
                         ModelData.getModels().getFirst().getPosition()
                 )
         );
-        /////////////todo
         if (distance >= SizeConstants.TRIGORATH_DIMENTION.width + SizeConstants.EPSILON_DIMENSION.width + 160){
             velocity = Math.VectorWithSize(velocity , VelocityConstants.ENEMY_LINEAR_SPEED * 1.6);
             omega = VelocityConstants.ENEMY_ROTATION_SPEED * 1.6;
@@ -113,7 +112,6 @@ public class TrigorathModel extends BasicEnemyModel implements Ability, ImpactAb
             velocity = Math.VectorWithSize(velocity , VelocityConstants.ENEMY_LINEAR_SPEED * 0.9);
             omega = VelocityConstants.ENEMY_ROTATION_SPEED * 0.9;
         }
-        ////////////todo
     }
 
     @Override

@@ -16,4 +16,10 @@ public class CostConstants {
     public static final int SQUAD_XP_COST = 100;
     public static final int ADONIS_XP_COST = 400;
     public static final int GEFJON_XP_COST = 300;
+    public static final int BANISH_COST = 100;
+    public static final int EMPOWER_COST = 75;
+    public static final int HEAL_COST = 50;
+    public static final int SLAUGHTER_COST = 200;
+    public static final int SLUMBER_COST = 150;
+    public static final int DISMAY_COST = 125;
 }

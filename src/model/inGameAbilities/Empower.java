@@ -1,5 +1,6 @@
 package model.inGameAbilities;
 
+import constants.CostConstants;
 import constants.RefreshRateConstants;
 import constants.TimeConstants;
 import controller.enums.InGameAbilityType;
@@ -18,7 +19,7 @@ public class Empower extends InGameAbility{
 
     public Empower(){
         type = InGameAbilityType.empower;
-        xpCost = 75;
+        xpCost = CostConstants.EMPOWER_COST;
         initTimer();
     }
 

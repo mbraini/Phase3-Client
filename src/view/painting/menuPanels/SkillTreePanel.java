@@ -1,6 +1,7 @@
 package view.painting.menuPanels;
 
 
+import constants.CostConstants;
 import constants.ImageConstants;
 import constants.SizeConstants;
 import controller.ViewRequestController;
@@ -12,6 +13,7 @@ import view.painting.objectViews.panels.MyButton;
 import view.painting.objectViews.panels.MyLabel;
 import view.painting.objectViews.panels.MyPanel;
 
+import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 
@@ -37,6 +39,16 @@ public class SkillTreePanel extends PIG {
     private MyLabel melampusL;
     private MyLabel cerberusL;
     private MyLabel athenaL;
+    private MyLabel aresXPL;
+    private MyLabel acesoXPL;
+    private MyLabel proteusXPL;
+    private MyLabel astrapeXPL;
+    private MyLabel chironXPL;
+    private MyLabel dolusXPL;
+    private MyLabel empusaXPL;
+    private MyLabel melampusXPL;
+    private MyLabel cerberusXPL;
+    private MyLabel athenaXPL;
     private MyLabel xp;
     private final int widthUnit;
     private final int heightUnit;
@@ -79,6 +91,8 @@ public class SkillTreePanel extends PIG {
                 "xp: " + Configs.GameConfigs.XP,
                 this
         );
+        xp.setBorder(BorderFactory.createLineBorder(Color.MAGENTA ,2));
+        xp.setForeground(Color.MAGENTA);
     }
 
     private void initAthena() {
@@ -101,6 +115,14 @@ public class SkillTreePanel extends PIG {
                 "athena",
                 this
         );
+        athenaXPL = new MyLabel(
+                new Point(athenaL.getX() ,athenaL.getY() - heightUnit * 3 / 4),
+                new Dimension(athenaL.getWidth() ,athenaL.getHeight()),
+                CostConstants.ATHENA_UNLOCK_COST + "",
+                this
+        );
+        athenaXPL.setBorder(null);
+        athenaXPL.setForeground(Color.MAGENTA);
     }
 
     private void initCerberus() {
@@ -123,6 +145,14 @@ public class SkillTreePanel extends PIG {
                 "cerberus",
                 this
         );
+        cerberusXPL = new MyLabel(
+                new Point(cerberusL.getX() ,cerberusL.getY() - heightUnit * 3 / 4),
+                new Dimension(cerberusL.getWidth() ,cerberusL.getHeight()),
+                CostConstants.CERBERUS_UNLOCK_COST + "",
+                this
+        );
+        cerberusXPL.setBorder(null);
+        cerberusXPL.setForeground(Color.MAGENTA);
     }
 
     private void updateXP() {
@@ -150,6 +180,14 @@ public class SkillTreePanel extends PIG {
                 "astrape",
                 this
         );
+        astrapeXPL = new MyLabel(
+                new Point(astrapeL.getX() ,astrapeL.getY() - heightUnit * 3 / 4),
+                new Dimension(astrapeL.getWidth() ,astrapeL.getHeight()),
+                CostConstants.ASTRAPE_UNLOCK_COST + "",
+                this
+        );
+        astrapeXPL.setBorder(null);
+        astrapeXPL.setForeground(Color.MAGENTA);
     }
 
     private void initDolus() {
@@ -172,6 +210,14 @@ public class SkillTreePanel extends PIG {
                 "dolus",
                 this
         );
+        dolusXPL = new MyLabel(
+                new Point(dolusL.getX() ,dolusL.getY() - heightUnit * 3 / 4),
+                new Dimension(dolusL.getWidth() ,dolusL.getHeight()),
+                CostConstants.DOLUS_UNLOCK_COST + "",
+                this
+        );
+        dolusXPL.setBorder(null);
+        dolusXPL.setForeground(Color.MAGENTA);
     }
 
     private void initEmpusa() {
@@ -194,6 +240,14 @@ public class SkillTreePanel extends PIG {
                 "empusa",
                 this
         );
+        empusaXPL = new MyLabel(
+                new Point(empusaL.getX() ,empusaL.getY() - heightUnit * 3 / 4),
+                new Dimension(empusaL.getWidth() ,empusaL.getHeight()),
+                CostConstants.EMPUSA_UNLOCK_COST + "",
+                this
+        );
+        empusaXPL.setBorder(null);
+        empusaXPL.setForeground(Color.MAGENTA);
     }
 
     private void initChiron() {
@@ -216,6 +270,14 @@ public class SkillTreePanel extends PIG {
                 "chiron",
                 this
         );
+        chironXPL = new MyLabel(
+                new Point(chironL.getX() ,chironL.getY() - heightUnit * 3 / 4),
+                new Dimension(chironL.getWidth() ,chironL.getHeight()),
+                CostConstants.CHIRON_UNLOCK_COST + "",
+                this
+        );
+        chironXPL.setBorder(null);
+        chironXPL.setForeground(Color.MAGENTA);
     }
 
     private void initMelampus() {
@@ -238,6 +300,14 @@ public class SkillTreePanel extends PIG {
                 "melampus",
                 this
         );
+        melampusXPL = new MyLabel(
+                new Point(melampusL.getX() ,melampusL.getY() - heightUnit * 3 / 4),
+                new Dimension(melampusL.getWidth() ,melampusL.getHeight()),
+                CostConstants.MELAMPUS_UNLOCK_COST + "",
+                this
+        );
+        melampusXPL.setBorder(null);
+        melampusXPL.setForeground(Color.MAGENTA);
     }
 
 
@@ -314,6 +384,14 @@ public class SkillTreePanel extends PIG {
                 "ares",
                 this
         );
+        aresXPL = new MyLabel(
+                new Point(aresL.getX() ,aresL.getY() - heightUnit * 3 / 4),
+                new Dimension(aresL.getWidth() ,aresL.getHeight()),
+                CostConstants.ARES_UNLOCK_COST + "",
+                this
+        );
+        aresXPL.setBorder(null);
+        aresXPL.setForeground(Color.MAGENTA);
     }
 
     private void initAceso() {
@@ -336,6 +414,14 @@ public class SkillTreePanel extends PIG {
                 "aceso",
                 this
         );
+        acesoXPL = new MyLabel(
+                new Point(acesoL.getX() ,acesoL.getY() - heightUnit * 3 / 4),
+                new Dimension(acesoL.getWidth() ,acesoL.getHeight()),
+                CostConstants.ACESO_UNLOCK_COST + "",
+                this
+        );
+        acesoXPL.setBorder(null);
+        acesoXPL.setForeground(Color.MAGENTA);
     }
     private void initProteus() {
         proteus.addMouseListener(new MouseAdapter() {
@@ -357,6 +443,14 @@ public class SkillTreePanel extends PIG {
                 "proteus",
                 this
         );
+        proteusXPL = new MyLabel(
+                new Point(proteusL.getX() ,proteusL.getY() - heightUnit * 3 / 4),
+                new Dimension(proteusL.getWidth() ,proteusL.getHeight()),
+                CostConstants.PROTEUS_UNLOCK_COST + "",
+                this
+        );
+        proteusXPL.setBorder(null);
+        proteusXPL.setForeground(Color.MAGENTA);
     }
 
     private void initBack() {

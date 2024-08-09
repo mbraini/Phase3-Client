@@ -1,5 +1,6 @@
 package model.inGameAbilities;
 
+import constants.CostConstants;
 import constants.DistanceConstants;
 import controller.enums.InGameAbilityType;
 import model.ModelData;
@@ -12,7 +13,7 @@ public class Banish extends InGameAbility{
 
     public Banish(EpsilonModel epsilon){
         type = InGameAbilityType.banish;
-        xpCost = 100;
+        xpCost = CostConstants.BANISH_COST;
         this.epsilon = epsilon;
     }
 

@@ -1,5 +1,6 @@
 package model.inGameAbilities;
 
+import constants.CostConstants;
 import controller.enums.InGameAbilityType;
 import model.ModelData;
 import model.objectModel.fighters.EpsilonModel;
@@ -10,7 +11,7 @@ public class Heal extends InGameAbility{
 
     public Heal(EpsilonModel epsilon){
         type = InGameAbilityType.heal;
-        xpCost = 50;
+        xpCost = CostConstants.HEAL_COST;
         this.epsilon = epsilon;
     }
 

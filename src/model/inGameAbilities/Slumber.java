@@ -1,5 +1,6 @@
 package model.inGameAbilities;
 
+import constants.CostConstants;
 import constants.RefreshRateConstants;
 import constants.TimeConstants;
 import controller.enums.InGameAbilityType;
@@ -18,7 +19,7 @@ public class Slumber extends InGameAbility{
 
     public Slumber(){
         type = InGameAbilityType.slumber;
-        xpCost = 150;
+        xpCost = CostConstants.SLUMBER_COST;
         initTimer();
     }
 

@@ -1,5 +1,6 @@
 package model.inGameAbilities;
 
+import constants.CostConstants;
 import constants.RefreshRateConstants;
 import constants.TimeConstants;
 import controller.enums.InGameAbilityType;
@@ -20,7 +21,7 @@ public class Slaughter extends InGameAbility{
 
     public Slaughter(){
         type = InGameAbilityType.slaughter;
-        xpCost = 200;
+        xpCost = CostConstants.SLAUGHTER_COST;
         initTimer();
     }
 

@@ -1,5 +1,6 @@
 package model.inGameAbilities.Dismay;
 
+import constants.CostConstants;
 import constants.RefreshRateConstants;
 import constants.TimeConstants;
 import controller.enums.InGameAbilityType;
@@ -27,7 +28,7 @@ public class Dismay extends InGameAbility {
     public Dismay(EpsilonModel epsilon){
         this.epsilon = epsilon;
         type = InGameAbilityType.dismay;
-        xpCost = 120;
+        xpCost = CostConstants.DISMAY_COST;
         initTimer();
         initProtector();
     }

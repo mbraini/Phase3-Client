@@ -23,6 +23,7 @@ public class MenuPanel extends PIG {
     private MyButton skillTree;
     private MyButton squad;
     private MyLabel live;
+    private MyButton connectODisconnect;
     public MenuPanel(){
         this.setLayout(null);
         this.setBounds(0,0, SizeConstants.GAME_WIDTH, SizeConstants.GAME_HEIGHT);
@@ -35,7 +36,17 @@ public class MenuPanel extends PIG {
         initTutorial();
         initSquad();
         initLive();
+        initConnectODisconnect();
         initAL();
+    }
+
+    private void initConnectODisconnect() {
+        connectODisconnect = new MyButton(
+                new Point(0 ,0),
+                new Dimension((int) (getWidth() / (3.5)) ,getHeight() / 11),
+                "",
+                this
+        );
     }
 
     private void initLive() {
@@ -121,6 +132,24 @@ public class MenuPanel extends PIG {
                 }
             }
         });
+
+        connectODisconnect.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (OnlineData.getTCPMessager() != null) {
+                    OnlineData.getTcpThread().end();
+                    start();
+                    revalidate();
+                    repaint();
+                }
+                else {
+                    Application.endMainFrame();
+                    OnlineData.initTCPMessager();
+                }
+
+            }
+        });
+
     }
 
     private void initExit(){
@@ -174,10 +203,12 @@ public class MenuPanel extends PIG {
         if (OnlineData.getTCPMessager() == null) {
             squad.setForeground(Color.RED);
             live.setText("offline");
+            connectODisconnect.setText("connect to server");
         }
         else {
-            squad.setForeground(Color.CYAN);
+            squad.setForeground(Color.WHITE);
             live.setText("live");
+            connectODisconnect.setText("disconnect from server");
         }
     }
 

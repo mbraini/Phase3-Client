@@ -20,6 +20,7 @@ import javax.swing.*;
 public class TCPThread extends Thread {
 
     private Gson gson;
+    private ConnectionChecker connectionChecker;
 
     public TCPThread() {
         initGson();
@@ -32,9 +33,10 @@ public class TCPThread extends Thread {
 
     @Override
     public void run() {
-        new ConnectionChecker(OnlineData.getTcpConnectionChecker()).start();
+        connectionChecker = new ConnectionChecker(OnlineData.getTcpConnectionChecker());
+        connectionChecker.start();
         try {
-            while (true) {
+            while (!isInterrupted()) {
                 String json = OnlineData.getTCPMessager().readMessage();
                 ServerMessageType type = gson.fromJson(json ,ServerMessageType.class);
                 switch (type) {
@@ -136,4 +138,16 @@ public class TCPThread extends Thread {
         }
 
     }
+
+    public void end() {
+        connectionChecker.setDisconnecting(true);
+        this.interrupt();
+        try {
+            Thread.sleep(4000);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+        OnlineData.setTCPMessager(null);
+    }
+
 }

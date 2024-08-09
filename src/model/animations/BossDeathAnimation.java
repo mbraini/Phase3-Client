@@ -15,11 +15,9 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class BossDeathAnimation extends TimerAnimation {
+public class BossDeathAnimation extends ThreadAnimation {
 
     private Boss boss;
-    private Timer timer;
-    private Timer wait;
     private int timePassed;
     private int delay = 60;
 
@@ -27,59 +25,58 @@ public class BossDeathAnimation extends TimerAnimation {
         this.boss = boss;
         ModelRequestController.playSound(SoundPathConstants.winSound);
         GameState.setIsInAnimation(true);
-        setUpTimer();
-        setUpWait();
     }
 
-    private void setUpWait() {
-        wait = new Timer(2000, new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
+
+
+    @Override
+    public void run() {
+        while (true) {
+
+            try {
+                Thread.sleep(delay);
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
+
+            timePassed += delay;
+            if (timePassed / delay >= 95) {
+                GameState.setIsInAnimation(false);
+                try {
+                    Thread.sleep(2000);
+                } catch (InterruptedException e) {
+                    throw new RuntimeException(e);
+                }
                 killEveryOne();
                 new EpsilonGetBigAnimation().StartAnimation();
-                wait.stop();
+                return;
             }
-        });
-        wait.setRepeats(false);
-    }
+            boss.getHead().setSize(
+                    new Dimension(
+                            boss.getHead().getSize().width - SizeConstants.HEAD_DIMENSION.width / 100,
+                            boss.getHead().getSize().height - SizeConstants.HEAD_DIMENSION.height / 100
+                    )
+            );
+            boss.getLeftHand().setSize(
+                    new Dimension(
+                            boss.getLeftHand().getSize().width - SizeConstants.HAND_DIMENSION.width / 100,
+                            boss.getLeftHand().getSize().height - SizeConstants.HAND_DIMENSION.height / 100
+                    )
+            );
+            boss.getRightHand().setSize(
+                    new Dimension(
+                            boss.getRightHand().getSize().width - SizeConstants.HAND_DIMENSION.width / 100,
+                            boss.getRightHand().getSize().height - SizeConstants.HAND_DIMENSION.height / 100
+                    )
+            );
+            boss.getPunch().setSize(
+                    new Dimension(
+                            boss.getPunch().getSize().width - SizeConstants.PUNCH_DIMENSION.width / 100,
+                            boss.getPunch().getSize().height - SizeConstants.PUNCH_DIMENSION.height / 100
+                    )
+            );
 
-    private void setUpTimer() {
-        timer = new Timer(delay, new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                timePassed += delay;
-                if (timePassed / delay >= 95) {
-                    GameState.setIsInAnimation(false);
-                    wait.start();
-                    timer.stop();
-                    return;
-                }
-                boss.getHead().setSize(
-                        new Dimension(
-                                boss.getHead().getSize().width - SizeConstants.HEAD_DIMENSION.width / 100,
-                                boss.getHead().getSize().height - SizeConstants.HEAD_DIMENSION.height / 100
-                        )
-                );
-                boss.getLeftHand().setSize(
-                        new Dimension(
-                                boss.getLeftHand().getSize().width - SizeConstants.HAND_DIMENSION.width / 100,
-                                boss.getLeftHand().getSize().height - SizeConstants.HAND_DIMENSION.height / 100
-                        )
-                );
-                boss.getRightHand().setSize(
-                        new Dimension(
-                                boss.getRightHand().getSize().width - SizeConstants.HAND_DIMENSION.width / 100,
-                                boss.getRightHand().getSize().height - SizeConstants.HAND_DIMENSION.height / 100
-                        )
-                );
-                boss.getPunch().setSize(
-                        new Dimension(
-                                boss.getPunch().getSize().width - SizeConstants.PUNCH_DIMENSION.width / 100,
-                                boss.getPunch().getSize().height - SizeConstants.PUNCH_DIMENSION.height / 100
-                        )
-                );
-            }
-        });
+        }
     }
 
     private synchronized void killEveryOne() {
@@ -105,7 +102,7 @@ public class BossDeathAnimation extends TimerAnimation {
     public void StartAnimation() {
         GameState.setIsInAnimation(true);
         setUpPictures();
-        timer.start();
+        start();
     }
 
     private void setUpPictures() {

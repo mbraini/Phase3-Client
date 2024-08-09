@@ -9,6 +9,7 @@ import controller.online.tcp.messages.ServerYesNoMessage;
 import controller.online.tcp.serverMessages.messages.ServerEndGameMessage;
 import controller.online.tcp.serverMessages.messages.ServerGetPortsMessage;
 import controller.online.tcp.serverMessages.messages.ServerGivePortsMessage;
+import controller.online.tcp.serverMessages.messages.ServerUpdateXPMessage;
 import controller.online.tcp.serverMessages.messages.giveStats.ServerGiveStatsMessage;
 import controller.online.tcp.serverMessages.recponces.*;
 import controller.online.tcp.serverMessages.recponces.squadHistory.ServerGetBattleSquadHistoryRecponce;
@@ -42,6 +43,12 @@ public class TCPThread extends Thread {
                 switch (type) {
                     case hasSquadRecponce :
                         new ServerHasSquadRecponce().receiveRecponce();
+                        break;
+                    case updateXP:
+                        new ServerUpdateXPMessage();
+                        break;
+                    case matchHistory:
+                        new ServerSendMatchHistoryRecponce().receiveRecponce();
                         break;
                     case getAllSquadsRecponce:
                         new ServerGetAllSquadsRecponce().receiveRecponce();

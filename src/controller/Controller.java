@@ -1,13 +1,17 @@
 package controller;
 
 import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import constants.SizeConstants;
 import controller.configs.Configs;
 import controller.configs.helper.GameConfigsJsonHelper;
+import controller.gameHistory.GameHistoryHelper;
+import controller.gameHistory.SkillTreeBuyHelper;
 import controller.manager.GameManager;
 import controller.manager.loading.GameLoader;
 import constants.ControllerConstants;
 import controller.manager.saving.GameSaver;
+import controller.online.OnlineData;
 import model.ModelRequests;
 import model.animations.GameStartAnimation;
 import model.inGameAbilities.InGameAbilityHandler;
@@ -35,6 +39,10 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.lang.reflect.Type;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+import java.util.ArrayList;
 
 public abstract class Controller {
     private static Render render;
@@ -79,6 +87,19 @@ public abstract class Controller {
 
     public static void rumModel() {
         setModelConfigs();
+        setHistories();
+    }
+
+    private static void setHistories() {
+        Gson gson = new Gson();
+        StringBuilder JGameHistories = Helper.readFile("src/controller/gameHistory/gameHistories.json");
+        StringBuilder JSkillTreeHistories = Helper.readFile("src/controller/gameHistory/skillTreeBuys.json");
+        Type gameType = new TypeToken<ArrayList<GameHistoryHelper>>(){}.getType();
+        Type skillTreeType = new TypeToken<ArrayList<SkillTreeBuyHelper>>(){}.getType();
+        ArrayList<GameHistoryHelper> gameHistories = gson.fromJson(JGameHistories.toString() ,gameType);
+        ArrayList<SkillTreeBuyHelper> skillTreeHistories = gson.fromJson(JSkillTreeHistories.toString() ,skillTreeType);
+        ModelData.setGameHistories(gameHistories);
+        ModelData.setSkillTreeHistories(skillTreeHistories);
     }
 
     private static void setModelConfigs() {
@@ -123,6 +144,7 @@ public abstract class Controller {
 
 
     public static void startGame(){
+        ModelData.setCurrentGame(new GameHistoryHelper());
         gameMode = GameMode.inGame;
         if (GameSaver.isGameSaved()) {
             int response = JOptionPane.showConfirmDialog(null ,"do you want to play your last game?");
@@ -160,6 +182,9 @@ public abstract class Controller {
         int totalShots = GameState.getTotalBullets();
         int successfulShots = GameState.getSuccessfulBullets();
         int timePassed = (int) GameState.getTime() / 1000;
+        ModelData.getCurrentGame().setXpGained(xpGained);
+        ModelData.getCurrentGame().setTimePassed(timePassed);
+        saveGameHistory();
         endRequest();
         if (won) {
             new EndGamePanel(new EndGameFrame(),xpGained ,enemyKilled ,totalShots ,successfulShots ,timePassed).start();
@@ -178,6 +203,24 @@ public abstract class Controller {
         else {
             new EndGamePanel(new EndGameFrame() ,xpGained ,enemyKilled ,totalShots ,successfulShots ,timePassed).start();
         }
+    }
+
+    private static void saveGameHistory() {
+        Gson gson = new Gson();
+        StringBuilder stringBuilder = Helper.readFile("src/controller/gameHistory/gameHistories.json");
+        Type type = new TypeToken<ArrayList<GameHistoryHelper>>(){}.getType();
+        ArrayList<GameHistoryHelper> gameHistories = gson.fromJson(stringBuilder.toString() ,type);
+        String hash;
+        try {
+            MessageDigest messageDigest = MessageDigest.getInstance("MD5");
+            messageDigest.update(gson.toJson(ModelData.getCurrentGame()).getBytes());
+            hash = new String(messageDigest.digest());
+        } catch (NoSuchAlgorithmException e) {
+            throw new RuntimeException(e);
+        }
+        ModelData.getCurrentGame().setHash(hash);
+        gameHistories.add(ModelData.getCurrentGame());
+        Helper.writeFile("src/controller/gameHistory/gameHistories.json" ,gson.toJson(gameHistories));
     }
 
     private static void endRequest() {

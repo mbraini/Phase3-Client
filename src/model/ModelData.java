@@ -1,5 +1,7 @@
 package model;
 
+import controller.gameHistory.GameHistoryHelper;
+import controller.gameHistory.SkillTreeBuyHelper;
 import model.inGameAbilities.*;
 import model.objectModel.effects.EffectModel;
 import model.objectModel.fighters.AbstractEnemy;
@@ -27,6 +29,9 @@ public class ModelData {
     private static EpsilonModel epsilon;
     private static FrameModel epsilonFrame;
     private static ArrayList<ImaginaryObject> solidObjects = new ArrayList<>();
+    private static ArrayList<GameHistoryHelper> gameHistories = new ArrayList<>();
+    private static ArrayList<SkillTreeBuyHelper> skillTreeHistories = new ArrayList<>();
+    private static GameHistoryHelper currentGame;
 
     public static void resetAll() {
         frames = new ArrayList<>();
@@ -179,4 +184,27 @@ public class ModelData {
         }
     }
 
+    public static ArrayList<GameHistoryHelper> getGameHistories() {
+        return gameHistories;
+    }
+
+    public static void setGameHistories(ArrayList<GameHistoryHelper> gameHistories) {
+        ModelData.gameHistories = gameHistories;
+    }
+
+    public static ArrayList<SkillTreeBuyHelper> getSkillTreeHistories() {
+        return skillTreeHistories;
+    }
+
+    public static void setSkillTreeHistories(ArrayList<SkillTreeBuyHelper> skillTreeHistories) {
+        ModelData.skillTreeHistories = skillTreeHistories;
+    }
+
+    public static GameHistoryHelper getCurrentGame() {
+        return currentGame;
+    }
+
+    public static void setCurrentGame(GameHistoryHelper currentGame) {
+        ModelData.currentGame = currentGame;
+    }
 }

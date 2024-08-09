@@ -7,7 +7,6 @@ import controller.enums.SkillTreeAbilityType;
 import controller.interfaces.SizeChanger;
 import controller.manager.GameState;
 import controller.online.OnlineData;
-import controller.online.tcp.requests.ClientUpdateInfoRequest;
 import model.ModelData;
 import model.inGameAbilities.InGameAbility;
 import model.inGameAbilities.Slaughter;
@@ -188,7 +187,5 @@ public class ViewRequestController {
 
     public static void buySkillTreeRequest(SkillTreeAbilityType type) {
         SkillTreeAbilityRequests.buyRequest(type);
-        if (OnlineData.getTCPMessager() != null)
-            new ClientUpdateInfoRequest().sendRequest();
     }
 }

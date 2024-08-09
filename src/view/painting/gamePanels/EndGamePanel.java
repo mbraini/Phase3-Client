@@ -4,11 +4,8 @@ package view.painting.gamePanels;
 import com.google.gson.Gson;
 import constants.ImageConstants;
 import constants.SizeConstants;
-import controller.configs.Configs;
-import controller.configs.helper.SkillTreeJsonHelper;
 import controller.online.OnlineData;
-import controller.online.tcp.requests.ClientGiveClientGameInfoRequest;
-import controller.online.tcp.requests.ClientUpdateInfoRequest;
+import controller.online.tcp.requests.ClientSendMatchHistoryRequest;
 import view.Application;
 import view.painting.menuPanels.PIG;
 import view.painting.objectViews.panels.MyButton;
@@ -58,9 +55,8 @@ public class EndGamePanel extends PIG {
         menu.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                new ClientSendMatchHistoryRequest().sendRequest();
                 endGameFrame.dispose();
-                if (OnlineData.getTCPMessager() != null)
-                    new ClientUpdateInfoRequest().sendRequest();
                 Application.startMainFrame();
             }
         });

@@ -2,11 +2,16 @@ package model.viewRequests;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.google.gson.reflect.TypeToken;
 import constants.CostConstants;
 import controller.configs.Configs;
 import controller.configs.helper.SkillTreeJsonHelper;
 import controller.enums.SkillTreeAbilityType;
+import controller.gameHistory.InGameSkillTreeBuyHelper;
+import controller.gameHistory.SkillTreeBuyHelper;
 import controller.manager.GameState;
+import controller.online.OnlineData;
+import model.ModelData;
 import model.skillTreeAbilities.SkillTreeAbility;
 import model.skillTreeAbilities.SkillTreeAbilityHandler;
 import utils.Helper;
@@ -14,6 +19,10 @@ import utils.Helper;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
+import java.lang.reflect.Type;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class SkillTreeAbilityRequests {
@@ -21,6 +30,9 @@ public class SkillTreeAbilityRequests {
     public static void abilityRequest(SkillTreeAbilityType type) {
         if (canUse(type)) {
             GameState.setXp(GameState.getXp() - SkillTreeAbilityHandler.getAbility(type).getInGameXpCost());
+            ModelData.getCurrentGame().addInGameAbilityHistory(
+                    new InGameSkillTreeBuyHelper(type ,SkillTreeAbilityHandler.getAbility(type).getInGameXpCost())
+            );
             SkillTreeAbilityHandler.activateSkillTreeAbility(type);
         }
     }
@@ -49,6 +61,7 @@ public class SkillTreeAbilityRequests {
         StringBuilder stringBuilder = Helper.readFile("src/controller/configs/skillTree.json");
         helper = gson.fromJson(stringBuilder.toString() ,SkillTreeJsonHelper.class);
         GameState.setXp(GameState.getXp() - cost);
+        addSkillTreeBuyHistory(type ,cost);
         switch (type) {
             case ares :
                 helper.ares = true;
@@ -168,4 +181,24 @@ public class SkillTreeAbilityRequests {
         }
         return -1;
     }
+
+    public static void addSkillTreeBuyHistory(SkillTreeAbilityType skillTreeAbilityType ,int cost) {
+        Gson gson = new Gson();
+        StringBuilder stringBuilder = Helper.readFile("src/controller/gameHistory/skillTreeBuys.json");
+        Type type = new TypeToken<ArrayList<SkillTreeBuyHelper>>(){}.getType();
+        ArrayList<SkillTreeBuyHelper> skillTreeBuyHelpers = gson.fromJson(stringBuilder.toString() ,type);
+        SkillTreeBuyHelper buyHelper = new SkillTreeBuyHelper(cost ,skillTreeAbilityType);
+        String hash;
+        try {
+            MessageDigest messageDigest = MessageDigest.getInstance("MD5");
+            messageDigest.update(gson.toJson(buyHelper).getBytes());
+            hash = new String(messageDigest.digest());
+        } catch (NoSuchAlgorithmException e) {
+            throw new RuntimeException(e);
+        }
+        buyHelper.setHash(hash);
+        skillTreeBuyHelpers.add(buyHelper);
+        Helper.writeFile("src/controller/gameHistory/skillTreeBuys.json" ,gson.toJson(skillTreeBuyHelpers));
+    }
+
 }

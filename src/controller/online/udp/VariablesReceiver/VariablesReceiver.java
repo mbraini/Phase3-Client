@@ -2,6 +2,7 @@ package controller.online.udp.VariablesReceiver;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import controller.configs.helper.GameConfigsJsonHelper;
 import controller.online.udp.objectViewReceiver.JView;
 import utils.Helper;
 import view.painting.ViewData;
@@ -19,6 +20,7 @@ public class VariablesReceiver extends Thread{
     private DatagramSocket datagramSocket;
     private DatagramPacket datagramPacket;
     private Gson gson;
+    private int refreshCount;
     private volatile boolean canReceive = true;
 
 
@@ -35,15 +37,27 @@ public class VariablesReceiver extends Thread{
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
+            refreshCount++;
             try {
                 String JObjects = new String(Helper.getDataUntil(datagramPacket.getData() ,datagramPacket.getLength()));
                 JVariables jVariables = gson.fromJson(JObjects , JVariables.class);
                 updateVariables(jVariables);
+                if (refreshCount >= 0) {
+                    refreshCount = 0;
+                    saveXP(jVariables);
+                }
             }
             catch (Exception e){
 
             }
         }
+    }
+
+    private void saveXP(JVariables jVariables) {
+        StringBuilder stringBuilder = Helper.readFile("src/controller/configs/gameConfigs.json");
+        GameConfigsJsonHelper configs = gson.fromJson(stringBuilder.toString() ,GameConfigsJsonHelper.class);
+        configs.XP = jVariables.getXp();
+        Helper.writeFile("src/controller/configs/gameConfigs.json" ,gson.toJson(configs));
     }
 
     private void updateVariables(JVariables jVariables) {

@@ -46,7 +46,10 @@ public class Application implements Runnable{
 
     private void getImages(){
         try {
-            ImageConstants.epsilonImage = ImageIO.read(new File("src/view/painting/objectViews/images/epsilonImage.png"));
+            ImageConstants.whiteEpsilon = ImageIO.read(new File("src/view/painting/objectViews/images/whiteEpsilon.png"));
+            ImageConstants.redEpsilon = ImageIO.read(new File("src/view/painting/objectViews/images/redEpsilon.png"));
+            ImageConstants.yellowEpsilon = ImageIO.read(new File("src/view/painting/objectViews/images/yellowEpsilon.png"));
+            ImageConstants.blueEpsilon = ImageIO.read(new File("src/view/painting/objectViews/images/blueEpsilon.png"));
             ImageConstants.trigorathImage = ImageIO.read(new File("src/view/painting/objectViews/images/trigorathImage.png"));
             ImageConstants.squarantineImage = ImageIO.read(new File("src/view/painting/objectViews/images/squarantineImage.png"));
             ImageConstants.banish = ImageIO.read(new File("src/view/painting/objectViews/images/Banish.png"));

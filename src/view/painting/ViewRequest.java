@@ -1,7 +1,9 @@
 package view.painting;
 
+import constants.ImageConstants;
 import controller.enums.EffectType;
 import controller.enums.ModelType;
+import controller.online.OnlineData;
 import utils.Vector;
 import utils.area.Area;
 import utils.area.Circle;
@@ -38,6 +40,7 @@ public class ViewRequest {
     private static ArrayList<ObjectView> addedObjectViews;
     private static ArrayList<FrameView> addedFrameViews;
     private static boolean endRequest;
+    private static int epsilonColor = -1;
 
     public synchronized static void resetAll() {
         removeObjectViewReq = new ArrayList<>();
@@ -46,6 +49,7 @@ public class ViewRequest {
         addedEffectViews = new ArrayList<>();
         addedObjectViews = new ArrayList<>();
         addedFrameViews = new ArrayList<>();
+        epsilonColor = -1;
     }
 
     public synchronized static void checkRequests(){
@@ -136,6 +140,20 @@ public class ViewRequest {
                         position,
                         id
                 );
+                switch (giveEpsilonColor() % 4) {
+                    case 0:
+                        epsilonView.setImage(ImageConstants.whiteEpsilon);
+                        break;
+                    case 1:
+                        epsilonView.setImage(ImageConstants.redEpsilon);
+                        break;
+                    case 2:
+                        epsilonView.setImage(ImageConstants.blueEpsilon);
+                        break;
+                    case 3:
+                        epsilonView.setImage(ImageConstants.yellowEpsilon);
+                        break;
+                }
                 epsilonView.setSize(size);
                 addObjectView(epsilonView);
                 break;
@@ -230,4 +248,10 @@ public class ViewRequest {
                 break;
         }
     }
+
+    public static int giveEpsilonColor() {
+        epsilonColor++;
+        return epsilonColor;
+    }
+
 }

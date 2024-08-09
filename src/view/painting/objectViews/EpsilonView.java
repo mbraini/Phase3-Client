@@ -13,6 +13,7 @@ public class EpsilonView extends ObjectView implements SizeChanger {
     public EpsilonView(Vector position , String id) {
         this.position = position;
         this.id = id;
+        image = ImageConstants.whiteEpsilon;
     }
 
     @Override
@@ -23,7 +24,7 @@ public class EpsilonView extends ObjectView implements SizeChanger {
                 position.getY() + SizeConstants.SCREEN_SIZE.height
         );
         g2d.drawImage(
-                ImageConstants.epsilonImage ,
+                image,
                 (int) position.getX() - size.width / 2 + SizeConstants.SCREEN_SIZE.width ,
                 (int) position.getY() - size.height / 2 + SizeConstants.SCREEN_SIZE.height,
                 size.width ,

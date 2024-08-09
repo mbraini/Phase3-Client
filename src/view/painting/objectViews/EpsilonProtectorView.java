@@ -11,7 +11,7 @@ public class EpsilonProtectorView extends ObjectView{
     public EpsilonProtectorView(Vector position, String id){
         this.position = position;
         this.id = id;
-        image = ImageConstants.epsilonImage;
+        image = ImageConstants.whiteEpsilon;
     }
 
 

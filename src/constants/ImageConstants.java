@@ -35,6 +35,9 @@ public class ImageConstants {
     public static Image empower;
     public static Image heal;
     public static Image banish;
-    public static Image epsilonImage;
+    public static Image whiteEpsilon;
+    public static Image redEpsilon;
+    public static Image yellowEpsilon;
+    public static Image blueEpsilon;
     public static Image trigorathImage;
 }

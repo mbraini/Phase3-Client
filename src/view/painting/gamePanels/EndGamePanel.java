@@ -1,8 +1,14 @@
 package view.painting.gamePanels;
 
 
+import com.google.gson.Gson;
 import constants.ImageConstants;
 import constants.SizeConstants;
+import controller.configs.Configs;
+import controller.configs.helper.SkillTreeJsonHelper;
+import controller.online.OnlineData;
+import controller.online.tcp.requests.ClientGiveClientGameInfoRequest;
+import controller.online.tcp.requests.ClientUpdateInfoRequest;
 import view.Application;
 import view.painting.menuPanels.PIG;
 import view.painting.objectViews.panels.MyButton;
@@ -17,11 +23,9 @@ public class EndGamePanel extends PIG {
     private final int successfulShots;
     private int enemyKilled;
     private final int survivalTime;
-    private int mostXpGained;
-    private int mostSurvivalTime;
     private MyButton menu;
     private final EndGameFrame endGameFrame;
-    private boolean onlineGame;
+    private Gson gson;
     public EndGamePanel(EndGameFrame endGameFrame ,int xpGained ,int enemyKilled ,int totalShots ,int successfulShots ,int survivalTime){
         this.endGameFrame = endGameFrame;
         this.survivalTime = survivalTime;
@@ -30,22 +34,7 @@ public class EndGamePanel extends PIG {
         this.xpGained = xpGained;
         this.totalShots = totalShots;
         setUp();
-    }
-
-    public EndGamePanel(EndGameFrame endGameFrame , int xpGained , int survivalTime, int totalShots ,
-                        int successfulShots ,int mostXpGained ,int mostSurvivalTime)
-    {
-
-        this.endGameFrame = endGameFrame;
-        this.xpGained = xpGained;
-        this.survivalTime = survivalTime;
-        this.totalShots = totalShots;
-        this.successfulShots = successfulShots;
-        this.mostXpGained = mostXpGained;
-        this.mostSurvivalTime = mostSurvivalTime;
-        onlineGame = true;
-
-        setUp();
+        gson = new Gson();
     }
 
     private void setUp() {
@@ -70,6 +59,8 @@ public class EndGamePanel extends PIG {
             @Override
             public void actionPerformed(ActionEvent e) {
                 endGameFrame.dispose();
+                if (OnlineData.getTCPMessager() != null)
+                    new ClientUpdateInfoRequest().sendRequest();
                 Application.startMainFrame();
             }
         });
@@ -92,28 +83,16 @@ public class EndGamePanel extends PIG {
         super.paintComponent(g);
         g.drawImage(ImageConstants.endGameImage ,getWidth() / 3 ,getHeight() / 6 ,getWidth() / 3 ,getHeight() / 3 ,null);
         g.setFont(new Font(null,Font.BOLD ,15));
-        if (!onlineGame) {
-            g.setColor(Color.MAGENTA);
-            g.drawString("xp earned: " + xpGained, getWidth() / 7 * 4, getHeight() / 14 * 8);
-            g.setColor(Color.RED);
-            g.drawString("successfulShots: " + successfulShots, getWidth() / 7 * 2, getHeight() / 14 * 8);
-            g.drawString("enemyKilled: " + enemyKilled, getWidth() / 7 * 3, getHeight() / 14 * 10);
-            g.setColor(Color.WHITE);
-            g.drawString("survival time: " + survivalTime, getWidth() / 7, getHeight() / 14 * 10);
-            g.setColor(Color.BLUE);
-            g.drawString("totalShots: " + totalShots, getWidth() / 7 * 5, getHeight() / 14 * 10);
-        }
-        else {
-            g.setColor(Color.MAGENTA);
-            g.drawString("xp earned: " + xpGained, getWidth() / 7 * 3, getHeight() / 14 * 8);
-            g.setColor(Color.RED);
-            g.drawString("successfulShots: " + successfulShots, getWidth() / 7 * 5, getHeight() / 14 * 10);
-            g.setColor(Color.WHITE);
-            g.drawString("most survival time record: " + mostSurvivalTime, 10, getHeight() / 14 * 10 );
-            g.drawString("most xp earned record: " + mostXpGained, 10, getHeight() / 14 * 8 );
-            g.drawString("survival time: " + survivalTime, getWidth() / 7 * 3, getHeight() / 14 * 10);
-            g.setColor(Color.BLUE);
-            g.drawString("totalShots: " + totalShots, getWidth() / 7 * 5, getHeight() / 14 * 8);
-        }
+        g.setColor(Color.MAGENTA);
+        g.drawString("xp earned: " + xpGained, getWidth() / 7 * 4, getHeight() / 14 * 8);
+        g.setColor(Color.RED);
+        g.drawString("successfulShots: " + successfulShots, getWidth() / 7 * 2, getHeight() / 14 * 8);
+        g.drawString("enemyKilled: " + enemyKilled, getWidth() / 7 * 3, getHeight() / 14 * 10);
+        g.setColor(Color.WHITE);
+        g.drawString("survival time: " + survivalTime, getWidth() / 7, getHeight() / 14 * 10);
+        g.setColor(Color.BLUE);
+        g.drawString("totalShots: " + totalShots, getWidth() / 7 * 5, getHeight() / 14 * 10);
     }
+
+
 }

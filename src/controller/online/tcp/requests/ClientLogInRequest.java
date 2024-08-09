@@ -42,21 +42,4 @@ public class ClientLogInRequest extends ClientRequest {
         }
         new ServerLogInRecponce().receiveRecponce();
     }
-
-    private void update() {
-        OnlineData.getTCPMessager().sendMessage(Configs.GameConfigs.XP);
-        SkillTreeJsonHelper helper = new SkillTreeJsonHelper();
-        helper.ares = Configs.SkillTreeConfigs.aresBought;
-        helper.astrape = Configs.SkillTreeConfigs.astrapeBought;
-        helper.cerberus = Configs.SkillTreeConfigs.cerberusBought;
-        helper.melampus = Configs.SkillTreeConfigs.melampusBought;
-        helper.chiron = Configs.SkillTreeConfigs.chironBought;
-        helper.athena = Configs.SkillTreeConfigs.athenaBought;
-        helper.proteus = Configs.SkillTreeConfigs.proteusBought;
-        helper.empusa = Configs.SkillTreeConfigs.empusaBought;
-        helper.dolus = Configs.SkillTreeConfigs.dolusBought;
-        helper.aceso = Configs.SkillTreeConfigs.acesoBought;
-
-        OnlineData.getTCPMessager().sendMessage(gson.toJson(helper));
-    }
 }

@@ -1,9 +1,15 @@
 package controller.online.tcp.serverMessages.messages.giveStats;
 
 import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import controller.online.OnlineData;
 import view.painting.gamePanels.EndGameFrame;
 import view.painting.gamePanels.EndGamePanel;
+import view.painting.gamePanels.OnlineEndGameFrame;
+import view.painting.gamePanels.OnlineEndGamePanel;
+
+import java.lang.reflect.Type;
+import java.util.ArrayList;
 
 public class ServerGiveStatsMessage {
 
@@ -16,22 +22,13 @@ public class ServerGiveStatsMessage {
     public void receiveMessage() {
 
         String JMessage = OnlineData.getTCPMessager().readMessage();
-        StatsHelper helper = gson.fromJson(JMessage ,StatsHelper.class);
+        Type type = new TypeToken<ArrayList<StatsHelper>>(){}.getType();
+        ArrayList<StatsHelper> helpers = gson.fromJson(JMessage ,type);
 
-        EndGameFrame endGameFrame = new EndGameFrame();
-        EndGamePanel endGamePanel = new EndGamePanel(
-                endGameFrame,
-                helper.getXpGained(),
-                helper.getSurvivalTime(),
-                helper.getTotalBullets(),
-                helper.getSuccessfulBullets(),
-                helper.getMostXpGained(),
-                helper.getMostSurvivalTime()
-        );
-
+        OnlineEndGameFrame endGameFrame = new OnlineEndGameFrame();
+        OnlineEndGamePanel endGamePanel = new OnlineEndGamePanel(endGameFrame);
         endGamePanel.start();
-        endGamePanel.revalidate();
-        endGamePanel.repaint();
+        endGamePanel.update(helpers);
 
     }
 

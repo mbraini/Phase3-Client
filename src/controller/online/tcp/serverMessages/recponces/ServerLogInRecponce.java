@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import controller.configs.Configs;
 import controller.configs.helper.SkillTreeJsonHelper;
 import controller.online.OnlineData;
+import controller.online.tcp.ClientRequestType;
 import controller.online.tcp.ServerRecponce;
 import controller.online.tcp.ServerRecponceType;
 import controller.online.tcp.TCPThread;
@@ -39,7 +40,8 @@ public class ServerLogInRecponce extends ServerRecponce {
         }
     }
 
-    private void update() {
+    public void update() {
+        OnlineData.getTCPMessager().sendMessage(ClientRequestType.updateInfo);
         OnlineData.getTCPMessager().sendMessage(Configs.GameConfigs.XP);
         SkillTreeJsonHelper helper = new SkillTreeJsonHelper();
         helper.ares = Configs.SkillTreeConfigs.aresBought;

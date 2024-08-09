@@ -11,6 +11,7 @@ public class JVariables {
     int xp;
     int wave;
     JVariables.FrameView frameView;
+    int pauseTimeLeft;
 
     public int getTime() {
         return time;
@@ -50,6 +51,14 @@ public class JVariables {
 
     public void setFrameView(FrameView frameView) {
         this.frameView = frameView;
+    }
+
+    public int getPauseTimeLeft() {
+        return pauseTimeLeft;
+    }
+
+    public void setPauseTimeLeft(int pauseTimeLeft) {
+        this.pauseTimeLeft = pauseTimeLeft;
     }
 
     public static class FrameView {

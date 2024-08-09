@@ -2,10 +2,12 @@ package controller.online.udp.VariablesReceiver;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import controller.PauseController;
 import controller.configs.helper.GameConfigsJsonHelper;
 import controller.online.udp.objectViewReceiver.JView;
 import utils.Helper;
 import view.painting.ViewData;
+import view.painting.gamePanels.Shop;
 
 import java.io.IOException;
 import java.lang.reflect.Type;
@@ -66,6 +68,13 @@ public class VariablesReceiver extends Thread{
         ViewData.setWave(jVariables.getWave());
         ViewData.setTime(jVariables.getTime());
         ViewData.setEpsilonFrame(ViewData.getFrame(jVariables.getFrameView().getId()));
+        if (Shop.getPauseTimeLeft() != jVariables.getPauseTimeLeft()) {
+            Shop.setPauseTimeLeft(jVariables.getPauseTimeLeft() / 1000);
+            if (PauseController.shop != null) {
+                PauseController.shop.revalidate();
+                PauseController.shop.repaint();
+            }
+        }
     }
 
     public int getPort() {

@@ -48,6 +48,8 @@ public class Shop extends PIG {
     private MyLabel dismayXPL;
     private MyLabel slumberXPL;
     private MyButton spawnAlly;
+    public static int pauseTimeLeft;
+    private MyLabel pauseTimeL;
 
     public Shop(ShopFrame shopFrame ,boolean isOnline){
         this.setLayout(null);
@@ -63,6 +65,7 @@ public class Shop extends PIG {
         initSlumber();
         initSlaughter();
         initKeyListener();
+        initPauseTimeL();
         this.isOnline = isOnline;
         if (isOnline)
             initSpawn();
@@ -73,13 +76,34 @@ public class Shop extends PIG {
         this.setVisible(true);
     }
 
+    public static void setPauseTimeLeft(int pauseTimeLeft) {
+        Shop.pauseTimeLeft = pauseTimeLeft;
+    }
+
+    public static int getPauseTimeLeft() {
+        return pauseTimeLeft;
+    }
+
+    private void initPauseTimeL() {
+        pauseTimeL = new MyLabel(
+                new Point(getWidth() / 5 * 3 + 10 ,getHeight() / 16),
+                new Dimension(getWidth() / 5 * 2 - 14 ,getHeight() / 16),
+                "pause time left :" + pauseTimeLeft,
+                this
+        );
+        pauseTimeL.setForeground(Color.WHITE);
+        pauseTimeL.setBorder(BorderFactory.createLineBorder(Color.WHITE ,2));
+    }
+
     private void initSpawn() {
         spawnAlly = new MyButton(
-                new Point(0 ,0),
-                new Dimension(getWidth() / 5 ,getHeight() / 16),
+                new Point(healL.getX() ,getHeight() / 16),
+                new Dimension(healL.getWidth() ,healL.getHeight()),
                 "spawn an ally",
                 this
         );
+        spawnAlly.setForeground(Color.BLUE);
+        spawnAlly.setBorder(BorderFactory.createLineBorder(Color.BLUE ,2));
         spawnAlly.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -193,6 +217,8 @@ public class Shop extends PIG {
                 "XP :" + GameState.getXp(),
                 this
         );
+        xp.setBorder(BorderFactory.createLineBorder(Color.MAGENTA ,2));
+        xp.setForeground(Color.MAGENTA);
     }
 
     private void initHealL() {
@@ -380,11 +406,15 @@ public class Shop extends PIG {
         g.drawImage(ImageConstants.slumber ,slumber.getX() ,slumber.getY() ,slumber.getWidth() ,slumber.getHeight() ,null);
         g.drawImage(ImageConstants.slaughter ,slaughter.getX() ,slaughter.getY() ,slaughter.getWidth() ,slaughter.getHeight() ,null);
         g.drawImage(ImageConstants.dismay ,dismay.getX() ,dismay.getY() ,dismay.getWidth() ,dismay.getHeight() ,null);
+        pauseTimeL.setText("pause time left :" + pauseTimeLeft);
     }
 
     @Override
     public void start() {
         setVisible(true);
+        if (!isOnline) {
+            pauseTimeL.setVisible(false);
+        }
     }
 
     private void updateXP() {

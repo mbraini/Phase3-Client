@@ -12,6 +12,7 @@ import controller.manager.loading.GameLoader;
 import constants.ControllerConstants;
 import controller.manager.saving.GameSaver;
 import controller.online.OnlineData;
+import controller.online.gameInfos.GameMode;
 import controller.online.tcp.requests.ClientStartingOfflineGameRequest;
 import model.ModelRequests;
 import model.animations.GameStartAnimation;

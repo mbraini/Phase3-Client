@@ -1,6 +1,6 @@
 package controller.online.tcp.requests;
 
-import controller.online.CallType;
+import controller.online.gameInfos.CallType;
 import controller.online.OnlineData;
 import controller.online.tcp.ClientRequest;
 import controller.online.tcp.ClientRequestType;

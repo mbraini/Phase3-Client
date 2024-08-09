@@ -2,7 +2,7 @@ package view.painting.menuPanels.onlinePanels.squad;
 
 import constants.CostConstants;
 import constants.SizeConstants;
-import controller.online.CallType;
+import controller.online.gameInfos.CallType;
 import controller.online.tcp.requests.ClientBuyCallRequest;
 import controller.online.tcp.requests.ClientUpdateTreasuryShopRequest;
 import view.painting.menuPanels.MainFrame;

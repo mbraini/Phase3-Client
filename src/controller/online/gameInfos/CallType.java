@@ -1,4 +1,4 @@
-package controller.online;
+package controller.online.gameInfos;
 
 public enum CallType {
 
